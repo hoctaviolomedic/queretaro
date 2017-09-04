@@ -1,0 +1,172 @@
+/*Estílo personalizado*/
+body{
+  background:#f4f4f4;
+  font-family: 'Roboto', sans-serif;
+}
+object {
+    width: 25px;
+  height: 25px;
+    -webkit-transition: -webkit-transform ease-in-out 0.3s, background 0.2s;
+    -moz-transition: -moz-transform ease-in-out 0.3s, background 0.2s;
+    transition: transform ease-in-out 0.3s, background 0.2s;
+}
+
+object:hover {
+    -webkit-transform: scale(0.90);
+    -moz-transform: scale(0.90);
+    -ms-transform: scale(0.90);
+    transform: scale(0.90);
+}
+.border-right {
+  border-right: 1px solid #ddd;
+}
+@media only screen and (max-width : 992px) {
+.border-right {
+  border-right:none;
+}
+}
+.divider{
+  border:1px solid #ddd;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+.nav-tabs > li, .nav-pills > li {
+    float:none;
+    display:inline-block;
+}
+tbody.medicine > tr{
+  border-left: 3px solid #009688;
+}
+.nav-tabsn,.nav-pills {
+    text-align:center;
+}
+.chart {
+  width: 100%;
+  min-height: 300px;
+  position: relative;
+}
+.charts{
+  width: 100%;
+  height:100%;
+}
+.select2-container{
+  border-radius: 0px;
+}
+.shadow-3 {
+box-shadow: 3px 3px 2px #c6c6c6;
+}
+.panel-heading{
+  border-bottom: 1px solid #f4f4f4
+}
+.panel-title {
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
+}
+.panel-danger>.panel-heading{
+  background: #9E181F;
+  border:none;
+}
+.panel-danger{
+  border:none;
+}
+.shadow-3-danger {
+box-shadow: 3px 3px 2px #9E181F;
+}
+.panel-info {
+ border-color:#009688
+}
+.panel-info>.panel-heading {
+ color:#fff;
+ background-color:#009688;
+ border-color:#009688;
+}
+.panel-info>.panel-heading+.panel-collapse>.panel-body {
+ border-top-color:#009688;
+}
+.panel-info>.panel-heading .badge {
+ color:#fff;
+ background-color:#009688;
+}
+.panel-info>.panel-footer+.panel-collapse>.panel-body {
+ border-bottom-color:#009688;
+}
+.form-control:focus {
+  border-color: #009688;
+  outline: 0;
+  -webkit-box-shadow:none;
+  box-shadow:none;
+}
+.form-control {
+  outline: 0;
+  -webkit-box-shadow:none;
+  box-shadow:none;
+}
+.my-group .form-control{
+    width:50%;
+}
+.input-group{
+    width:100%;
+}
+.btn{
+  text-transform: uppercase;
+  padding: 10px 25px;
+  border:none;
+  -webkit-transition: -webkit-transform ease-in-out 0.3s, background 0.2s;
+  -moz-transition: -moz-transform ease-in-out 0.3s, background 0.2s;
+  transition: transform ease-in-out 0.3s, background 0.2s;
+}
+.btn-secondary{
+  background: #009688;
+  color:#FFF; 
+}
+.btn-secondary:focus,.btn-secondary.focus {
+ color:#fff;
+ background-color:#00695c;
+}
+.btn-secondary:hover {
+ color:#fff;
+ background-color:#00695c;
+}
+.btn-secondary:active {
+ color:#fff;
+ background-color:#004d40;
+}
+.btn:hover{
+  box-shadow: 2px 2px 4px #c6c6c6;
+}
+.btn-check{
+  padding: 6px 12px;
+  border:1px solid #c6c6c6;
+}
+.text-danger {
+    color: #f44336;
+}
+a.text-danger:hover, a.text-danger:focus {
+    color: #383838 !important;
+}
+/*Time/Date picker styles*/
+.timepicker{
+  text-align: center;
+}
+.month,.year{
+  padding: 5px;
+}
+.datepicker{
+padding: 10px;
+}
+.prev, .switch, .next{
+text-align: center;
+}
+.day:hover, .prev:hover, .switch:hover, .next:hover, .month:hover, .year:hover{
+background: #f4f4f4;
+cursor: pointer;
+}
+.day.active,.month.active, .year.active{
+  background: #009688;
+  color:#FFF; 
+}
+.day.old, .year.old{
+  background: #c8c8c8;
+  color:#1c1c1c; 
+}
