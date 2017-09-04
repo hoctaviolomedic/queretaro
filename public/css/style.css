@@ -176,6 +176,6 @@ cursor: pointer;
   background: #c8c8c8;
   color:#1c1c1c;
 }
-.dataTable-search.input-group {
-    width: 20%;
+.dataTable-search{
+    width: 30%;
 }

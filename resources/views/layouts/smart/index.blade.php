@@ -22,13 +22,12 @@
 <br>
 <div class="panel shadow-3 panel-danger">
 	<div class="panel-heading">
-		<h3 class="panel-title text-center">TÍTULO DEL MÓDULO</h3>
+		{{ HTML::tag('h3', currentEntityBaseName(),['class'=>'panel-title text-center']) }}
 	</div>
 	<div class="panel-body">
 
 
 <div class="row">
-	{{ HTML::tag('h4', currentEntityBaseName(),['class'=>'col-sm-12']) }}
 	<div class="col-sm-12">
 		<section id="smart-view" class="row" data-primary-key="{{ currentEntity()->getKeyName() }}" data-columns="{{ json_encode(array_keys($fields)) }}" data-item-show-or-delete-url="{{ companyRoute('show', ['id' => '#ID#']) }}" data-item-update-url="{{ companyRoute('edit', ['id' => '#ID#']) }}">
 			<div class="col-sm-3">
@@ -39,48 +38,46 @@
 					<tr><td>datarows</td><td rv-text="collections.datarows"></td></tr>
 				</table>
 			</div>
-			<div class="col-sm-12">
-				<div class="row" rv-hide="actions.countItems | call < collections.items">
-					<div class="text-right">
-						<a href="{{ companyRoute('create') }}" class="btn btn-danger">Crear</a>
-						<div style="display: inline-block; position: relative;">
-							<button class="btn btn-default" type="button" id="export-all" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-								Exportar
-								<span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="export-all">
-								<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'XLSX'])}}">Libro Excel</a></li>
-								<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'PDF'])}}">Archivo Pdf</a></li>
-								<li role="separator" class="divider"></li>
-								<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'XLS'])}}">Excel 97-2003</a></li>
-								<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'CSV'])}}">CSV</a></li>
-								<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'TXT'])}}">TXT</a></li>
-							</ul>
-						</div>
+			<div class="col-sm-12" rv-hide="actions.countItems | call < collections.items">
+				<div class="text-right">
+					<a href="{{ companyRoute('create') }}" class="btn btn-danger">Crear</a>
+					<div style="display: inline-block; position: relative;">
+						<button class="btn btn-default" type="button" id="export-all" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							Exportar
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="export-all">
+							<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'XLSX'])}}">Libro Excel</a></li>
+							<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'PDF'])}}">Archivo Pdf</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'XLS'])}}">Excel 97-2003</a></li>
+							<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'CSV'])}}">CSV</a></li>
+							<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'TXT'])}}">TXT</a></li>
+						</ul>
 					</div>
 				</div>
-				<div class="row" rv-show="actions.countItems | call < collections.items" style="display: none;">
-					<div class="text-right">
-						<button class="btn btn-default" rv-on-click="actions.uncheckAll"><i class="glyphicon glyphicon-remove"></i> Deseleccionar (<span rv-text="actions.countItems | call < collections.items"></span>)</button>
-						@can('delete', currentEntity())
-						<button class="btn btn-default" rv-on-click="actions.showModalDelete" data-delete-type="multiple" data-delete-url="{{companyRoute('destroyMultiple')}}"><i class="glyphicon glyphicon-trash"></i> Eliminar (<span rv-text="actions.countItems | call < collections.items"></span>)</button>
-						@endcan
-						<div style="display: inline-block; position: relative;">
-							<button class="btn btn-default" type="button" id="export-custom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-								Exportar (<span rv-text="actions.countItems | call < collections.items"></span>)
-								<span class="caret"></span>
-							</button>
-							<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="export-custom">
-								<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'XLSX'])}}">Libro Excel</a></li>
-								<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'PDF'])}}">Archivo Pdf</a></li>
-								<li role="separator" class="divider"></li>
-								<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'XLS'])}}">Excel 97-2003</a></li>
-								<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'CSV'])}}">CSV</a></li>
-								<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'TXT'])}}">TXT</a></li>
-							</ul>
-						</div>
-
+			</div>
+			<div class="col-sm-12" rv-show="actions.countItems | call < collections.items" style="display: none;">
+				<div class="text-right">
+					<button class="btn btn-default" rv-on-click="actions.uncheckAll"><i class="glyphicon glyphicon-remove"></i> Deseleccionar (<span rv-text="actions.countItems | call < collections.items"></span>)</button>
+					@can('delete', currentEntity())
+					<button class="btn btn-default" rv-on-click="actions.showModalDelete" data-delete-type="multiple" data-delete-url="{{companyRoute('destroyMultiple')}}"><i class="glyphicon glyphicon-trash"></i> Eliminar (<span rv-text="actions.countItems | call < collections.items"></span>)</button>
+					@endcan
+					<div style="display: inline-block; position: relative;">
+						<button class="btn btn-default" type="button" id="export-custom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							Exportar (<span rv-text="actions.countItems | call < collections.items"></span>)
+							<span class="caret"></span>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="export-custom">
+							<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'XLSX'])}}">Libro Excel</a></li>
+							<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'PDF'])}}">Archivo Pdf</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'XLS'])}}">Excel 97-2003</a></li>
+							<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'CSV'])}}">CSV</a></li>
+							<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'TXT'])}}">TXT</a></li>
+						</ul>
 					</div>
+
 				</div>
 			</div>
 			<div class="col-sm-12">

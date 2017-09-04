@@ -1260,7 +1260,7 @@
 					var li = util.createElement("li");
 					var a = util.createElement("a", {
 						href: "#",
-						html: '<input type="checkbox" value='+i+' checked><label>' + (th.innerText || th.textContent) +'</label>',
+						html: '<input type="checkbox" value='+i+' checked> <label>' + (th.innerText || th.textContent) +'</label>',
 					});
 					var dt = this;
 					util.on(a, 'click', function(e){
