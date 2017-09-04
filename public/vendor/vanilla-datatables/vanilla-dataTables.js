@@ -1203,10 +1203,8 @@
 
         // Searchable
         if (o.searchable) {
-            var form =
-                "<div class='dataTable-search'>"+o.labels.icon+"<input class='dataTable-input form-control' placeholder='" +
-                o.labels.placeholder +
-                "' type='text'></div>";
+            // var form = "<div class='dataTable-search'>"+o.labels.icon+"<input class='dataTable-input form-control' placeholder='" + o.labels.placeholder + "' type='text'></div>";
+            var form = "<div class='dataTable-search input-group'><input class='dataTable-input form-control' placeholder='" + o.labels.placeholder + "' type='text'></div>";
 
             // Search input placement
             template = template.replace("{search}", form);
@@ -1238,16 +1236,16 @@
 		if (this.hasHeadings) {
 
             var btn_group = util.createElement("div", {
-                class: "btn-group",
+                class: "input-group-btn",
             });
 
             var btn = util.createElement("button", {
                 type: "button",
-                class: "btn btn-default dropdown-toggle",
+                class: "btn btn-check dropdown-toggle",
                 'data-toggle': 'dropdown',
                 'aria-haspopup': 'true',
                 'aria-expanded': 'false',
-                text: '▼'
+                text: 'Filtrar columnas ▼'
             });
             util.append(btn_group, btn);
 

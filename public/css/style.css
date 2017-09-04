@@ -121,7 +121,7 @@ box-shadow: 3px 3px 2px #9E181F;
 }
 .btn-secondary{
   background: #009688;
-  color:#FFF; 
+  color:#FFF;
 }
 .btn-secondary:focus,.btn-secondary.focus {
  color:#fff;
@@ -170,9 +170,12 @@ cursor: pointer;
 }
 .day.active,.month.active, .year.active{
   background: #009688;
-  color:#FFF; 
+  color:#FFF;
 }
 .day.old, .year.old{
   background: #c8c8c8;
-  color:#1c1c1c; 
+  color:#1c1c1c;
+}
+.dataTable-search.input-group {
+    width: 20%;
 }
