@@ -831,7 +831,7 @@
             function(i, row) {
             	// Actualizamos dataset
 				row.setAttribute('data-datarow', i);
-				
+
                 a = row.cloneNode();
                 b = row.cloneNode();
 
@@ -1203,10 +1203,8 @@
 
         // Searchable
         if (o.searchable) {
-            var form =
-                "<div class='dataTable-search'>"+o.labels.icon+"<input class='dataTable-input' placeholder='" +
-                o.labels.placeholder +
-                "' type='text'></div>";
+            // var form = "<div class='dataTable-search'>"+o.labels.icon+"<input class='dataTable-input form-control' placeholder='" + o.labels.placeholder + "' type='text'></div>";
+            var form = "<div class='dataTable-search input-group'><input class='dataTable-input form-control' placeholder='" + o.labels.placeholder + "' type='text'></div>";
 
             // Search input placement
             template = template.replace("{search}", form);
@@ -1233,28 +1231,36 @@
         template = template.replace(/\{pager\}/g, w.outerHTML);
 
         that.wrapper.innerHTML = template;
-        
+
         // Headings Selector
 		if (this.hasHeadings) {
 
-			var btn = util.createElement("a", {
-				href: "#",
-				class: "dropdown-button btn",
-				'data-activates': 'dataTable-headings-selector',
-				text: '▼'
-			});
+            var btn_group = util.createElement("div", {
+                class: "input-group-btn",
+            });
 
-			var ul = util.createElement("ul", {
-				id: "dataTable-headings-selector",
-				class: "dropdown-content",
-			});
+            var btn = util.createElement("button", {
+                type: "button",
+                class: "btn btn-check dropdown-toggle",
+                'data-toggle': 'dropdown',
+                'aria-haspopup': 'true',
+                'aria-expanded': 'false',
+                text: 'Filtrar columnas ▼'
+            });
+            util.append(btn_group, btn);
+
+            var ul = util.createElement("ul", {
+                id: "dataTable-headings-selector",
+                class: "dropdown-menu dropdown-menu-right",
+            });
+            util.append(btn_group, ul);
 
 			util.each(this.headings, function(i, th) {
 				if (th.innerText || th.textContent) {
 					var li = util.createElement("li");
 					var a = util.createElement("a", {
 						href: "#",
-						html: '<input type="checkbox" value='+i+' checked><label>' + (th.innerText || th.textContent) +'</label>',
+						html: '<input type="checkbox" value='+i+' checked> <label>' + (th.innerText || th.textContent) +'</label>',
 					});
 					var dt = this;
 					util.on(a, 'click', function(e){
@@ -1272,8 +1278,8 @@
 				}
 			}, this);
 			if (o.searchable) {
-                this.wrapper.querySelector('.dataTable-search').appendChild(btn)
-                this.wrapper.querySelector('.dataTable-search').appendChild(ul)
+                this.wrapper.querySelector('.dataTable-search').appendChild(btn_group)
+                // this.wrapper.querySelector('.dataTable-search').appendChild(ul)
             }
 		}
 
@@ -1806,7 +1812,7 @@
 							textContent = textContent.toLowerCase();
 							_word = word.toLowerCase();
 						}
-                    	
+
                         if (
                         	util.includes(textContent, _word) &&
                             that.columns(row.cells[x].cellIndex).visible()

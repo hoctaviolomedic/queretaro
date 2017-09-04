@@ -36,7 +36,7 @@ let datatable = new DataTable('.smart-table', {
 		perPage: 'Mostrar {select} datos por pagina',
 		noRows: 'No hay datos que mostrar',
 		info: 'Mostrando {start} a {end} de {rows} datos (Pagina {page} de {pages})',
-        icon:'<i class="material-icons prefix">search</i>',
+        icon:'<span class="glyphicon glyphicon-search"></span>',
 	},
 });
 

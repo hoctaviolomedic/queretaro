@@ -5,23 +5,19 @@
 @section('fieldset', 'disabled')
 
 @section('form-header')
-    {!! Form::open(['url' => '#', 'id' => 'form-model', 'class' => 'col s12 m12']) !!}
+    {!! Form::open(['url' => '#', 'id' => 'form-model', 'class' => 'col-sm-12']) !!}
 @endsection
 
 @section('form-actions')
-    <div class="row">
-        <div class="right">
-            {{ link_to(companyRoute('index'), 'Cerrar', ['class'=>'waves-effect waves-light btn orange']) }}
-            @can('update', currentEntity())
-            {{ link_to(companyRoute('edit'), 'Editar', ['class'=>'waves-effect waves-teal btn-flat teal-text']) }}
-            @endcan
-            @can('create', currentEntity())
-            {{ link_to(companyRoute('create'), 'Nuevo', ['class'=>'waves-effect waves-teal btn-flat teal-text']) }}
-            @endcan
-        </div>
-    </div>
+<div class="text-right">
+    {{ link_to(companyRoute('index'), 'Cerrar', ['class'=>'btn btn-default']) }}
+    @can('update', currentEntity())
+    {{ link_to(companyRoute('edit'), 'Editar', ['class'=>'btn btn-default']) }}
+    @endcan
+    @can('create', currentEntity())
+    {{ link_to(companyRoute('create'), 'Nuevo', ['class'=>'btn btn-danger']) }}
+    @endcan
+</div>
 @endsection
 
-@section('form-title')
-    {{ HTML::tag('h4', 'Datos del '. str_singular(currentEntityBaseName())) }}
-@endsection
+@section('form-title', 'Datos del '. str_singular(currentEntityBaseName()))
