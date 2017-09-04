@@ -1,0 +1,158 @@
+/*Logo animation*/
+object {
+    -webkit-transition: -webkit-transform ease-in-out 0.3s, background 0.2s;
+    -moz-transition: -moz-transform ease-in-out 0.3s, background 0.2s;
+    transition: transform ease-in-out 0.3s, background 0.2s;
+}
+
+object:hover {
+    -webkit-transform: scale(0.90);
+    -moz-transform: scale(0.90);
+    -ms-transform: scale(0.90);
+    transform: scale(0.90);
+}
+
+/*Nav*/
+.side-nav {
+    height: 100%;
+}
+
+.side-nav li.active {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.background > img {
+    height: 300px;
+}
+
+.logo-enterprise > img {
+    width: 35px;
+}
+
+/*Ésta linea de código sirve para cuando queremos mostrar el ícono (propuesta 1)*/
+.nav-wrapper a.button-collapse {
+    display: inline;
+}
+
+/*Código para mover el contenido en caso de que sea la 2da propuesta*/
+header, main, footer {
+    padding-left: 300px;
+}
+
+@media only screen and (max-width: 992px) {
+    header, main, footer {
+        padding-left: 0;
+    }
+}
+
+/*Notifications dropdown*/
+.noti-content {
+    background-color: #FFFFFF;
+    margin: 0;
+    display: none;
+    min-width: 300px; /* Width del componente */
+    max-height: auto;
+    margin-left: -1px; /* Esto sirve para mantener el contenido alineado al ícono */
+    overflow: hidden; /* Podría usarse overflow-y:auto; en caso de mostrar mas contenido */
+    opacity: 0;
+    position: absolute;
+    will-change: width, height;
+    z-index: 99;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.dropdown-content li > a, .dropdown-content li > span {
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.dt-buttons {
+    float: right !important;
+}
+
+/*Estilo adicional para separar contenido en el form*/
+.internSection {
+    padding: 15px;
+    border: solid 1px rgba(51, 51, 51, 0.12);
+    background: #e3f2fd;
+}
+
+#userProfileContainer .card-image > img {
+    height: 300px;
+}
+
+/*Estílos de la tabla*/
+.btn_tables {
+    padding: 0 10px !important;
+}
+
+td, th {
+    padding: 5px 5px;
+}
+
+.link_edit {
+    text-decoration: underline;
+    color: rgba(0, 0, 0, 0.87);
+}
+
+.form-separator {
+    padding: 10px;
+    border: solid 1px rgba(51, 51, 51, 0.12);
+    background: #fff;
+}
+
+/*Estílo facturas*/
+.facturas-line h5 {
+    display: inline;
+}
+
+.facturas-line span {
+    margin-left: 8px;
+    font-size: 12px;
+    color: #616161;
+}
+
+/* Tables - Nowrap column */
+.width-auto {
+    width: 1px;
+    white-space: nowrap;
+}
+
+/* Vanilla DataTables */
+.text-strike {
+    text-decoration: line-through;
+}
+.dataTable-search .dataTable-input {
+    width: auto !important;
+}
+ul#dataTable-headings-selector {
+    width: auto !important;
+}
+
+/* Smart view */
+#smart-view .single-check + label,
+.smart-table tr > td:last-of-type > * {
+    opacity: 0;
+}
+#smart-view tr:hover .single-check + label,
+.smart-table tr:hover > td:last-of-type > *,
+#smart-view .single-check:checked + label {
+    opacity: 1;
+}
+.smart-table tr > td:last-of-type {
+    width: 1px;
+    white-space: nowrap;
+}
+
+fieldset {
+    border: none !important;
+}
+
+/* toast */
+.toast_error {
+    background: #f44336;
+    color: white;
+}
+.toast_success {
+    background: #4caf50;
+    color: white;
+}
