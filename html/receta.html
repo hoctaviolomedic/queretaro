@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Captura receta</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+  <div class="container-fluid">
+  <br>
+    <div class="panel shadow-3 panel-danger">
+     <div class="panel-heading">
+      <h3 class="panel-title text-center">RECETA - FOLIO: <span><b>1234</b></span></h3>
+    </div>
+    <div class="panel-body">
+
+      <div class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="unidad">*Unidad:</label>
+            <select id="unidad" class="form-control">
+              <option>Selecciona...</option>
+              <option>Servicios de Salud del Estado de Querétaro</option>
+              <option>Servicios de Salud del Estado de Querétaro </option>
+              <option>Servicios de Salud del Estado de Querétaro </option>
+              <option>Servicios de Salud del Estado de Querétaro </option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="paciente">*Afiliación/Paciente:</label>
+            <input type="text" class="form-control" id="paciente" placeholder="Ejemplo: Juan Herández">
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+          <label for="diagnostico">Diagnóstico:</label>
+          <select id="diagnostico" class="js-data-example-ajax form-control" style="width: 100%">
+            <option value="3620194" selected="selected">Escriba la clave o su descripción</option>
+          </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-2 col-xs-3">
+          <div class="form-group">
+            <label for="tipo-servicio">*Tipo de servicio:</label>
+            <select id="tipo-servicio" class="form-control">
+              <option>Selecciona...</option>
+              <option>Externo</option>
+              <option>Interno</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-2 col-xs-3">
+          <div class="form-group">
+            <label for="peso">Peso:</label>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Ej: 70" aria-describedby="peso-addon">
+              <span class="input-group-addon" id="peso-addon">Kg</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2 col-xs-3">
+          <div class="form-group">
+            <label for="altura">Altura:</label>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Ej: 1.70" aria-describedby="altura-addon">
+              <span class="input-group-addon" id="altura-addon">Mts</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-sm-2 col-xs-3">
+          <div class="form-group">
+            <label for="presion">Presión:</label>
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Ej: 120" aria-describedby="presion-addon">
+              <span class="input-group-addon" id="presion-addon">/</span>
+              <input type="text" class="form-control" placeholder="Ej: 80" aria-describedby="presion-addon">
+            </div>
+          </div>
+        </div>
+      </div><!--/row-->
+
+      <div class="well">
+
+      <form class="form-group">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="input-group">
+            <label for="medicamento">*Medicamento:</label>
+            <select id="medicamento" class="js-example-basic-single form-control" style="width: 100%">
+              <option value="AL">Paracetamol 200MG</option>
+              <option value="WY">Paracetamol 500MG</option>
+              <option>DEXAMETASONA / LIDOCAÍNA / VITAMINA B1 / VITAMINA B12 / VITAMINA B6 4 MG / 30 MG / 100 MG / 5 MG / 100 MG</option>
+              <option>  FORMULA DE PROTEÍNA PARCIALMENTE HIDROLIZADA DE SUERO CONTIENE ACIDO GRASO OMEGA 3 DHA Y PREBIOTICOS GOS / NUCLEOTIDOSEL ACIDO GRASO OMEGA 6 AA 400 G / </option>
+            </select>
+            </div>
+          </div>
+        </div>
+      </form>
+      <!--<p>Medicamento seleccionado: FORMULA DE PROTEÍNA PARCIALMENTE HIDROLIZADA DE SUERO CONTIENE ACIDO GRASO OMEGA 3 DHA Y PREBIOTICOS GOS / NUCLEOTIDOSEL ACIDO GRASO OMEGA 6 AA 400 G /</p>-->
+
+      <div class="row">
+        <div class="col-sm-4 border-right">
+          <h4>*Dósis:</h4>
+          <div class="input-group my-group">
+            <div class="input-group-btn" role="group" aria-label="dosis" data-toggle="buttons">
+              <label class="btn btn-check btn-default">
+                <input type="radio" name="options" id="option1" autocomplete="off" class="btn btn-default">1/4
+              </label>
+              <label class="btn btn-check btn-default">
+                <input type="radio" name="options" id="option2" autocomplete="off"  class="btn btn-default">1/2
+              </label>
+            </div>
+              <input type="number" class="form-control" placeholder="Ej: 6">
+            <select class="form-control">
+              <option>Selecciona...</option>
+              <option>Pastilla</option>
+              <option>Tableta</option>
+              <option>Unidad</option>
+              <option>Capsula</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4 border-right">
+          <h4>Cada:</h4>
+          <div class="input-group my-group">
+            <input type="number" class="form-control" placeholder="Ej: 6">
+            <select class="form-control">
+              <option>Selecciona...</option>
+              <option>Hora(s)</option>
+              <option>Día(s)</option>
+              <option>Semana(s)</option>
+              <option>Mes(s)</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <h4>Por:</h4> 
+          <div class="input-group my-group">
+            <input type="number" class="form-control" placeholder="Ej: 6">
+            <select class="form-control">
+              <option>Selecciona...</option>
+              <option>Día(s)</option>
+              <option>Semana(s)</option>
+              <option>Mes(s)</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-6">
+          <h4>En caso de presentar:</h4>
+          <textarea class="form-control" rows="1"></textarea>
+        </div>
+        <div class="col-sm-6">
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" value="" id="surtido-recurrente"> Surtido recurrente
+            </label>
+          </div>
+          <fieldset id="surtidoField" disabled>
+            <div class="input-group my-group">
+              <input type="number" class="form-control" placeholder="Ej: 6">
+              <select class="form-control">
+                <option>Selecciona...</option>
+                <option>Opción</option>
+              </select>
+            </div>
+          </fieldset>
+        </div>
+        <div class="text-center col-sm-12">
+        <br>
+          <p><b>1 Pastilla(s)</b> cada <b>8 Hora(s)</b> por <b>5 Día(s)</b></p>
+          <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Aceptar</button>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-sm-12">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Medicamento recetado</th>
+              </tr>
+            </thead>
+            <tbody class="medicine">
+              <tr>
+                <th scope="row">1</th>
+                <td>
+                  <p>Paracetamol 500GM</p>
+                  <p><b>1 Pastilla(s)</b> cada <b>8 Hora(s)</b> por <b>5 Día(s)</b></p>
+                  <p>15 Pastillas</p>
+                </td>
+                <td>
+                  <a href="#" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>
+                  <p>DEXAMETASONA / LIDOCAÍNA / VITAMINA B1 / VITAMINA B12 / VITAMINA B6 4 MG / 30 MG / 100 MG / 5 MG / 100 MG</p>
+                  <p><b>1 Pastilla(s)</b> cada <b>8 Hora(s)</b> por <b>5 Día(s)</b></p>
+                  <p>15 Pastillas</p>
+                </td>
+                <td>
+                  <a href="#" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>
+                  <p> FORMULA DE PROTEÍNA PARCIALMENTE HIDROLIZADA DE SUERO CONTIENE ACIDO GRASO OMEGA 3 DHA Y PREBIOTICOS GOS / NUCLEOTIDOSEL ACIDO GRASO OMEGA 6 AA 400 G /</p>
+                  <p><b>1 Pastilla(s)</b> cada <b>8 Hora(s)</b> por <b>5 Día(s)</b></p>
+                  <p>15 Pastillas</p>
+                </td>
+                <td>
+                  <a href="#" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      </div><!--/well-->
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label for="observaciones">Observaciones adicionales:</label>
+            <textarea id="observaciones" class="form-control" rows="1"></textarea>
+          </div>
+        </div>
+      </div><!--/row-->
+
+    <div class="text-right">
+      <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+      <button type="submit" class="btn btn-default">Cancelar y regresar</button>
+    </div>
+
+    </div><!--/panel-body-->
+    </div><!--/panel-->
+  </div>
+
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+      $(".js-example-basic-single").select2({       
+       "language": { //para cambiar el idioma a español
+           "noResults": function(){
+               return "No se encontraron resultados";
+           }
+       },
+        escapeMarkup: function (markup) {
+            return markup;
+        }
+      });
+      $('[data-toggle="tooltip"]').tooltip();
+      $(".js-data-example-ajax").select2({
+        ajax: {
+          url: "https://api.github.com/search/repositories",
+          dataType: 'json',
+          delay: 250,
+          data: function (params) {
+            return {
+              q: params.term, // search term
+              page: params.page
+            };
+          },
+          processResults: function (data, params) {
+            // parse the results into the format expected by Select2
+            // since we are using custom formatting functions we do not need to
+            // alter the remote JSON data, except to indicate that infinite
+            // scrolling can be used
+            params.page = params.page || 1;
+
+            return {
+              results: data.items,
+              pagination: {
+                more: (params.page * 30) < data.total_count
+              }
+            };
+          },
+          cache: true
+        },
+        escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+        minimumInputLength: 1,
+         language: {
+             "noResults": function(){
+                 return "No se encontraron resultados";
+             }
+         },
+          escapeMarkup: function (markup) {
+              return markup;
+          }
+      });
+    });
+    </script>
+  </body>
+</html>
