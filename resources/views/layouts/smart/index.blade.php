@@ -125,12 +125,12 @@
 			</div>
 		</section>
 		<div class="smart-actions" hidden>
-			<a class="text-danger btn btn-default btn-check" data-item-id="#ID#" rv-get-show-url><i class="glyphicon glyphicon-eye-open"></i></a>
+			<a class="text-danger btn btn-check" data-item-id="#ID#" rv-get-show-url><i class="glyphicon glyphicon-eye-open"></i></a>
 			@can('update', currentEntity())
-			<a class="text-danger btn btn-default btn-check" data-item-id="#ID#" rv-get-edit-url><i class="glyphicon glyphicon-pencil"></i></a>
+			<a class="text-danger btn btn-check" data-item-id="#ID#" rv-get-edit-url><i class="glyphicon glyphicon-pencil"></i></a>
 			@endcan
 			@can('delete', currentEntity())
-			<a href="#" class="text-danger btn btn-default btn-check" rv-on-click="actions.showModalDelete" rv-get-datarow rv-get-delete-url data-item-id="#ID#" data-delete-type="single"><i class="glyphicon glyphicon-trash"></i></a>
+			<a href="#" class="text-danger btn btn-check" rv-on-click="actions.showModalDelete" rv-get-datarow rv-get-delete-url data-item-id="#ID#" data-delete-type="single"><i class="glyphicon glyphicon-trash"></i></a>
 			@endcan
 		</div>
 	</div>
