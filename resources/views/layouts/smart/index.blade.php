@@ -19,7 +19,7 @@
 @endsection
 
 @section('content')
-
+<br>
 <div class="panel shadow-3 panel-danger">
 	<div class="panel-heading">
 		<h3 class="panel-title text-center">TÍTULO DEL MÓDULO</h3>
@@ -42,9 +42,9 @@
 			<div class="col-sm-12">
 				<div class="row" rv-hide="actions.countItems | call < collections.items">
 					<div class="text-right">
-						<a href="{{ companyRoute('create') }}" class="btn orange waves-effect waves-light">Crear</a>
+						<a href="{{ companyRoute('create') }}" class="btn btn-danger">Crear</a>
 						<div style="display: inline-block; position: relative;">
-							<button class="btn btn-default dropdown-toggle" type="button" id="export-all" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							<button class="btn btn-default" type="button" id="export-all" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 								Exportar
 								<span class="caret"></span>
 							</button>
@@ -61,12 +61,12 @@
 				</div>
 				<div class="row" rv-show="actions.countItems | call < collections.items" style="display: none;">
 					<div class="text-right">
-						<button class="btn waves-effect waves-light" rv-on-click="actions.uncheckAll"><i class="material-icons left">select_all</i>Deseleccionar (<span rv-text="actions.countItems | call < collections.items"></span>)</button>
+						<button class="btn btn-default" rv-on-click="actions.uncheckAll"><i class="glyphicon glyphicon-remove"></i> Deseleccionar (<span rv-text="actions.countItems | call < collections.items"></span>)</button>
 						@can('delete', currentEntity())
-						<button class="btn waves-effect waves-light" rv-on-click="actions.showModalDelete" data-delete-type="multiple" data-delete-url="{{companyRoute('destroyMultiple')}}"><i class="material-icons left">delete</i>Eliminar (<span rv-text="actions.countItems | call < collections.items"></span>)</button>
+						<button class="btn btn-default" rv-on-click="actions.showModalDelete" data-delete-type="multiple" data-delete-url="{{companyRoute('destroyMultiple')}}"><i class="glyphicon glyphicon-trash"></i> Eliminar (<span rv-text="actions.countItems | call < collections.items"></span>)</button>
 						@endcan
 						<div style="display: inline-block; position: relative;">
-							<button class="btn btn-default dropdown-toggle" type="button" id="export-custom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+							<button class="btn btn-default" type="button" id="export-custom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 								Exportar (<span rv-text="actions.countItems | call < collections.items"></span>)
 								<span class="caret"></span>
 							</button>
@@ -125,12 +125,12 @@
 			</div>
 		</section>
 		<div class="smart-actions" hidden>
-			<a class="waves-effect waves-light btn btn-flat no-padding" data-item-id="#ID#" rv-get-show-url><i class="material-icons">visibility</i></a>
+			<a class="text-danger btn btn-default btn-check" data-item-id="#ID#" rv-get-show-url><i class="glyphicon glyphicon-eye-open"></i></a>
 			@can('update', currentEntity())
-			<a class="waves-effect waves-light btn btn-flat no-padding" data-item-id="#ID#" rv-get-edit-url><i class="material-icons">mode_edit</i></a>
+			<a class="text-danger btn btn-default btn-check" data-item-id="#ID#" rv-get-edit-url><i class="glyphicon glyphicon-pencil"></i></a>
 			@endcan
 			@can('delete', currentEntity())
-			<a href="#" class="waves-effect waves-light btn btn-flat no-padding" rv-on-click="actions.showModalDelete" rv-get-datarow rv-get-delete-url data-item-id="#ID#" data-delete-type="single"><i class="material-icons">delete</i></a>
+			<a href="#" class="text-danger btn btn-default btn-check" rv-on-click="actions.showModalDelete" rv-get-datarow rv-get-delete-url data-item-id="#ID#" data-delete-type="single"><i class="glyphicon glyphicon-trash"></i></a>
 			@endcan
 		</div>
 	</div>
