@@ -1,5 +1,11 @@
-/*Logo animation*/
+/*Estílo personalizado*/
+body{
+  background:#f4f4f4;
+  font-family: 'Roboto', sans-serif;
+}
 object {
+    width: 25px;
+  height: 25px;
     -webkit-transition: -webkit-transform ease-in-out 0.3s, background 0.2s;
     -moz-transition: -moz-transform ease-in-out 0.3s, background 0.2s;
     transition: transform ease-in-out 0.3s, background 0.2s;
@@ -11,148 +17,156 @@ object:hover {
     -ms-transform: scale(0.90);
     transform: scale(0.90);
 }
-
-/*Nav*/
-.side-nav {
-    height: 100%;
+.border-right {
+  border-right: 1px solid #ddd;
 }
-
-.side-nav li.active {
-    background-color: rgba(0, 0, 0, 0.2);
+@media only screen and (max-width : 992px) {
+.border-right {
+  border-right:none;
 }
-
-.background > img {
-    height: 300px;
 }
-
-.logo-enterprise > img {
-    width: 35px;
+.divider{
+  border:1px solid #ddd;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
-
-/*Ésta linea de código sirve para cuando queremos mostrar el ícono (propuesta 1)*/
-.nav-wrapper a.button-collapse {
-    display: inline;
+.nav-tabs > li, .nav-pills > li {
+    float:none;
+    display:inline-block;
 }
-
-/*Código para mover el contenido en caso de que sea la 2da propuesta*/
-header, main, footer {
-    padding-left: 300px;
+tbody.medicine > tr{
+  border-left: 3px solid #009688;
 }
-
-@media only screen and (max-width: 992px) {
-    header, main, footer {
-        padding-left: 0;
-    }
+.nav-tabsn,.nav-pills {
+    text-align:center;
 }
-
-/*Notifications dropdown*/
-.noti-content {
-    background-color: #FFFFFF;
-    margin: 0;
-    display: none;
-    min-width: 300px; /* Width del componente */
-    max-height: auto;
-    margin-left: -1px; /* Esto sirve para mantener el contenido alineado al ícono */
-    overflow: hidden; /* Podría usarse overflow-y:auto; en caso de mostrar mas contenido */
-    opacity: 0;
-    position: absolute;
-    will-change: width, height;
-    z-index: 99;
-    color: rgba(0, 0, 0, 0.87);
+.chart {
+  width: 100%;
+  min-height: 300px;
+  position: relative;
 }
-
-.dropdown-content li > a, .dropdown-content li > span {
-    color: rgba(0, 0, 0, 0.87);
+.charts{
+  width: 100%;
+  height:100%;
 }
-
-.dt-buttons {
-    float: right !important;
+.select2-container{
+  border-radius: 0px;
 }
-
-/*Estilo adicional para separar contenido en el form*/
-.internSection {
-    padding: 15px;
-    border: solid 1px rgba(51, 51, 51, 0.12);
-    background: #e3f2fd;
+.shadow-3 {
+box-shadow: 3px 3px 2px #c6c6c6;
 }
-
-#userProfileContainer .card-image > img {
-    height: 300px;
+.panel-heading{
+  border-bottom: 1px solid #f4f4f4
 }
-
-/*Estílos de la tabla*/
-.btn_tables {
-    padding: 0 10px !important;
+.panel-title {
+  font-size: 18px;
+  font-weight: 500;
+  text-transform: uppercase;
 }
-
-td, th {
-    padding: 5px 5px;
+.panel-danger>.panel-heading{
+  background: #9E181F;
+  border:none;
 }
-
-.link_edit {
-    text-decoration: underline;
-    color: rgba(0, 0, 0, 0.87);
+.panel-danger{
+  border:none;
 }
-
-.form-separator {
-    padding: 10px;
-    border: solid 1px rgba(51, 51, 51, 0.12);
-    background: #fff;
+.shadow-3-danger {
+box-shadow: 3px 3px 2px #9E181F;
 }
-
-/*Estílo facturas*/
-.facturas-line h5 {
-    display: inline;
+.panel-info {
+ border-color:#009688
 }
-
-.facturas-line span {
-    margin-left: 8px;
-    font-size: 12px;
-    color: #616161;
+.panel-info>.panel-heading {
+ color:#fff;
+ background-color:#009688;
+ border-color:#009688;
 }
-
-/* Tables - Nowrap column */
-.width-auto {
-    width: 1px;
-    white-space: nowrap;
+.panel-info>.panel-heading+.panel-collapse>.panel-body {
+ border-top-color:#009688;
 }
-
-/* Vanilla DataTables */
-.text-strike {
-    text-decoration: line-through;
+.panel-info>.panel-heading .badge {
+ color:#fff;
+ background-color:#009688;
 }
-.dataTable-search .dataTable-input {
-    width: auto !important;
+.panel-info>.panel-footer+.panel-collapse>.panel-body {
+ border-bottom-color:#009688;
 }
-ul#dataTable-headings-selector {
-    width: auto !important;
+.form-control:focus {
+  border-color: #009688;
+  outline: 0;
+  -webkit-box-shadow:none;
+  box-shadow:none;
 }
-
-/* Smart view */
-#smart-view .single-check + label,
-.smart-table tr > td:last-of-type > * {
-    opacity: 0;
+.form-control {
+  outline: 0;
+  -webkit-box-shadow:none;
+  box-shadow:none;
 }
-#smart-view tr:hover .single-check + label,
-.smart-table tr:hover > td:last-of-type > *,
-#smart-view .single-check:checked + label {
-    opacity: 1;
+.my-group .form-control{
+    width:50%;
 }
-.smart-table tr > td:last-of-type {
-    width: 1px;
-    white-space: nowrap;
+.input-group{
+    width:100%;
 }
-
-fieldset {
-    border: none !important;
+.btn{
+  text-transform: uppercase;
+  padding: 10px 25px;
+  border:none;
+  -webkit-transition: -webkit-transform ease-in-out 0.3s, background 0.2s;
+  -moz-transition: -moz-transform ease-in-out 0.3s, background 0.2s;
+  transition: transform ease-in-out 0.3s, background 0.2s;
 }
-
-/* toast */
-.toast_error {
-    background: #f44336;
-    color: white;
+.btn-secondary{
+  background: #009688;
+  color:#FFF; 
 }
-.toast_success {
-    background: #4caf50;
-    color: white;
+.btn-secondary:focus,.btn-secondary.focus {
+ color:#fff;
+ background-color:#00695c;
+}
+.btn-secondary:hover {
+ color:#fff;
+ background-color:#00695c;
+}
+.btn-secondary:active {
+ color:#fff;
+ background-color:#004d40;
+}
+.btn:hover{
+  box-shadow: 2px 2px 4px #c6c6c6;
+}
+.btn-check{
+  padding: 6px 12px;
+  border:1px solid #c6c6c6;
+}
+.text-danger {
+    color: #f44336;
+}
+a.text-danger:hover, a.text-danger:focus {
+    color: #383838 !important;
+}
+/*Time/Date picker styles*/
+.timepicker{
+  text-align: center;
+}
+.month,.year{
+  padding: 5px;
+}
+.datepicker{
+padding: 10px;
+}
+.prev, .switch, .next{
+text-align: center;
+}
+.day:hover, .prev:hover, .switch:hover, .next:hover, .month:hover, .year:hover{
+background: #f4f4f4;
+cursor: pointer;
+}
+.day.active,.month.active, .year.active{
+  background: #009688;
+  color:#FFF; 
+}
+.day.old, .year.old{
+  background: #c8c8c8;
+  color:#1c1c1c; 
 }
