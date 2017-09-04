@@ -2,36 +2,36 @@
 
 namespace App\Http\Models\Captura;
 
-use App\Http\Models\ModelBase;
+use App\Http\Models\ModelCompany;
 
-class Recetas extends ModelBase
+class Recetas extends ModelCompany
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'ges_det_correos';
+    protected $table = 'abisa.public.ss_qro_receta';
 
     /**
      * The primary key of the table
      * @var string
      */
-    protected $primaryKey = 'id_correo';
+    protected $primaryKey = 'folio';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['correo', 'fk_id_empresa', 'fk_id_usuario','activo'];
+    protected $fillable = ['id_afiliacion', 'id_dependiente','id_medico','id_localidad'];
 
     /**
      * The validation rules
      * @var array
      */
     public $rules = [
-        'correo' => 'required|email',
+//        'correo' => 'required|email',
     ];
 
     /**
@@ -39,10 +39,10 @@ class Recetas extends ModelBase
      * @var array
      */
     protected $fields = [
-        'correo' => 'Correo',
-        // 'empresa.nombre_comercial' => 'Empresa',
-        // 'usuario.usuario' => 'Usuario',
-        'activo_span' => 'Estado',
+        'id_afiliacion' => 'Afiliacion',
+        'id_dependiente' => 'Dependiente',
+        'id_medico' => 'Médico',
+        'id_localidad' => 'Localidad'
     ];
 
     /**

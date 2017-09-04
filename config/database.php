@@ -86,7 +86,6 @@ return [
             'schema'   => 'logs',
             'sslmode'   => 'prefer',
         ],
-
 	],
 
 	/*
