@@ -145,6 +145,9 @@ box-shadow: 3px 3px 2px #9E181F;
 .text-danger {
     color: #f44336;
 }
+a {
+    color: #9E181F;
+}
 a.text-danger:hover, a.text-danger:focus {
     color: #383838 !important;
 }
