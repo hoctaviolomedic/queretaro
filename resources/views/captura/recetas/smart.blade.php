@@ -1,25 +1,191 @@
 
-@section('content-width', 's12 m7 xl8 offset-xl2')
-
 @section('form-content')
 {{ Form::setModel($data) }}
-<div class="row">
-    <div class="input-field col s4">
-        {{ Form::text('correo', null, ['id'=>'correo','class'=>'validate']) }}
-        {{ Form::label('correo', 'Correo:') }}
-        {{ $errors->has('correo') ? HTML::tag('span', $errors->first('correo'), ['class'=>'help-block deep-orange-text']) : '' }}
+<div class="container-fluid">
+<div class="panel shadow-3 panel-danger">
+    <div class="panel-heading">
+        <h3 class="panel-title text-center">Receta - Folio</h3>
     </div>
-    <div class="input-field col s4">
-        {{ Form::select('fk_id_empresa', (isset($companies) ? $companies : []), null, ['id'=>'fk_id_empresa','class'=>'validate']) }}
-        {{ Form::label('fk_id_empresa', 'Empresa:') }}
-        {{ $errors->has('fk_id_empresa') ? HTML::tag('span', $errors->first('fk_id_empresa'), ['class'=>'help-block deep-orange-text']) : '' }}
+<div class="panel-body">
+    <div class="row">
+        <div class="col-sm-4">
+            <div class="form-group">
+                {{Form::label('unidad','*Unidad')}}
+                {{Form::select('unidad',[],null,['id'=>'unidad','class' => 'unidad form-control'])}}
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                {{Form::label('paciente','*Afiliación/Paciente')}}
+                {{Form::select('paciente',[],null,['id'=>'paciente','class' => 'paciente form-control','data-url'=>companyRoute('getAfiliados')])}}
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                {{Form::label('diagnostico','*Diagnóstico')}}
+                {{Form::select('diagnostico',[],null,['id'=>'diagnostico','class' => 'diagnostico form-control'])}}
+            </div>
+        </div>
     </div>
-    <div class="input-field col s4">
-        {{ Form::select('fk_id_usuario', (isset($users) ? $users : []), null, ['id'=>'fk_id_usuario','class'=>'validate']) }}
-        {{ Form::label('fk_id_usuario', 'Usuario:') }}
-        {{ $errors->has('fk_id_usuario') ? HTML::tag('span', $errors->first('fk_id_usuario'), ['class'=>'help-block deep-orange-text']) : '' }}
+    <div class="row">
+        <div class="col-sm-2 col-xs-3">
+            <div class="form-group">
+                {{Form::label('tipo-servicio','*Tipo de servicio')}}
+                {{Form::select('tipo-servicio',[],null,['id'=>'tipo-servicio','class' => 'tipo-servicio form-control'])}}
+            </div>
+        </div>
+        <div class="col-sm-2 col-xs-3">
+            <div class="form-group">
+                <label for="peso">Peso:</label>
+                <div class="input-group">
+                    {{Form::text('peso',null,['id'=>'peso','class' =>'form-control', 'placeholder' => 'Ej:70','aria-describedby'=>'peso-addon'])}}
+                    <span class="input-group-addon" id="peso-addon">Kg</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2 col-xs-3">
+            <div class="form-group">
+                <label for="altura">Altura:</label>
+                <div class="input-group">
+                    {{Form::text('altura',null,['id'=>'altura','class' =>'form-control', 'placeholder' => 'Ej: 1.70','aria-describedby'=>'altura-addon'])}}
+                    <span class="input-group-addon" id="altura-addon">Mts</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2 col-xs-3">
+            <div class="form-group">
+                <label for="presion">Presión:</label>
+                <div class="input-group">
+                    {{Form::text('presion1',null,['id'=>'presion1','class' =>'form-control', 'placeholder' => 'Ej: 120','aria-describedby'=>'presion-addon'])}}
+                    <span class="input-group-addon" id="presion-addon">/</span>
+                    {{Form::text('presion2',null,['id'=>'presion2','class' =>'form-control', 'placeholder' => 'Ej: 80','aria-describedby'=>'presion-addon'])}}
+                </div>
+            </div>
+        </div>
+    </div><!--/row-->
+
+    <div class="well">
+
+        <form class="form-group">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="input-group">
+                        <label for="medicamento">*Medicamento:</label>
+                        {{Form::label('medicamento','*Medicamento')}}
+                        {{Form::select('medicamento',[],null,['id'=>'medicamento','class' => 'medicamento form-control'])}}
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--<p>Medicamento seleccionado: FORMULA DE PROTEÍNA PARCIALMENTE HIDROLIZADA DE SUERO CONTIENE ACIDO GRASO OMEGA 3 DHA Y PREBIOTICOS GOS / NUCLEOTIDOSEL ACIDO GRASO OMEGA 6 AA 400 G /</p>-->
+
+        <div class="row">
+            <div class="col-sm-4 border-right">
+                <h4>*Dosis:</h4>
+                <div class="input-group my-group">
+                    <div class="input-group-btn" role="group" aria-label="dosis" data-toggle="buttons">
+                        <label class="btn btn-check btn-default">
+                            <input type="checkbox" name="dosis14" id="dosis14" autocomplete="off" class="btn btn-default">1/4
+                        </label>
+                        <label class="btn btn-check btn-default">
+                            <input type="checkbox" name="dosis12" id="dosis12" autocomplete="off"  class="btn btn-default">1/2
+                        </label>
+                    </div>
+                    {{Form::number('dosis',null,['id'=>'dosis','class'=>'form-control','placeholder'=>'Ej. 6'])}}
+                    {{Form::select('_dosis',[],null,['id'=>'_dosis','class' => '_dosis form-control'])}}
+                </div>
+            </div>
+            <div class="col-sm-4 border-right">
+                <h4>Cada:</h4>
+                <div class="input-group my-group">
+                    {{Form::number('cada',null,['id'=>'cada','class'=>'form-control','placeholder'=>'Ej. 6'])}}
+                    {{Form::select('_cada',[],null,['id'=>'_cada','class' => '_cada form-control'])}}
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <h4>Por:</h4>
+                <div class="input-group my-group">
+                    {{Form::number('por',null,['id'=>'por','class'=>'form-control','placeholder'=>'Ej. 6'])}}
+                    {{Form::select('_por',[],null,['id'=>'_por','class' => '_por form-control'])}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-6">
+                <h4>En caso de presentar:</h4>
+                {{Form::textarea('nota_medicamento',null,['class' => 'form-control','rows'=>'1','id'=>'nota_medicamento'])}}
+            </div>
+            <div class="col-sm-6">
+                <div class="checkbox">
+                    <label>
+                        {{Form::checkbox('surtido-recurrente',null,['class'=>'field'])}} Surtido recurrente
+                    </label>
+                </div>
+                <fieldset id="surtidoField" disabled>
+                    <div class="input-group my-group">
+                        {{Form::number('number',null,['id'=>'surtido_numero','placeholder'=>'Ej: 6','class'=>'form-control','disabled'])}}
+                        {{Form::select('tiempo',[],null,['id'=>'tiempo','class'=>'form-control'])}}
+                    </div>
+                </fieldset>
+            </div>
+            <div class="text-center col-sm-12">
+                <br>
+                <p><b>1 Pastilla(s)</b> cada <b>8 Hora(s)</b> por <b>5 Día(s)</b></p>
+                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar</button>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-sm-12">
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Medicamento recetado</th>
+                    </tr>
+                    </thead>
+                    <tbody class="medicine">
+                    <tr>
+                        <th scope="row">1</th>
+                        <td>
+                            <p>Paracetamol 500GM</p>
+                            <p><b>1 Pastilla(s)</b> cada <b>8 Hora(s)</b> por <b>5 Día(s)</b></p>
+                            <p>15 Pastillas</p>
+                        </td>
+                        <td>
+                            <a href="#" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger">
+                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
+                            </a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div><!--/well-->
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="form-group">
+                {{Form::label('observacion','Observaciones adicionales:')}}
+                {{Form::textarea('observacion',null,['class' => 'form-control','rows'=>'1','id'=>'observacion'])}}
+            </div>
+        </div>
+    </div><!--/row-->
+
+    <div class="text-right">
+        <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+        <button type="submit" class="btn btn-default">Cancelar y regresar</button>
     </div>
-</div>
+
+</div><!--/panel-body-->
+</div><!--/panel-->
+</div>    {{--Content-fluid--}}
+@endsection
+@section('header-bottom')
+    <script type="text/javascript" src="{{asset('js/recetas.js')}}"></script>
 @endsection
 
 {{-- DONT DELETE --}}

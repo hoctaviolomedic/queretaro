@@ -4,34 +4,34 @@ namespace App\Http\Models\Captura;
 
 use App\Http\Models\ModelCompany;
 
-class Recetas extends ModelCompany
+class Afiliaciones extends ModelCompany
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'abisa.public.ss_qro_receta';
+    protected $table = 'abisa.public.cat_afiliado_ss_qro';
 
     /**
      * The primary key of the table
      * @var string
      */
-    protected $primaryKey = 'folio';
+    protected $primaryKey = 'id_afiliacion';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['folio','id_afiliacion', 'id_dependiente','id_medico','id_localidad'];
+    protected $fillable = ['id_afiliacion','id_dependiente', 'paterno','materno','nombre','sexo','edad','genero','edad_tiempo'];
 
     /**
      * The validation rules
      * @var array
      */
     public $rules = [
-//        'correo' => 'required|email',
+
     ];
 
     /**
@@ -39,11 +39,11 @@ class Recetas extends ModelCompany
      * @var array
      */
     protected $fields = [
-        'folio' => 'Folio'
+        'nombre' => 'nombre'
     ];
 
-    public function afiliacion()
+    public function recetas()
     {
-        return $this->belongsTo('App\Http\Models\Captura\Afiliacion','id_afiliacion','id_afiliacion');
+        return $this->hasMany('App\Http\Models\Captura\Recetas','id_afiliacion','id_afiliacion');
     }
 }
