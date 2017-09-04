@@ -35,7 +35,7 @@ object:hover {
     display:inline-block;
 }
 tbody.medicine > tr{
-  border-left: 3px solid #009688;
+  border-left: 3px solid #9E181F;
 }
 .nav-tabsn,.nav-pills {
     text-align:center;
@@ -116,6 +116,9 @@ box-shadow: 3px 3px 2px #9E181F;
   -moz-transition: -moz-transform ease-in-out 0.3s, background 0.2s;
   transition: transform ease-in-out 0.3s, background 0.2s;
 }
+.btn-default {
+  background-color: #d6d6d6;
+}
 .btn-secondary{
   background: #009688;
   color:#FFF; 
@@ -141,6 +144,9 @@ box-shadow: 3px 3px 2px #9E181F;
 }
 .text-danger {
     color: #f44336;
+}
+a {
+    color: #9E181F;
 }
 a.text-danger:hover, a.text-danger:focus {
     color: #383838 !important;
