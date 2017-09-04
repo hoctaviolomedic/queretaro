@@ -831,7 +831,7 @@
             function(i, row) {
             	// Actualizamos dataset
 				row.setAttribute('data-datarow', i);
-				
+
                 a = row.cloneNode();
                 b = row.cloneNode();
 
@@ -1233,21 +1233,29 @@
         template = template.replace(/\{pager\}/g, w.outerHTML);
 
         that.wrapper.innerHTML = template;
-        
+
         // Headings Selector
 		if (this.hasHeadings) {
 
-			var btn = util.createElement("a", {
-				href: "#",
-				class: "dropdown-button btn",
-				'data-activates': 'dataTable-headings-selector',
-				text: '▼'
-			});
+            var btn_group = util.createElement("div", {
+                class: "btn-group",
+            });
 
-			var ul = util.createElement("ul", {
-				id: "dataTable-headings-selector",
-				class: "dropdown-content",
-			});
+            var btn = util.createElement("button", {
+                type: "button",
+                class: "btn btn-default dropdown-toggle",
+                'data-toggle': 'dropdown',
+                'aria-haspopup': 'true',
+                'aria-expanded': 'false',
+                text: '▼'
+            });
+            util.append(btn_group, btn);
+
+            var ul = util.createElement("ul", {
+                id: "dataTable-headings-selector",
+                class: "dropdown-menu dropdown-menu-right",
+            });
+            util.append(btn_group, ul);
 
 			util.each(this.headings, function(i, th) {
 				if (th.innerText || th.textContent) {
@@ -1272,8 +1280,8 @@
 				}
 			}, this);
 			if (o.searchable) {
-                this.wrapper.querySelector('.dataTable-search').appendChild(btn)
-                this.wrapper.querySelector('.dataTable-search').appendChild(ul)
+                this.wrapper.querySelector('.dataTable-search').appendChild(btn_group)
+                // this.wrapper.querySelector('.dataTable-search').appendChild(ul)
             }
 		}
 
@@ -1806,7 +1814,7 @@
 							textContent = textContent.toLowerCase();
 							_word = word.toLowerCase();
 						}
-                    	
+
                         if (
                         	util.includes(textContent, _word) &&
                             that.columns(row.cells[x].cellIndex).visible()
