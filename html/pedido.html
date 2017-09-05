@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Pedido</title>
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link href="css/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.min.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet"> 
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+
+  <div class="container-fluid">
+  <br>
+    <div class="panel shadow-3 panel-danger">
+     <div class="panel-heading">
+      <h3 class="panel-title text-center">CREAR PEDIDOS
+    </div>
+    <div class="panel-body">
+
+      <form class="row">
+        <div class="col-sm-4">
+          <div class="form-group">
+             <label for="pedido">Buscar pedido</label>
+             <div class="input-group">
+              <input id="pedido" type="text" class="form-control" placeholder="Buscar...">
+              <span class="input-group-btn">
+                <button class="btn btn-default btn-check" type="button"><span class="glyphicon glyphicon-search"></span></button>
+              </span>
+            </div><!-- /input-group -->
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+            <label for="localidad">*Localidad:</label>
+            <select id="localidad" class="js-data-example-ajax form-control" style="width: 100%">
+              <option value="3620194" selected="selected">Escriba la clave o su descripción</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4">
+          <div class="form-group">
+          <label for="proveedor">*Proveedor:</label>
+          <select id="proveedor" class="js-data-example-ajax form-control" style="width: 100%">
+            <option value="3620194" selected="selected">Escriba la clave o su descripción</option>
+          </select>
+          </div>
+        </div>
+      </form><!--/row-->
+
+      <div class="row">
+        <div class="col-sm-4 col-xs-6">
+          <div class="form-group">
+            <label for="vendedor">*Vendedor:</label>
+            <select id="vendedor" class="form-control">
+              <option>Selecciona...</option>
+              <option>Opcion</option>
+              <option>Opcion</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-4 col-xs-6">
+          <div class="form-group">
+            <label for="contrato">*Contrato:</label>
+            <select id="contrato" class="form-control">
+              <option>Selecciona...</option>
+              <option>Opcion</option>
+              <option>Opcion</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-sm-2 col-xs-6">
+          <div class="form-group">
+            <label for="altura">Altura:</label>
+            <div id="datetimepicker3" class="input-group">
+              <input type="text" class="form-control" data-format="hh:mm:ss">
+              <span class="input-group-btn add-on">
+                <button data-time-icon="icon-time" data-date-icon="icon-calendar" class="btn btn-default btn-check" type="button"><span class="glyphicon glyphicon-time"></span></button>
+              </span>
+            </div><!-- /input-group -->
+          </div>
+        </div>
+        <div class="col-sm-2 col-xs-6">
+          <div class="form-group">
+            <label for="presion">Presión:</label>
+            <div id="datetimepicker3" class="input-group">
+              <input type="text" class="form-control" data-format="hh:mm:ss">
+              <span class="input-group-btn add-on">
+                <button data-time-icon="icon-time" data-date-icon="icon-calendar" class="btn btn-default btn-check" type="button"><span class="glyphicon glyphicon-time"></span></button>
+              </span>
+            </div><!-- /input-group -->
+          </div>
+        </div>
+        <div class="col-md-12">
+          <div class="checkbox text-center">
+            <label>
+              <input type="checkbox" value="">
+              Apartar existencias
+            </label>
+          </div>
+        </div>
+      </div><!--/row-->
+
+      <div class="row">
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <h4 class="panel-title">Dirección de entrega:</h4>
+            </div>
+            <div class="panel-body">
+              <p>AVENIDA 5 DE FEBRERO No 101, COL. VIRREYES, CP. 76170 QUERETARO</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="well">
+
+        <div class="row">
+          <h4 class="text-center">Productos</h4>
+          <p class="text-center">Agrega los productos que requieras manualmente o <a data-toggle="tooltip" title="<p>Formato:</p><img src='img/ejemplo_pedido.png'/>"><b><u>importalos mediante Excel</u></b></a></p>
+          <div class="col-sm-10">
+            <div class="input-group">
+            <label for="medicamento">*Productos:</label>
+            <select id="medicamento" class="js-example-basic-single form-control" style="width: 100%">
+              <option value="AL">Paracetamol 200MG</option>
+              <option value="WY">Paracetamol 500MG</option>
+              <option>DEXAMETASONA / LIDOCAÍNA / VITAMINA B1 / VITAMINA B12 / VITAMINA B6 4 MG / 30 MG / 100 MG / 5 MG / 100 MG</option>
+              <option>  FORMULA DE PROTEÍNA PARCIALMENTE HIDROLIZADA DE SUERO CONTIENE ACIDO GRASO OMEGA 3 DHA Y PREBIOTICOS GOS / NUCLEOTIDOSEL ACIDO GRASO OMEGA 6 AA 400 G / </option>
+            </select>
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="form-group">
+              <label for="cantidad">*Cantidad:</label>
+              <input type="number" class="form-control" id="cantidad" placeholder="Ej: 6">
+            </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label for="observaciones">Observaciones:</label>
+              <textarea id="observaciones" class="form-control" rows="1"></textarea>
+            </div>
+          </div>
+          <div class="text-center col-sm-12">
+            <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Aceptar</button>
+            <button type="submit" class="btn btn-default"><span class=" glyphicon glyphicon-import" aria-hidden="true"></span> Importar mediante Excel</button>
+          </div>
+        </div>
+      <!--<p>Medicamento seleccionado: FORMULA DE PROTEÍNA PARCIALMENTE HIDROLIZADA DE SUERO CONTIENE ACIDO GRASO OMEGA 3 DHA Y PREBIOTICOS GOS / NUCLEOTIDOSEL ACIDO GRASO OMEGA 6 AA 400 G /</p>-->
+
+      <div class="row">
+        <div class="col-md-12">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Tipo</th>
+                <th>Clave</th>
+                <th>Descripción</th>
+                <th>Cantidad</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+
+      </div><!--/well-->
+
+    <div class="text-right">
+      <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+      <button type="submit" class="btn btn-default">Cancelar y regresar</button>
+    </div>
+
+    </div><!--/panel-body-->
+    </div><!--/panel-->
+  </div>
+
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/bootstrap-datetimepicker.min.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function() {
+    $('a[data-toggle="tooltip"]').tooltip({
+        animated: 'fade',
+        placement: 'bottom',
+        html: true
+    });
+      $(".js-example-basic-single").select2({       
+       "language": { //para cambiar el idioma a español
+           "noResults": function(){
+               return "No se encontraron resultados";
+           }
+       },
+        escapeMarkup: function (markup) {
+            return markup;
+        }
+      });
+      $('[data-toggle="tooltip"]').tooltip();
+      $(".js-data-example-ajax").select2({
+        ajax: {
+          url: "https://api.github.com/search/repositories",
+          dataType: 'json',
+          delay: 250,
+          data: function (params) {
+            return {
+              q: params.term, // search term
+              page: params.page
+            };
+          },
+          processResults: function (data, params) {
+            // parse the results into the format expected by Select2
+            // since we are using custom formatting functions we do not need to
+            // alter the remote JSON data, except to indicate that infinite
+            // scrolling can be used
+            params.page = params.page || 1;
+
+            return {
+              results: data.items,
+              pagination: {
+                more: (params.page * 30) < data.total_count
+              }
+            };
+          },
+          cache: true
+        },
+        escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+        minimumInputLength: 1,
+         language: {
+             "noResults": function(){
+                 return "No se encontraron resultados";
+             }
+         },
+          escapeMarkup: function (markup) {
+              return markup;
+          }
+      });
+    $('#datetimepicker3').datetimepicker({
+      pickDate: false,
+      //pick12HourFormat: true,
+      //language: 'en'
+    });
+    });
+    </script>
+  </body>
+</html>
