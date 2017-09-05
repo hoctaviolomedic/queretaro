@@ -18,7 +18,7 @@ class ControllerBase extends Controller
 	 *
 	 * @return \Illuminate\Http\Response
 	 */
-	public function index($company, $attributes = ['where'=>['eliminar = 0']])
+	public function index($company, $attributes = ['where'=>[]])
 	{
 		# ¿Usuario tiene permiso para ver?
 		// $this->authorize('view', $this->entity);

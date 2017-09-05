@@ -16,10 +16,11 @@
 	<!--[if lt IE 9]>
 	{{ HTML::script('https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js') }}
 	{{ HTML::script('https://oss.maxcdn.com/respond/1.4.2/respond.min.js') }}
-	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+
+	<link href="css/style.css" rel="stylesheet">
 	<![endif]-->
 	@yield('header-top')
+
 </head>
 <body>
 <div style="background-color: black; color: white; height: 50px; text-align: center;">Aquí va el menú</div>
@@ -30,6 +31,9 @@
 {{ HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js') }}
 {{ HTML::script('https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js') }}
 {{ HTML::script(asset('js/bootstrap.min.js')) }}
+{{ HTML::script(asset('js/bootstrap-datetimepicker.min.js')) }}
+
 @yield('header-bottom')
+
 </body>
 </html>

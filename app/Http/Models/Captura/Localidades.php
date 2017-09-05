@@ -11,7 +11,7 @@ class Localidades extends ModelCompany
      *
      * @var string
      */
-    protected $table = 'abisa.public.cat_localidad';
+    protected $table = 'cat_localidad';
 
     /**
      * The primary key of the table

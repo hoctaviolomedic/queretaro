@@ -11,7 +11,7 @@ class Recetas extends ModelCompany
      *
      * @var string
      */
-    protected $table = 'abisa.public.ss_qro_receta';
+    protected $table = 'ss_qro_receta';
 
     /**
      * The primary key of the table
