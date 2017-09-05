@@ -4,8 +4,13 @@ namespace App\Http\Controllers\Captura;
 
 use App\Http\Controllers\ControllerBase;
 use App\Http\Models\Captura\Afiliaciones;
+use App\Http\Models\Captura\Diagnosticos;
+use App\Http\Models\Captura\Localidades;
 use App\Http\Models\Captura\Recetas;
+use App\Http\Models\Captura\Usuarios;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class RecetasController extends ControllerBase
 {
@@ -17,7 +22,14 @@ class RecetasController extends ControllerBase
     public function __construct(Recetas $entity)
     {
         $this->entity = $entity;
-        $this->afiliate = Afiliaciones::all();
+//        $this->localidades = DB::table('abisa.public.cat_localidad')
+//            ->leftJoin('abisa.public.adm_usuario_localidad','abisa.public.adm_usuario_localidad.id_localidad','abisa.public.adm_usuario_localidad.id_localidad')
+//            ->select('abisa.public.cat_localidad.id_localidad','abisa.public.cat_localidad.localidad')
+//            ->where('abisa.public.adm_usuario_localidad.id_usuario','=',Auth::id())
+//            ->where('abisa.public.cat_localidad.tipo','=',0)
+//            ->where('abisa.public.cat_localidad.id_cliente','=',135)
+//            ->get();
+        $this->localidades = Localidades::where('tipo',0)->where('id_cliente',135)->where('id_usuario',3)->get();
     }
 
     public function getDataView()
@@ -35,14 +47,14 @@ class RecetasController extends ControllerBase
      */
     public function create($company, $attributes = [])
     {
-//        $attributes = $attributes +['dataview'=>[
-//                'afiliados' => $this->afiliate->pluck('nombre','id_afiliacion')
-//            ]];
-//        return parent::create($company, $attributes);
+        $attributes = $attributes +['dataview'=>[
+                'localidades' => $this->localidades->pluck('localidad','id_localidad')
+            ]];
+        return parent::create($company, $attributes);
 
-        return parent::create($company, [
-            'dataview' => $this->getDataView()
-        ]);
+//        return parent::create($company, [
+//            'dataview' => $this->getDataView()
+//        ]);
     }
 
     /**
@@ -71,10 +83,27 @@ class RecetasController extends ControllerBase
         ]);
     }
 
-    public function getAfiliados($company)
+    public function getAfiliados($company,Request $request)
     {
-        $string = 'LOPEZ';
-//        dd(Afiliaciones::where('id_afiliacion','LIKE','%')->orWhere(DB::raw('concat(paterno, " ",materno, " ",nombre)'),'like','%%')->get());
-        dd(Afiliaciones::where('id_afiliacion','LIKE',$string.'%')->orWhere(DB::raw("CONCAT(paterno,' ',materno, ' ',nombre)"),'LIKE','%'.$string.'%')->get());
+        $json = [];
+        $term = strtoupper($request->membership);
+        $afiliados = Afiliaciones::where('id_afiliacion','LIKE',$term.'%')->orWhere(DB::raw("CONCAT(paterno,' ',materno, ' ',nombre)"),'LIKE','%'.$term.'%')->get();
+        foreach ($afiliados as $afiliado){
+            $json[] = ['id'=>$afiliado->id_dependiente,
+                'text' => $afiliado->id_afiliacion." - ".$afiliado->paterno." ".$afiliado->materno." ".$afiliado->nombre];
+        }
+        return json_encode($json);
+    }
+
+    public function getDiagnosticos($company,Request $request)
+    {
+        $json = [];
+        $term = strtoupper($request->diagnostico);
+        $diagnosticos = Diagnosticos::where('diagnostico','LIKE','%'.$term.'%')->where('estatus','1')->get();
+        foreach ($diagnosticos as $diagnostico){
+            $json[] = ['id'=>$diagnostico->id_diagnostico,
+                'text' => '('.$diagnostico->clave_diagnostico.') '.$diagnostico->diagnostico];
+        }
+        return json_encode($json);
     }
 }

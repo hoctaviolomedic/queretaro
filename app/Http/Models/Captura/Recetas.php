@@ -46,4 +46,14 @@ class Recetas extends ModelCompany
     {
         return $this->belongsTo('App\Http\Models\Captura\Afiliacion','id_afiliacion','id_afiliacion');
     }
+
+    public function diagnostico()
+    {
+        return $this->hasOne('App\Http\Models\Captura\Diagnosticos','id_diagnostico','id_diagnostico');
+    }
+
+    public function localidad()
+    {
+        return $this->belongsTo('App\Http\Models\Captura\Localidades','id_localidad','id_localidad');
+    }
 }

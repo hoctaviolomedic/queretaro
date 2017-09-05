@@ -1,17 +1,25 @@
 
 @section('form-content')
 {{ Form::setModel($data) }}
-<div class="container-fluid">
-<div class="panel shadow-3 panel-danger">
-    <div class="panel-heading">
-        <h3 class="panel-title text-center">Receta - Folio</h3>
-    </div>
 <div class="panel-body">
     <div class="row">
         <div class="col-sm-4">
             <div class="form-group">
                 {{Form::label('unidad','*Unidad')}}
-                {{Form::select('unidad',[],null,['id'=>'unidad','class' => 'unidad form-control'])}}
+                {{Form::select('unidad',isset($localidades)?$localidades:[],null,['id'=>'unidad','class' => 'unidad form-control'])}}
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                {{Form::label('tipo-servicio','*Tipo de servicio')}}
+                <div class="input-group-btn form-group" role="group" aria-label="tipo_servicio" data-toggle="buttons">
+                    <label class="btn btn-check btn-default">
+                        <input type="radio" name="tipo_servicio" autocomplete="off" value="afiliado" class="btn btn-default">Afiliado
+                    </label>
+                    <label class="btn btn-check btn-default">
+                        <input type="radio" name="tipo_servicio" autocomplete="off" value="externo" class="btn btn-default">Externo
+                    </label>
+                </div>
             </div>
         </div>
         <div class="col-sm-4">
@@ -20,18 +28,12 @@
                 {{Form::select('paciente',[],null,['id'=>'paciente','class' => 'paciente form-control','data-url'=>companyRoute('getAfiliados')])}}
             </div>
         </div>
-        <div class="col-sm-4">
-            <div class="form-group">
-                {{Form::label('diagnostico','*Diagnóstico')}}
-                {{Form::select('diagnostico',[],null,['id'=>'diagnostico','class' => 'diagnostico form-control'])}}
-            </div>
-        </div>
     </div>
     <div class="row">
         <div class="col-sm-2 col-xs-3">
             <div class="form-group">
-                {{Form::label('tipo-servicio','*Tipo de servicio')}}
-                {{Form::select('tipo-servicio',[],null,['id'=>'tipo-servicio','class' => 'tipo-servicio form-control'])}}
+                {{Form::label('diagnostico','*Diagnóstico')}}
+                {{Form::select('diagnostico',[],null,['id'=>'diagnostico','class' => 'diagnostico form-control','data-url'=>companyRoute('getDiagnosticos')])}}
             </div>
         </div>
         <div class="col-sm-2 col-xs-3">
@@ -174,15 +176,7 @@
             </div>
         </div>
     </div><!--/row-->
-
-    <div class="text-right">
-        <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
-        <button type="submit" class="btn btn-default">Cancelar y regresar</button>
-    </div>
-
 </div><!--/panel-body-->
-</div><!--/panel-->
-</div>    {{--Content-fluid--}}
 @endsection
 @section('header-bottom')
     <script type="text/javascript" src="{{asset('js/recetas.js')}}"></script>
