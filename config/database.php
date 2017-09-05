@@ -42,7 +42,7 @@ return [
 	        'charset'  => 'utf8',
 	        'timezone' =>config('app.timezone'),
 	        'prefix'   => '',
-	        'schema'   => 'maestro',
+	        'schema'   => 'public',
 	        'sslmode'   => 'prefer',
 	    ],
 

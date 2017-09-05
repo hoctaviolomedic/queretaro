@@ -2,7 +2,6 @@
 
 namespace App\Http\Middleware;
 
-use Session;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
@@ -18,11 +17,16 @@ class LoginFromSession
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        # Si no existe session laravel pero si, session sistema anterior
-        if (!Auth::guard($guard)->check() && Session::has('user_id')) {
-            Auth::loginUsingId(Session::get('user_id'));
+        session_name('abisa');
+        session_start();
+
+        if(isset($_SESSION['idUser']) &&  isset($_SESSION['passwd'])){
+
+            Auth::loginUsingId($_SESSION['idUser']);
+            return $next($request);
+
         } else {
-            return redirect("/sistema-anterior");
+            return redirect("../");
         }
 
         return $next($request);
