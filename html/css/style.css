@@ -180,3 +180,9 @@ cursor: pointer;
   color: #fff;
   background-color: #9E181F !important;
 }
+.multiselect-native-select{
+  display: block;
+}
+.form-inline > .input-group{
+  width: auto;
+}
