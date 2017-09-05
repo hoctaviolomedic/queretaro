@@ -19,6 +19,7 @@ Route::prefix('{company}')->group(function () {
 	Route::group(['prefix' => 'captura', 'as' => 'captura.', 'middleware' => ['share'] ], function() {
 		Route::post('getAfiliados','captura\RecetasController@getAfiliados')->name('recetas.getAfiliados');
 		Route::post('getDiagnosticos','captura\RecetasController@getDiagnosticos')->name('recetas.getDiagnosticos');
+		Route::post('getMedicamentos','captura\RecetasController@getMedicamentos')->name('recetas.getMedicamentos');
 	    Route::resource('recetas', 'captura\RecetasController');
 		Route::resource('requesiciones', 'captura\RequisicionesController');
 	});

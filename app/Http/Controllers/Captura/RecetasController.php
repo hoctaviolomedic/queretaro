@@ -7,8 +7,6 @@ use App\Http\Models\Captura\Afiliaciones;
 use App\Http\Models\Captura\Diagnosticos;
 use App\Http\Models\Captura\Localidades;
 use App\Http\Models\Captura\Recetas;
-use App\Http\Models\Captura\Usuarios;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -22,13 +20,6 @@ class RecetasController extends ControllerBase
     public function __construct(Recetas $entity)
     {
         $this->entity = $entity;
-//        $this->localidades = DB::table('abisa.public.cat_localidad')
-//            ->leftJoin('abisa.public.adm_usuario_localidad','abisa.public.adm_usuario_localidad.id_localidad','abisa.public.adm_usuario_localidad.id_localidad')
-//            ->select('abisa.public.cat_localidad.id_localidad','abisa.public.cat_localidad.localidad')
-//            ->where('abisa.public.adm_usuario_localidad.id_usuario','=',Auth::id())
-//            ->where('abisa.public.cat_localidad.tipo','=',0)
-//            ->where('abisa.public.cat_localidad.id_cliente','=',135)
-//            ->get();
         $this->localidades = Localidades::where('tipo',0)->where('id_cliente',135)->where('id_usuario',3)->get();
     }
 
@@ -103,6 +94,40 @@ class RecetasController extends ControllerBase
         foreach ($diagnosticos as $diagnostico){
             $json[] = ['id'=>$diagnostico->id_diagnostico,
                 'text' => '('.$diagnostico->clave_diagnostico.') '.$diagnostico->diagnostico];
+        }
+        return json_encode($json);
+    }
+
+    public function getMedicamentos($company,Request $request)
+    {
+        $json = [];
+        $term = strtoupper($request->medicamento);
+        $medicamentos = DB::select("SELECT cp.clave_cliente, cp.descripcion, TIPO_PARTIDA.id_cuadro_tipo_medicamento as partida,
+        				       TIPO_PRODUCTO.id_cuadro_tipo_medicamento as tipo_medicamento, c.id_cuadro, lp.tope_receta
+        			          FROM cat_cuadro c, cat_cuadro_producto cp, cat_cuadro_tipo_producto TIPO_PRODUCTO,
+        				           cat_cuadro_tipo_producto TIPO_PARTIDA, cat_localidad_producto lp
+        			                   WHERE cp.descripcion LIKE '%'.:term.'%'
+        			                   AND cp.id_cuadro = c.id_cuadro
+                                       AND cp.id_cliente = c.id_cliente
+        			                   AND c.estatus = '1'
+        			                   AND c.id_tipo_cuadro = '1'
+        			                   AND c.id_cliente = 135
+        			                   AND cp.estatus = '1'
+        			                   AND cp.id_cuadro_tipo_medicamento = TIPO_PRODUCTO.id_cuadro_tipo_medicamento
+        			                   AND TIPO_PRODUCTO.estatus = '1'
+        			                   AND TIPO_PRODUCTO.id_cuadro_tipo_medicamento <> 57
+                                       AND TIPO_PRODUCTO.id_cuadro_tipo_medicamento <> 56
+        			                   AND cp.id_cuadro_tipo_medicamento = TIPO_PARTIDA.id_cuadro_tipo_medicamento
+        			                   AND TIPO_PARTIDA.estatus = '1'
+        			                   AND lp.id_cuadro = c.id_cuadro
+        			                   AND lp.id_localidad = :location
+        			                   AND lp.clave_cliente = cp.clave_cliente
+        			                   AND lp.estatus = '1'
+        			                   ORDER BY cp.descripcion
+							           LIMIT 10;",['term'=>$term],['location'=>$request->localidad]);
+        foreach ($medicamentos as $medicamento){
+            $json[] = ['id'=>$medicamento->clave_cliente,
+                'text' => $medicamento->descripcion];
         }
         return json_encode($json);
     }

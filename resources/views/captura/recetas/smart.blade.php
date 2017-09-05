@@ -9,12 +9,12 @@
                 {{Form::select('unidad',isset($localidades)?$localidades:[],null,['id'=>'unidad','class' => 'unidad form-control'])}}
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-2">
             <div class="form-group">
                 {{Form::label('tipo-servicio','*Tipo de servicio')}}
                 <div class="input-group-btn form-group" role="group" aria-label="tipo_servicio" data-toggle="buttons">
-                    <label class="btn btn-check btn-default">
-                        <input type="radio" name="tipo_servicio" autocomplete="off" value="afiliado" class="btn btn-default">Afiliado
+                    <label class="btn btn-check btn-default active">
+                        <input type="radio" name="tipo_servicio" checked="checked" autocomplete="off" value="afiliado" class="btn btn-default">Afiliado
                     </label>
                     <label class="btn btn-check btn-default">
                         <input type="radio" name="tipo_servicio" autocomplete="off" value="externo" class="btn btn-default">Externo
@@ -22,15 +22,16 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-6">
             <div class="form-group">
                 {{Form::label('paciente','*Afiliación/Paciente')}}
                 {{Form::select('paciente',[],null,['id'=>'paciente','class' => 'paciente form-control','data-url'=>companyRoute('getAfiliados')])}}
+                {{Form::text('paciente_externo',null,['id'=>'paciente_externo','class'=>'form-control','style'=>'display:none'])}}
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-2 col-xs-3">
+        <div class="col-sm-4">
             <div class="form-group">
                 {{Form::label('diagnostico','*Diagnóstico')}}
                 {{Form::select('diagnostico',[],null,['id'=>'diagnostico','class' => 'diagnostico form-control','data-url'=>companyRoute('getDiagnosticos')])}}
@@ -72,9 +73,8 @@
             <div class="row">
                 <div class="col-sm-12">
                     <div class="input-group">
-                        <label for="medicamento">*Medicamento:</label>
                         {{Form::label('medicamento','*Medicamento')}}
-                        {{Form::select('medicamento',[],null,['id'=>'medicamento','class' => 'medicamento form-control'])}}
+                        {{Form::select('medicamento',[],null,['id'=>'medicamento','class' => 'medicamento form-control','data-url'=>companyRoute('getMedicamentos')])}}
                     </div>
                 </div>
             </div>
@@ -87,10 +87,10 @@
                 <div class="input-group my-group">
                     <div class="input-group-btn" role="group" aria-label="dosis" data-toggle="buttons">
                         <label class="btn btn-check btn-default">
-                            <input type="checkbox" name="dosis14" id="dosis14" autocomplete="off" class="btn btn-default">1/4
+                            <input type="checkbox" name="dosis14" id="dosis14" autocomplete="off" class="btn btn-default dosis_checkbox">1/4
                         </label>
                         <label class="btn btn-check btn-default">
-                            <input type="checkbox" name="dosis12" id="dosis12" autocomplete="off"  class="btn btn-default">1/2
+                            <input type="checkbox" name="dosis12" id="dosis12" autocomplete="off"  class="btn btn-default dosis_checkbox">1/2
                         </label>
                     </div>
                     {{Form::number('dosis',null,['id'=>'dosis','class'=>'form-control','placeholder'=>'Ej. 6'])}}
@@ -101,14 +101,14 @@
                 <h4>Cada:</h4>
                 <div class="input-group my-group">
                     {{Form::number('cada',null,['id'=>'cada','class'=>'form-control','placeholder'=>'Ej. 6'])}}
-                    {{Form::select('_cada',[],null,['id'=>'_cada','class' => '_cada form-control'])}}
+                    {{Form::select('_cada',['Hora(s)','Día(s)','Semana(s)','Mes(es)'],null,['id'=>'_cada','class' => '_cada form-control'])}}
                 </div>
             </div>
             <div class="col-sm-4">
                 <h4>Por:</h4>
                 <div class="input-group my-group">
                     {{Form::number('por',null,['id'=>'por','class'=>'form-control','placeholder'=>'Ej. 6'])}}
-                    {{Form::select('_por',[],null,['id'=>'_por','class' => '_por form-control'])}}
+                    {{Form::select('_por',['Día(s)','Semana(s)','Mes(es)'],null,['id'=>'_por','class' => '_por form-control'])}}
                 </div>
             </div>
         </div>
