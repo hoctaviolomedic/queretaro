@@ -176,3 +176,13 @@ cursor: pointer;
   background: #c8c8c8;
   color:#1c1c1c; 
 }
+.nav-pills > li.active > a {
+  color: #fff;
+  background-color: #9E181F !important;
+}
+.multiselect-native-select{
+  display: block;
+}
+.form-inline > .input-group{
+  width: auto;
+}
