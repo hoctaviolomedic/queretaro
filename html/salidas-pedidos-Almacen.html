@@ -46,7 +46,7 @@
             </select>
           </div>
         </div>
-        <div class="col-sm-4">
+        <div class="col-sm-4 col-xs-6">
           <div class="form-group">
           <label for="surtidor">*Surtidor:</label>
           <select id="surtidor" class="js-data-example-ajax form-control" style="width: 100%">
@@ -54,13 +54,13 @@
           </select>
           </div>
         </div>
-          <div class="col-sm-3">
+          <div class="col-sm-3 col-xs-6">
             <div class="form-group">
               <label for="cajas">*Número de cajas:</label>
               <input type="number" class="form-control" id="cajas" placeholder="Ej: 6">
             </div>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-3 col-xs-6">
             <div class="form-group">
               <label for="cajas">*Hora inicio:</label>
               <div id="datetimepicker3" class="input-group">
@@ -71,7 +71,7 @@
               </div><!-- /input-group -->
             </div>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-3 col-xs-6">
             <div class="form-group">
               <label for="cajas">*Hora fin:</label>
               <div id="datetimepicker3" class="input-group">
@@ -82,18 +82,89 @@
               </div><!-- /input-group -->
             </div>
           </div>
-          <div class="col-sm-3">
-            <label for="cajas">*Hora fin:</label>
+      </form><!--/row-->
+
+      <!-- Nav tabs -->
+      <ul class="nav nav-pills" role="tablist" id="myTab">
+        <li role="presentation" class="active"><a href="#captura-manual" aria-controls="captura-manual" role="tab" data-toggle="tab">Captura manual de productos</a></li>
+        <li role="presentation"><a href="#escaneo-codigo" aria-controls="escaneo-codigo" role="tab" data-toggle="tab">Escanéo código de barras</a></li>
+        <li role="presentation"><a href="#sin-captura" aria-controls="sin-captura" role="tab" data-toggle="tab">Sin captura</a></li>
+      </ul>
+
+      <!-- Tab panes -->
+      <div class="tab-content">
+        <div role="tabpanel" class="tab-pane active" id="captura-manual">
+        <br>
+          <div class="row">
+            <div class="col-sm-4">
+              <div class="form-group">
+                 <label for="pedido">Código de barras</label>
+                 <div class="input-group">
+                  <input id="pedido" type="number" class="form-control" placeholder="Buscar...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default btn-check" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                  </span>
+                </div><!-- /input-group -->
+              </div>
+            </div>
+          <div class="col-sm-4">
             <div class="form-group">
-              <label class="radio-inline">
-                <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> Opción 1
-              </label>
-              <label class="radio-inline">
-                <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> Opción 2
-              </label>
+              <label for="almacen">*Almacen:</label>
+              <select id="almacen" class="js-data-example-ajax form-control" style="width: 100%">
+                <option value="3620194" selected="selected">Escriba la clave o su descripción</option>
+              </select>
             </div>
           </div>
-      </form><!--/row-->
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="ubicacion">*Ubicación:</label>
+              <select id="ubicacion" class="form-control">
+                <option>Selecciona...</option>
+                <option>Opcion</option>
+                <option>Opcion</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-4 col-xs-6">
+            <div class="form-group">
+              <label for="lote">*Lote:</label>
+              <select id="lote" class="form-control">
+                <option>Selecciona...</option>
+                <option>Opcion</option>
+                <option>Opcion</option>
+              </select>
+            </div>
+          </div>
+            <div class="col-sm-3 col-xs-6">
+              <div class="form-group">
+                <label for="cantidad">*Cantidad:</label>
+                <input type="number" class="form-control" id="cantidad" placeholder="Ej: 6">
+              </div>
+            </div>
+            <div class="text-center col-sm-12">
+              <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Aceptar</button>
+            </div>
+          </div>
+        </div><!--/captura-->
+        <div role="tabpanel" class="tab-pane" id="escaneo-codigo">
+        <br>
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                 <label for="pedido">Código de barras</label>
+                 <div class="input-group">
+                  <input id="pedido" type="number" class="form-control" placeholder="Buscar...">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default btn-check" type="button"><span class="glyphicon glyphicon-plus"></span> Aceptar</button>
+                  </span>
+                </div><!-- /input-group -->
+              </div>
+            </div>
+          </div>
+        </div><!--/escaneo-->
+        <div role="tabpanel" class="tab-pane" id="sin-captura">
+        </div><!--/escaneo-->
+      </div>
 
       <div class="row">
         <div class="col-md-12">
@@ -101,18 +172,82 @@
             <thead>
               <tr>
                 <th>#</th>
-                <th>Tipo</th>
-                <th>Clave</th>
+                <th>Codigo de barras</th>
+                <th>Clave cliente</th>
                 <th>Descripción</th>
+                <th>Pérdida</th>
+                <th>Existencia</th>
                 <th>Cantidad</th>
+                <th>Ubicación</th>
+                <th>Lote</th>
+                <th>Acciones</th>
               </tr>
             </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>7501034651044</td>
+                <td>CP-0300-04</td>
+                <td>ACIDO DOCOSAHEXAEINOCO (DHA)</td>
+                <td>1</td>
+                <td>10</td>
+                <td>
+                  <div class="input-group">
+                    <input type="number" class="form-control" placeholder="Ej: 6">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default btn-check" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                    </span>
+                  </div><!-- /input-group -->
+                </td>
+                <td>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="a">A</span>
+                    <select class="form-control">
+                      <option>Selecciona...</option>
+                      <option>Pastilla</option>
+                      <option>Tableta</option>
+                      <option>Unidad</option>
+                      <option>Capsula</option>
+                    </select>
+                    <span class="input-group-addon" id="u">U</span>
+                    <select class="form-control">
+                      <option>Selecciona...</option>
+                      <option>Pastilla</option>
+                      <option>Tableta</option>
+                      <option>Unidad</option>
+                      <option>Capsula</option>
+                    </select>
+                  </div>
+                </td>
+                <td>
+                  <select class="form-control">
+                    <option>Selecciona...</option>
+                    <option>2</option>
+                    <option>3</option>
+                    <option>4</option>
+                    <option>5</option>
+                  </select>
+                </td>
+                <td>
+                  <a href="#" data-toggle="tooltip" data-placement="top" title="Agregar comentarios" class="text-danger btn btn-check">
+                    <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
+                  </a>
+                  <a href="#" data-toggle="tooltip" data-placement="top" title="Agregar" class="text-danger btn btn-check">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                  </a>
+                  <a href="#" data-toggle="tooltip" data-placement="top" title="Eliminar" class="text-danger btn btn-check">
+                    <span class="glyphicon glyphicon-minus" aria-hidden="true"></span>
+                  </a>
+                </td>
+              </tr>
+            </tbody>
           </table>
         </div>
       </div>
 
     <div class="text-right">
       <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+      <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-print" aria-hidden="true"></span> Imprimir</button>
       <button type="submit" class="btn btn-default">Cancelar y regresar</button>
     </div>
 

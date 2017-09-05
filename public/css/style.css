@@ -182,3 +182,7 @@ cursor: pointer;
 .width-auto {
     width: 1% !important;
 }
+.nav-pills > li.active > a {
+  color: #fff;
+  background-color: #9E181F !important;
+}
