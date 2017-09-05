@@ -119,6 +119,19 @@ box-shadow: 3px 3px 2px #9E181F;
 .btn-default {
   background-color: #d6d6d6;
 }
+.btn-default:focus,
+.btn-default.focus {
+  color: #050505;
+  background-color: #919191;
+  border-color: none;
+}
+.btn-default:active,
+.btn-default.active,
+.open > .dropdown-toggle.btn-default {
+  color: #050505;
+  background-color: #919191;
+  border-color: none;
+}
 .btn-secondary{
   background: #009688;
   color:#FFF;
@@ -185,4 +198,11 @@ cursor: pointer;
 .nav-pills > li.active > a {
   color: #fff;
   background-color: #9E181F !important;
+}
+.btn:active,
+.btn.active {
+  outline: 0;
+  background-image: none;
+  -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
 }
