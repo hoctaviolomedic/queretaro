@@ -57,8 +57,9 @@ class LoginController extends Controller
      */
     protected function authenticated(Request $request, $usuario)
     {
-        $empresa = Empresas::findOrFail($usuario->fk_id_empresa_default);
-        return redirect("/$empresa->conexion");
+        // $empresa = Empresas::findOrFail($usuario->fk_id_empresa_default);
+        // return redirect("/$empresa->conexion");
+        return redirect('/abisa');
     }
 
 }
