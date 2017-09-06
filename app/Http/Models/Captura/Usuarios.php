@@ -11,7 +11,7 @@ class Usuarios extends ModelCompany
      *
      * @var string
      */
-    protected $table = 'abisa.public.adm_usuarios';
+    protected $table = 'adm_usuarios';
 
     /**
      * The primary key of the table
@@ -36,6 +36,6 @@ class Usuarios extends ModelCompany
 
     public function localidades()
     {
-        return $this->belongsToMany('App\Http\Models\Captura\Localidades','abisa.public.adm_usuario_localidad','id_usuario','id_usuario');
+        return $this->belongsToMany('App\Http\Models\Captura\Localidades','adm_usuario_localidad','id_usuario','id_usuario');
     }
 }

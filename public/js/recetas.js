@@ -1,5 +1,9 @@
 $(document).ready(function () {
 
+    //Deshabilitar siempre al iniciar
+    $('#surtido_numero').prop('disabled',true);
+    $('#tiempo').prop('disabled',true);
+
     $(".unidad").select2();
 
     initPaciente();
@@ -66,7 +70,8 @@ $(document).ready(function () {
         },
         escapeMarkup: function(markup) {
             return markup;
-        }
+        },
+        templateResult: formatMedicine,
     });
 
     $('input[name=tipo_servicio]').change(function () {
@@ -91,6 +96,63 @@ $(document).ready(function () {
             $('#dosis14').parent().removeClass('active');
         }
     });
+
+    $('.checkbox_surtido').on('change',function () {
+        if($('.checkbox_surtido').prop('checked') == true){
+            $('#surtido_numero').prop('disabled',false);
+            $('#surtido_tiempo').prop('disabled',false);
+        }else if($('.checkbox_surtido').prop('checked') == false){
+            $('#surtido_numero').prop('disabled',true);
+            $('#surtido_numero').val('');
+            $('#surtido_tiempo').prop('disabled',true);
+        }
+    });
+
+    $('#agregar').click(function () {
+        var filas = $('#detalle tr').length;
+        var medicamento = $('.medicamento').select2('data');
+        var dosis_text = '<b>';
+        var dosis_hidden = parseInt($('#dosis').val());
+        dosis_text += $('#dosis').val();
+        if($('#dosis14').prop('checked') == true){
+            dosis_text += ' 1/4 ';
+            dosis_hidden += 0.25;
+        }else if($('#dosis14').prop('checked') == false){
+            dosis_text += ' 1/2 ';
+            dosis_hidden += 0.5;
+        }
+        dosis_text += medicamento[0].familia+'</b>';
+
+        var tiempo_text = '<b>'+$('#cada').val();
+        tiempo_text += ' '+$('#_cada option:selected').text()+'</b>';
+        var tiempo_hidden = $('#cada').val()+' '+$('#_cada option:selected').text();
+
+        var duracion_text = '<b>'+$('#por').val();
+        duracion_text += ' '+$('#_por option:selected').text()+'</b>';
+        var duracion_hidden = $('#por').val()+' '+ $('#_por option:selected').text();
+
+        var recurrencia_text = '';
+        var recurrencia_hidden = '';
+        if($('#surtido_recurrente').prop('checked') == true){
+            recurrencia_text += 'Recoger cada <b>'+$('#surtido_numero').val()+' '+$('#surtido_tiempo option:selected').text()+'</b>';
+            recurrencia_hidden += $('#surtido_numero').val()+' '+$('#surtido_tiempo option:selected').text();
+        }
+
+        var nota_medicamento = $('#nota_medicamento').val();
+        $('.medicine_detail').append('' +
+            '<tr id="'+filas+'">' +
+                '<th scope="row">'+filas+'</th>' +
+                '<td>' +
+                    '<p><input name="medicamento" type="hidden" value="'+medicamento[0].id+'"/>'+medicamento[0].text+'</p>' +
+                    '<p><input name="dosis" type="hidden" value="'+dosis+'" disabled/>'+dosis_text+' cada '+tiempo_text+' por '+duracion_text+'</p>' +
+                    '<input name="tiempo" type="hidden" value="'+tiempo_hidden+'" disabled/>' +
+                    '<input name="duracion" type="hidden" value="'+duracion_hidden+'" disabled/>' +
+                    '<p><input name="indicaciones" type="hidden" value="'+nota_medicamento+'" disabled/>'+nota_medicamento+'</p>' +
+                    '<p><input name="recurrencia" type="hidden" value="'+recurrencia_hidden+'" disabled/>'+recurrencia_text+'</p>' +
+                '</td>' +
+            '</tr>')
+    })
+
 });
 
 function initPaciente() {
@@ -125,4 +187,16 @@ function initPaciente() {
             return markup;
         }
     });
+}
+var presentacion;
+function formatMedicine(medicine,container) {
+
+    if(!medicine.id){return medicine.text;}
+
+    var $medicine = $('<span></span>').text(medicine.text);
+    // $medicine.append('<h6></h6>').text("Cantidad en la presentación: "+medicine.cantidad_presentacion);
+    // $medicine.append('<span></span>').text('Presentación: '+medicine.familia);
+
+    presentacion = medicine.familia;
+    return $medicine;
 }

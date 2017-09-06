@@ -93,7 +93,7 @@
       <form class="row">
         <div class="col-sm-4">
           <div class="form-group">
-            <label for="cliente-input">*Cliente:</label>
+            <label for="cliente-input">Cliente:</label>
             <select id="cliente-input" class="js-data-example-ajax form-control" style="width: 100%">
               <option value="3620194" selected="selected">Escriba la clave o su descripción</option>
             </select>
@@ -101,7 +101,7 @@
         </div>
         <div class="col-sm-4">
           <div class="form-group">
-          <label for="clave-cliente">*Clave cliente:</label>
+          <label for="clave-cliente">Clave cliente:</label>
           <select multiple="multiple" class="multiselect-component">
               <option value="cheese">Cheese</option>
               <option value="tomatoes">Tomatoes</option>
@@ -172,41 +172,6 @@
         </form>
 
         <form class="row">
-          <div class="col-sm-4">
-            <div class="form-group">
-              <label for="cliente-input">*Cliente:</label>
-              <select id="cliente-input" class="js-data-example-ajax form-control" style="width: 100%">
-                <option value="3620194" selected="selected">Escriba la clave o su descripción</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="form-group">
-            <label for="clave-cliente">*Clave cliente:</label>
-            <select multiple="multiple" class="multiselect-component">
-                <option value="cheese">Cheese</option>
-                <option value="tomatoes">Tomatoes</option>
-                <option value="mozarella">Mozzarella</option>
-                <option value="mushrooms">Mushrooms</option>
-                <option value="pepperoni">Pepperoni</option>
-                <option value="onions">Onions</option>
-            </select>
-            </div>
-          </div>
-          <div class="col-sm-4">
-            <div class="form-group">
-               <label for="buscar-clave">Buscar clave</label>
-               <div class="input-group">
-                <input id="buscar-clave" type="text" class="form-control" placeholder="Buscar...">
-                <span class="input-group-btn">
-                  <button class="btn btn-default btn-check" type="button"><span class="glyphicon glyphicon-search"></span></button>
-                </span>
-              </div><!-- /input-group -->
-            </div>
-          </div>
-        </form><!--/row-->
-
-        <form class="row">
           <div class="col-sm-2 col-xs-6">
             <div class="form-group">
               <label for="cajas">*Hora inicio:</label>
@@ -241,12 +206,49 @@
               </select>
             </div>
           </div>
+        </form>
+
+        <form class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label for="cliente-input">Cliente:</label>
+              <select id="cliente-input" class="js-data-example-ajax form-control" style="width: 100%">
+                <option value="3620194" selected="selected">Escriba la clave o su descripción</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+            <label for="clave-cliente">Clave cliente:</label>
+            <select multiple="multiple" class="multiselect-component">
+                <option value="cheese">Cheese</option>
+                <option value="tomatoes">Tomatoes</option>
+                <option value="mozarella">Mozzarella</option>
+                <option value="mushrooms">Mushrooms</option>
+                <option value="pepperoni">Pepperoni</option>
+                <option value="onions">Onions</option>
+            </select>
+            </div>
+          </div>
+          <div class="col-sm-4">
+            <div class="form-group">
+               <label for="buscar-clave">Buscar clave</label>
+               <div class="input-group">
+                <input id="buscar-clave" type="text" class="form-control" placeholder="Buscar...">
+                <span class="input-group-btn">
+                  <button class="btn btn-default btn-check" type="button"><span class="glyphicon glyphicon-search"></span></button>
+                </span>
+              </div><!-- /input-group -->
+            </div>
+          </div>
+
           <div class="text-center col-sm-12">
             <button type="submit" class="btn btn-danger"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span> Generar</button>
             <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-open-file" aria-hidden="true"></span> Excel</button>
             <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-open-file" aria-hidden="true"></span> CSV</button>
           </div>
-        </form>
+
+        </form><!--/row-->
 
         <br>
 

@@ -56,7 +56,7 @@ return [
 			'charset' => 'utf8',
 		    'timezone' =>config('app.timezone'),
 			'prefix' => '',
-			'schema' => 'abisa',
+			'schema' => 'public',
 			'sslmode' => 'prefer',
 		],
 
