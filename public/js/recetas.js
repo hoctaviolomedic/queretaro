@@ -109,6 +109,22 @@ $(document).ready(function () {
     });
 
     $('#agregar').click(function () {
+        var campos = '';
+        if($('#medicamento').select2('data').length ==0)
+            campos += '<br>Medicamento';
+        if($('#dosis').val()<1)
+            campos += '<br>Dosis';
+        if($('#cada').val()<1)
+            campos += '<br>Cada cuanto tomar la medicina';
+        if($('#por').val()<1 )
+            campos += '<br>Duración del tratamiento de la medicina';
+
+        if(campos!=''){
+            $.toaster({ priority : 'danger', title : 'Verifica los siguientes campos', message : campos,settings:{'donotdismiss':['danger']}});
+            return
+        }
+
+
         var filas = $('#detalle tr').length;
         var medicamento = $('.medicamento').select2('data');
         var dosis_text = '<b>';
@@ -144,13 +160,18 @@ $(document).ready(function () {
                 '<th scope="row">'+filas+'</th>' +
                 '<td>' +
                     '<p><input name="medicamento" type="hidden" value="'+medicamento[0].id+'"/>'+medicamento[0].text+'</p>' +
-                    '<p><input name="dosis" type="hidden" value="'+dosis+'" disabled/>'+dosis_text+' cada '+tiempo_text+' por '+duracion_text+'</p>' +
+                    '<p><input name="dosis" type="hidden" value="'+dosis_hidden+'" disabled/>'+dosis_text+' cada '+tiempo_text+' por '+duracion_text+'</p>' +
                     '<input name="tiempo" type="hidden" value="'+tiempo_hidden+'" disabled/>' +
                     '<input name="duracion" type="hidden" value="'+duracion_hidden+'" disabled/>' +
                     '<p><input name="indicaciones" type="hidden" value="'+nota_medicamento+'" disabled/>'+nota_medicamento+'</p>' +
                     '<p><input name="recurrencia" type="hidden" value="'+recurrencia_hidden+'" disabled/>'+recurrencia_text+'</p>' +
                 '</td>' +
             '</tr>')
+    })
+
+    $('#medicamento').on('change',function () {
+        var medicamento = $('#medicamento').select2('data');
+        $('#_dosis').val(medicamento[0].familia);
     })
 
 });
@@ -188,15 +209,9 @@ function initPaciente() {
         }
     });
 }
-var presentacion;
-function formatMedicine(medicine,container) {
 
+function formatMedicine(medicine) {
     if(!medicine.id){return medicine.text;}
-
-    var $medicine = $('<span></span>').text(medicine.text);
-    // $medicine.append('<h6></h6>').text("Cantidad en la presentación: "+medicine.cantidad_presentacion);
-    // $medicine.append('<span></span>').text('Presentación: '+medicine.familia);
-
-    presentacion = medicine.familia;
-    return $medicine;
+    return $('<span>'+medicine.text+'</span><br>Presentación: <b>'+medicine.familia+'</b> Cantidad en la presentación: <b>'+medicine.cantidad_presentacion+'</b>' +
+        '<br>Disponibilidad: <b></b>');
 }
