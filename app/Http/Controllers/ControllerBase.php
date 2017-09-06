@@ -34,6 +34,12 @@ class ControllerBase extends Controller
 			}
 		}
 
+		if(isset($attributes['whereHas'])) {
+			foreach ($attributes['whereHas'] as $relation => $callback) {
+				$query->whereHas($relation, $callback);
+			}
+		}
+
 		$dataview = isset($attributes['dataview']) ? $attributes['dataview'] : [];
 
 		if (!request()->ajax()) {
@@ -289,25 +295,45 @@ class ControllerBase extends Controller
 	{
 		# ¿Usuario tiene permiso para exportar?
 		// $this->authorize('export', $this->entity);
+
 		$type = strtolower($request->type);
-		$style = isset($request->style) ? $request->style : false;
+		// $style = isset($request->style) ? $request->style : false;
 
-	    if (isset($request->ids)) {
-	        $ids = is_array($request->ids) ? $request->ids : explode(',',$request->ids);
-	        $data = $this->entity->whereIn($this->entity->getKeyName(), $ids)->get();
-		}
-		else {
-		    $data = $this->entity->get();
-		}
+	 //    if (isset($request->ids)) {
+	 //        $ids = is_array($request->ids) ? $request->ids : explode(',',$request->ids);
+	 //        $data = $this->entity->whereIn($this->entity->getKeyName(), $ids)->get();
+		// }
+		// else {
+		//     $data = $this->entity->get();
+		// }
 
-		$fields = $this->entity->getFields();
+		// $fields = $this->entity->getFields();
 
-		$alldata = $data->map(function ($data) use($fields) {
-		    $return = [];
-		    foreach ($fields as $field=>$lable)
-		        $return[$lable] = html_entity_decode(strip_tags($data->$field));
-		    return $return;
-		});
+		// $alldata = $data;
+
+		// try {
+
+		// $alldata = $data->map(function ($data) use ($fields) {
+		//     $return = [];
+
+		//     foreach ($fields as $field=>$lable) {
+		//         $return[$lable] = html_entity_decode(strip_tags($data->$field));
+		//     }
+		//     // dump( $return );
+		//     return $return;
+		// });
+
+		// } catch (Exception $e) {
+
+		// 	dump( $e );
+
+		// }
+
+		// echo "string";
+
+		$data = '';
+		$alldata = '';
+		$style = $this->entity;
 
 		if($type == 'pdf') {
 		    $pdf = PDF::loadView(currentRouteName('smart'), ['fields' => $fields, 'data' => $data]);
@@ -316,11 +342,27 @@ class ControllerBase extends Controller
 		else {
 		    Excel::create(currentEntityBaseName(), function($excel) use($data,$alldata,$type,$style) {
 		        $excel->sheet(currentEntityBaseName(), function($sheet) use($data,$alldata,$type,$style) {
-    		        if($style) {
-    		            $sheet->loadView(currentRouteName('smart'), ['fields' => $this->entity->getFields(), 'data' => $data]);
-    		        }
-    		        else
-    		            $sheet->fromArray($alldata);
+    		        // if ($style) {
+    		        //     $sheet->loadView(currentRouteName('smart'), ['fields' => $this->entity->getFields(), 'data' => $data]);
+    		        // } else {
+		// echo "dos";
+		// dump( $alldata );
+
+
+						$style->chunk(500, function ($rows) use ($sheet) {
+							// dump($rows);
+							$sheet->rows($rows->toArray());
+
+
+			                // foreach ($rows as $row)
+			                // {
+			                //     $sheet->appendRow($row);
+			                // }
+
+						});
+
+    		            // $sheet->fromArray($alldata);
+    		        // }
     	        });
 		    })->download($type);
 		}
