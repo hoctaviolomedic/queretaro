@@ -1,7 +1,8 @@
 @section('content-width', 's12 m7 xl8 offset-xl2')
 @section('form-content')
-{{ Form::setModel($data) }}
-<div class="panel-body">
+    {{ Form::setModel($data) }}
+    <div class="container-fluid">
+    <div class="panel-body">
     <div class="row">
         <div class="col-sm-4">
             <div class="form-group">
@@ -69,7 +70,7 @@
 
     <div class="well">
 
-        <form class="form-group">
+        <div class="form-group">
             <div class="row">
                 <div class="col-sm-12">
                     <div class="input-group">
@@ -78,9 +79,7 @@
                     </div>
                 </div>
             </div>
-        </form>
-        <!--<p>Medicamento seleccionado: FORMULA DE PROTEÍNA PARCIALMENTE HIDROLIZADA DE SUERO CONTIENE ACIDO GRASO OMEGA 3 DHA Y PREBIOTICOS GOS / NUCLEOTIDOSEL ACIDO GRASO OMEGA 6 AA 400 G /</p>-->
-
+        </div>
         <div class="row">
             <div class="col-sm-4 border-right">
                 <h4>*Dosis:</h4>
@@ -93,21 +92,21 @@
                             <input type="checkbox" name="dosis12" id="dosis12" autocomplete="off"  class="btn btn-default dosis_checkbox">1/2
                         </label>
                     </div>
-                    {{Form::number('dosis',null,['id'=>'dosis','class'=>'form-control','placeholder'=>'Ej. 6'])}}
-                    {{Form::select('_dosis',[],null,['id'=>'_dosis','class' => '_dosis form-control'])}}
+                    {{Form::number('dosis',null,['id'=>'dosis','class'=>'form-control','placeholder'=>'Ej. 6','min'=>'1'])}}
+                    {{Form::text('_dosis',null,['id'=>'_dosis','class' => '_dosis form-control','disabled'])}}
                 </div>
             </div>
             <div class="col-sm-4 border-right">
                 <h4>Cada:</h4>
                 <div class="input-group my-group">
-                    {{Form::number('cada',null,['id'=>'cada','class'=>'form-control','placeholder'=>'Ej. 6'])}}
+                    {{Form::number('cada',null,['id'=>'cada','class'=>'form-control','placeholder'=>'Ej. 6','min'=>'1'])}}
                     {{Form::select('_cada',['Hora(s)','Día(s)','Semana(s)','Mes(es)'],null,['id'=>'_cada','class' => '_cada form-control'])}}
                 </div>
             </div>
             <div class="col-sm-4">
                 <h4>Por:</h4>
                 <div class="input-group my-group">
-                    {{Form::number('por',null,['id'=>'por','class'=>'form-control','placeholder'=>'Ej. 6'])}}
+                    {{Form::number('por',null,['id'=>'por','class'=>'form-control','placeholder'=>'Ej. 6','min'=>'1'])}}
                     {{Form::select('_por',['Día(s)','Semana(s)','Mes(es)'],null,['id'=>'_por','class' => '_por form-control'])}}
                 </div>
             </div>
@@ -118,7 +117,7 @@
                 <h4>En caso de presentar:</h4>
                 {{Form::textarea('nota_medicamento',null,['class' => 'form-control','rows'=>'1','id'=>'nota_medicamento'])}}
             </div>
-            <div class="col-sm-4 border-right">
+            <div class="col-sm-6 border-right">
                 <h4>¿Surtido recurrente?</h4>
                 <div class="input-group my-group">
                     <div class="input-group-btn" role="group" aria-label="surtido" data-toggle="buttons">
@@ -151,9 +150,7 @@
                 </table>
             </div>
         </div>
-
     </div><!--/well-->
-
     <div class="row">
         <div class="col-sm-12">
             <div class="form-group">
@@ -163,9 +160,12 @@
         </div>
     </div><!--/row-->
 </div><!--/panel-body-->
+    </div>
+
 @endsection
 @section('header-bottom')
     <script type="text/javascript" src="{{asset('js/recetas.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/toaster.js')}}"></script>
 @endsection
 
 {{-- DONT DELETE --}}

@@ -102,23 +102,21 @@ class RecetasController extends ControllerBase
     {
         $json = [];
         $term = strtoupper($request->medicamento);
-        $medicamentos = DB::select("SELECT cp.clave_cliente, cp.descripcion, cf.descripcion as familia, cp.cantidad_presentacion, 
-                              TIPO_PRODUCTO.id_cuadro_tipo_medicamento as tipo_medicamento, c.id_cuadro, lp.tope_receta
-                             FROM cat_cuadro c
-																	INNER JOIN cat_cuadro_producto cp ON cp.id_cuadro = c.id_cuadro AND c.id_cliente = 135
-																	INNER JOIN cat_cuadro_tipo_producto TIPO_PRODUCTO ON cp.id_cuadro_tipo_medicamento = TIPO_PRODUCTO.id_cuadro_tipo_medicamento
-																	INNER JOIN cat_localidad_producto lp ON lp.id_cuadro = c.id_cuadro AND lp.clave_cliente = cp.clave_cliente AND lp.id_localidad = ".$request->localidad."
-																	INNER JOIN cat_familia cf ON cf.id_familia = cp.id_familia
-                                      WHERE cp.descripcion LIKE '%".$term."%'
-                                      AND c.estatus = '1'
-                                      AND c.id_tipo_cuadro = '1'
-                                      AND cp.estatus = '1'
-                                      AND TIPO_PRODUCTO.estatus = '1'
-																			AND lp.estatus = '1'
-                                      AND TIPO_PRODUCTO.id_cuadro_tipo_medicamento <> 57
-                                      ORDER BY cp.descripcion
-                                       LIMIT 10;");
-//        dd($medicamentos);
+        $medicamentos = DB::select("SELECT cp.clave_cliente, cp.descripcion, cf.descripcion as familia, cp.cantidad_presentacion,TIPO_PRODUCTO.id_cuadro_tipo_medicamento as tipo_medicamento, c.id_cuadro, lp.tope_receta
+                             FROM cat_cuadro c 
+                             INNER JOIN cat_cuadro_producto cp ON cp.id_cuadro = c.id_cuadro AND c.id_cliente = 135
+                             INNER JOIN cat_cuadro_tipo_producto TIPO_PRODUCTO ON cp.id_cuadro_tipo_medicamento = TIPO_PRODUCTO.id_cuadro_tipo_medicamento
+                             INNER JOIN cat_localidad_producto lp ON lp.id_cuadro = c.id_cuadro AND lp.clave_cliente = cp.clave_cliente AND lp.id_localidad = ".$request->localidad."
+                             INNER JOIN cat_familia cf ON cf.id_familia = cp.id_familia
+                             WHERE cp.descripcion LIKE '%".$term."%'
+                             AND c.estatus = '1'
+                             AND c.id_tipo_cuadro = '1'
+                             AND cp.estatus = '1'
+                             AND TIPO_PRODUCTO.estatus = '1'
+							 AND lp.estatus = '1'
+                             AND TIPO_PRODUCTO.id_cuadro_tipo_medicamento <> 57
+                             ORDER BY cp.descripcion
+                             LIMIT 10;");
         foreach ($medicamentos as $medicamento){
             $json[] = ['id'=>$medicamento->clave_cliente,
                 'text' => $medicamento->descripcion,

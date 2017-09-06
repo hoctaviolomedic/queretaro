@@ -13,7 +13,7 @@
 </div>
 @endsection
 
-@section('form-title', 'Agregar '. str_singular(currentEntityBaseName()))
+@section('form-title', 'Crear '. str_singular(currentEntityBaseName()))
 
 @section('content')
 <br>
