@@ -1,4 +1,4 @@
-
+@section('content-width', 's12 m7 xl8 offset-xl2')
 @section('form-content')
 {{ Form::setModel($data) }}
 <div class="panel-body">
@@ -118,49 +118,35 @@
                 <h4>En caso de presentar:</h4>
                 {{Form::textarea('nota_medicamento',null,['class' => 'form-control','rows'=>'1','id'=>'nota_medicamento'])}}
             </div>
-            <div class="col-sm-6">
-                <div class="checkbox">
-                    <label>
-                        {{Form::checkbox('surtido-recurrente',null,['class'=>'field'])}} Surtido recurrente
-                    </label>
-                </div>
-                <fieldset id="surtidoField" disabled>
-                    <div class="input-group my-group">
-                        {{Form::number('number',null,['id'=>'surtido_numero','placeholder'=>'Ej: 6','class'=>'form-control','disabled'])}}
-                        {{Form::select('tiempo',[],null,['id'=>'tiempo','class'=>'form-control'])}}
+            <div class="col-sm-4 border-right">
+                <h4>¿Surtido recurrente?</h4>
+                <div class="input-group my-group">
+                    <div class="input-group-btn" role="group" aria-label="surtido" data-toggle="buttons">
+                        <label class="btn btn-check btn-default">
+                            <input type="checkbox" name="surtido_recurrente" id="surtido_recurrente" autocomplete="off" class="btn btn-default checkbox_surtido">Recurrente
+                        </label>
                     </div>
-                </fieldset>
+                    {{Form::number('surtido_numero',null,['id'=>'surtido_numero','placeholder'=>'Ej: 6','class'=>'form-control','disabled'])}}
+                    {{Form::select('surtido_tiempo',['Día(s)','Mes(es)'],null,['id'=>'surtido_tiempo','class'=>'form-control','disabled'])}}
+                </div>
             </div>
             <div class="text-center col-sm-12">
                 <br>
-                <p><b>1 Pastilla(s)</b> cada <b>8 Hora(s)</b> por <b>5 Día(s)</b></p>
-                <button type="button" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar</button>
+                {{--<p id="resumen"><b>1 Pastilla(s)</b> cada <b>8 Hora(s)</b> por <b>5 Día(s)</b></p>--}}
+                <button type="button" id="agregar" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar</button>
             </div>
         </div>
 
         <div class="row">
             <div class="col-sm-12">
-                <table class="table table-hover">
+                <table class="table table-hover" id="detalle">
                     <thead>
                     <tr>
                         <th>#</th>
                         <th>Medicamento recetado</th>
                     </tr>
                     </thead>
-                    <tbody class="medicine">
-                    <tr>
-                        <th scope="row">1</th>
-                        <td>
-                            <p>Paracetamol 500GM</p>
-                            <p><b>1 Pastilla(s)</b> cada <b>8 Hora(s)</b> por <b>5 Día(s)</b></p>
-                            <p>15 Pastillas</p>
-                        </td>
-                        <td>
-                            <a href="#" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger">
-                                <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
-                            </a>
-                        </td>
-                    </tr>
+                    <tbody class="medicine_detail">
                     </tbody>
                 </table>
             </div>
