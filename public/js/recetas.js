@@ -3,6 +3,8 @@ $(document).ready(function () {
     //Deshabilitar siempre al iniciar
     $('#surtido_numero').prop('disabled',true);
     $('#tiempo').prop('disabled',true);
+    $(':submit').prop('disabled',true);
+
 
     $(".unidad").select2();
 
@@ -109,24 +111,24 @@ $(document).ready(function () {
     });
 
     $('#agregar').click(function () {
+        var medicamento = $('.medicamento').select2('data');
         var campos = '';
         if($('#medicamento').select2('data').length ==0)
-            campos += '<br>Medicamento';
-        if($('#dosis').val()<1)
-            campos += '<br>Dosis';
+            campos += '<br>Medicamento: ¿Seleccionaste un medicamento?';
+        if(parseInt($('#dosis').val()) < 1 || parseInt(medicamento[0].tope_receta) < parseInt($('#dosis').val()) || parseInt(medicamento[0].disponible) < parseInt($('#dosis').val())){
+            campos += '<br><br>Dosis: verifica que el valor sea mayor a 0 o que el valor no exceda la cantidad máxima permitida por receta o que no rebase las cantidades disponibles.';
+        }
         if($('#cada').val()<1)
-            campos += '<br>Cada cuanto tomar la medicina';
+            campos += '<br><br>Cada cuanto tomar la medicina';
         if($('#por').val()<1 )
-            campos += '<br>Duración del tratamiento de la medicina';
+            campos += '<br><br>Duración del tratamiento de la medicina';
 
         if(campos!=''){
             $.toaster({ priority : 'danger', title : 'Verifica los siguientes campos', message : campos,settings:{'donotdismiss':['danger']}});
             return
         }
 
-
         var filas = $('#detalle tr').length;
-        var medicamento = $('.medicamento').select2('data');
         var dosis_text = '<b>';
         var dosis_hidden = parseInt($('#dosis').val());
         dosis_text += $('#dosis').val();
@@ -166,13 +168,30 @@ $(document).ready(function () {
                     '<p><input name="indicaciones" type="hidden" value="'+nota_medicamento+'" disabled/>'+nota_medicamento+'</p>' +
                     '<p><input name="recurrencia" type="hidden" value="'+recurrencia_hidden+'" disabled/>'+recurrencia_text+'</p>' +
                 '</td>' +
-            '</tr>')
-    })
+                '<td>' +
+                    '<a onclick="eliminarFila(this)" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger" id="'+filas+'"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a> ' +
+                '</td>'+
+            '</tr>');
+        if(filas>0){
+            $(':submit').prop('disabled',false);
+        }
+    });
 
     $('#medicamento').on('change',function () {
         var medicamento = $('#medicamento').select2('data');
         $('#_dosis').val(medicamento[0].familia);
-    })
+    });
+
+    //Validación de medicamentos
+    $('form').on('submit',function (e) {
+       var valid = true;
+
+       //validación; si los medicamentos siguen disponibles, valid = true
+
+        if(!valid){
+            e.preventDefault();//Evita que se envíe el formulario si hay un error
+        }
+    });
 
 });
 
@@ -213,5 +232,11 @@ function initPaciente() {
 function formatMedicine(medicine) {
     if(!medicine.id){return medicine.text;}
     return $('<span>'+medicine.text+'</span><br>Presentación: <b>'+medicine.familia+'</b> Cantidad en la presentación: <b>'+medicine.cantidad_presentacion+'</b>' +
-        '<br>Disponibilidad: <b></b>');
+        '<br>Disponibilidad: <b>'+medicine.disponible+'</b> Máximo para recetar: <b>'+medicine.tope_receta+'</b>');
+}
+
+function eliminarFila(a) {
+    $(a).closest('tr').remove();
+    if($('#detalle tr').length-1<1)
+        $(':submit').prop('disabled',true);
 }
