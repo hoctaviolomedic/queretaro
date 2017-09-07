@@ -5,8 +5,9 @@ $(document).ready(function () {
     $('#tiempo').prop('disabled',true);
     $(':submit').prop('disabled',true);
 
-
     $(".unidad").select2();
+    $('.medico').select2();
+    $('.programa').select2();
 
     initPaciente();
 
@@ -135,10 +136,11 @@ $(document).ready(function () {
         if($('#dosis14').prop('checked') == true){
             dosis_text += ' 1/4 ';
             dosis_hidden += 0.25;
-        }else if($('#dosis14').prop('checked') == false){
+        }else if($('#dosis12').prop('checked') == true){
             dosis_text += ' 1/2 ';
             dosis_hidden += 0.5;
         }
+        dosis_hidden += ' '+medicamento[0].familia;
         dosis_text += medicamento[0].familia+'</b>';
 
         var tiempo_text = '<b>'+$('#cada').val();
@@ -175,6 +177,7 @@ $(document).ready(function () {
         if(filas>0){
             $(':submit').prop('disabled',false);
         }
+        $.toaster({ priority : 'success', title : '¡Éxito!', message : '<br>Medicamento agregado exitosamente'});
     });
 
     $('#medicamento').on('change',function () {
@@ -186,7 +189,11 @@ $(document).ready(function () {
     $('form').on('submit',function (e) {
        var valid = true;
 
+
        //validación; si los medicamentos siguen disponibles, valid = true
+        $.ajax({
+
+        });
 
         if(!valid){
             e.preventDefault();//Evita que se envíe el formulario si hay un error
@@ -239,4 +246,6 @@ function eliminarFila(a) {
     $(a).closest('tr').remove();
     if($('#detalle tr').length-1<1)
         $(':submit').prop('disabled',true);
+
+
 }

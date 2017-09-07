@@ -39,12 +39,47 @@ class Recetas extends ModelCompany
      * @var array
      */
     protected $fields = [
-        'folio' => 'Folio'
+        'fecha_formated' => 'Fecha Captura',
+        'nombre_completo_medico' => 'Médico',
+        'nombre_completo_paciente' => 'Paciente',
+        'id_afiliacion' => 'N° de afiliación',
+        'tipo_servicio' => 'Tipo de servicio',
+        'estatus_formated' => 'Estatus de la receta'
     ];
+
+    public function getNombreCompletoMedicoAttribute()
+    {
+        return $this->medico->nombre.' '.$this->medico->paterno.' '.$this->medico->materno;
+    }
+
+    public function getNombreCompletoPacienteAttribute()
+    {
+        if($this->id_afiliacion != '' || $this->id_afiliacion != null){
+            return $this->afiliacion->paterno.' '.$this->afiliacion->materno.' '.$this->afiliacion->nombre;
+        }else{
+            return $this->paciente_no_afiliado;
+        }
+    }
+
+    public function getTipoServicioAttribute(){
+        if($this->id_afiliacion != '' || $this->id_afiliacion != null){
+            return 'Afiliado';
+        }else{
+            return 'Externo';
+        }
+    }
+
+    public function getFechaFormatedAttribute(){
+        return date("d-m-Y",strtotime($this->fecha));
+    }
+
+    public function getEstatusFormatedAttribute(){//Estatus Receta
+        return $this->estatus->estatus_receta;
+    }
 
     public function afiliacion()
     {
-        return $this->belongsTo('App\Http\Models\Captura\Afiliacion','id_afiliacion','id_afiliacion');
+        return $this->belongsTo('App\Http\Models\Captura\Afiliaciones','id_afiliacion','id_afiliacion');
     }
 
     public function diagnostico()
@@ -55,5 +90,20 @@ class Recetas extends ModelCompany
     public function localidad()
     {
         return $this->belongsTo('App\Http\Models\Captura\Localidades','id_localidad','id_localidad');
+    }
+
+    public function medico()
+    {
+        return $this->belongsTo('App\Http\Models\Administracion\Medicos','id_medico','id_medico');
+    }
+
+    public function programa()
+    {
+        return $this->belongsTo('App\Http\Models\Administracion\Programas','id_programa','id_programa');
+    }
+
+    public function estatus()
+    {
+        return $this->hasOne('App\Http\Models\Captura\EstatusRecetas','id_estatus_receta','id_estatus_receta');
     }
 }
