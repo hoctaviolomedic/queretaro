@@ -27,7 +27,7 @@
 	@yield('content')
 </div>
 <!-- scripts -->
-{{ HTML::script('https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js') }}
+{{ HTML::script(asset('js/jquery.min.js')) }}
 {{ HTML::script(asset('js/select2.min.js')) }}
 {{ HTML::script(asset('js/bootstrap.min.js')) }}
 {{ HTML::script(asset('js/bootstrap-datetimepicker.min.js')) }}
