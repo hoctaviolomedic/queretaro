@@ -8,7 +8,7 @@
 @endsection
 
 @section('header-bottom')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/rivets/0.9.6/rivets.bundled.min.js"></script>
+    <script src="{{ asset('js/rivets.bundled.min.js') }}"></script>
     <script src="{{ asset('vendor/vanilla-datatables/vanilla-dataTables.js') }}"></script>
     <script src="{{ asset('js/smartindex.js') }}"></script>
     @if (session('message'))
