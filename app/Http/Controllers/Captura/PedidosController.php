@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Captura;
 
 use App\Http\Controllers\ControllerBase;
 use App\Http\Models\Captura\Pedidos;
-use Illuminate\Support\Facades\DB;
 
 class PedidosController extends ControllerBase
 {
@@ -17,8 +16,6 @@ class PedidosController extends ControllerBase
 	{
 		$this->entity = $entity;
 	}
-
-
 
 	public function getDataView()
 	{
@@ -35,32 +32,12 @@ class PedidosController extends ControllerBase
 	 */
 	public function index($company, $attributes = [])
 	{
-
-		$id_cliente = 135; # 135: Queretaro
-
-		// DB::enableQueryLog();
-
-		// $localidades = Pedidos::whereHas('localidad', function($query) use ($id_cliente) {
-		// 	$query->where('id_cliente', 135);
-		// })->get();
-
-		// dump( $localidades );
-
-
-		// dump( DB::getQueryLog() );
-
+		# 135: Queretaro
 		return parent::index($company, ['whereHas' =>
-			['localidad' => function($query) use ($id_cliente) {
+			['localidad' => function($query) {
 				$query->where('id_cliente', 135);
 			}]
 		]);
-
-		// $localidades->each(function($item, $key){
-
-		//     dump( $item->localidad );
-
-		// });
-
 	}
 
 	/**
@@ -100,4 +77,28 @@ class PedidosController extends ControllerBase
 			'dataview' => $this->getDataView()
 		]);
 	}
+
+	/**
+	 * Obtenemos archivo de exportacion para Oracle
+	 * @param  Request $request
+	 * @return void
+	 */
+	public function exportOracle($request) {
+		#
+		if ($request->ids) {
+			$pedidos = $this->entity->with(['detalle', 'localidad'])->whereIn('id_pedido', explode(',', $request->ids));
+		} else {
+			$pedidos = $this->entity->with(['detalle', 'localidad'])->whereHas('localidad', function($query){
+				$query->where('id_cliente', 135);
+			});
+		}
+
+		$this->exportSpreadsheet('csv', $this->entity->oracleCollections($pedidos), [
+			'excel.export.generate_heading_by_indices' => false,
+			'excel.csv.delimiter' => '|',
+			'excel.csv.enclosure' => '',
+		]);
+	}
+
+
 }

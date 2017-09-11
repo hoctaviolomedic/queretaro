@@ -9,6 +9,22 @@ use Illuminate\Support\HtmlString;
 class ModelBase extends Model
 {
 	/**
+	 * Opciones para exportar
+	 * @var array
+	 */
+	protected $smart_exports = [
+		[
+			'XLSX' => 'Libro Excel',
+			'PDF' => 'Documento PDF',
+		],
+		[
+			'XLS' => 'Excel 93-2003',
+			'CSV' => 'Archivo .csv',
+			'TXT' => 'Archivo .txt'
+		],
+	];
+
+	/**
 	 * Los atributos que seran visibles en index-datable
 	 * @var null|array
 	 */
@@ -57,6 +73,14 @@ class ModelBase extends Model
 	public function getEagerLoaders()
 	{
 		return $this->eagerLoaders;
+	}
+
+	/**
+	 * Obtenemos opciones para exportacion
+	 * @return array
+	 */
+	public function getSmartExports() {
+		return $this->smart_exports;
 	}
 
 	/**

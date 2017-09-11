@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Captura;
 
 use App\Http\Controllers\ControllerBase;
+use App\Http\Models\Administracion\Medicos;
+use App\Http\Models\Administracion\Programas;
 use App\Http\Models\Captura\Afiliaciones;
 use App\Http\Models\Captura\Diagnosticos;
 use App\Http\Models\Captura\Localidades;
@@ -21,6 +23,8 @@ class RecetasController extends ControllerBase
     {
         $this->entity = $entity;
         $this->localidades = Localidades::where('tipo',0)->where('id_cliente',135)->where('id_usuario',3)->get();
+        $this->medicos = Medicos::all();
+        $this->programas = Programas::all();
     }
 
     public function getDataView()
@@ -38,8 +42,11 @@ class RecetasController extends ControllerBase
      */
     public function create($company, $attributes = [])
     {
+
         $attributes = $attributes +['dataview'=>[
-                'localidades' => $this->localidades->pluck('localidad','id_localidad')
+                'localidades' => $this->localidades->pluck('localidad','id_localidad'),
+                'medicos' => $this->medicos->pluck('nombre_completo','id_medico'),
+                'programas' => $this->programas->pluck('nombre_programa','id_programa')
             ]];
         return parent::create($company, $attributes);
 
@@ -102,28 +109,21 @@ class RecetasController extends ControllerBase
     {
         $json = [];
         $term = strtoupper($request->medicamento);
-        $medicamentos = DB::select("SELECT cp.clave_cliente, cp.descripcion, cf.descripcion as familia, cp.cantidad_presentacion, SUM(ie.quedan - ie.apartadas) disponible,
-            TIPO_PRODUCTO.id_cuadro_tipo_medicamento as tipo_medicamento, c.id_cuadro, lp.tope_receta
-            FROM cat_cuadro c
-            INNER JOIN cat_cuadro_producto cp ON cp.id_cuadro = c.id_cuadro AND c.id_cliente = 135
-            INNER JOIN cat_cuadro_tipo_producto TIPO_PRODUCTO ON cp.id_cuadro_tipo_medicamento = TIPO_PRODUCTO.id_cuadro_tipo_medicamento
-            INNER JOIN cat_localidad_producto lp ON lp.id_cuadro = c.id_cuadro AND lp.clave_cliente = cp.clave_cliente AND lp.id_localidad = ".$request->localidad."
+        $medicamentos = DB::select("SELECT cp.clave_cliente, cp.descripcion, cf.descripcion as familia, coalesce(cp.cantidad_presentacion,0) cantidad_presentacion, coalesce(SUM(ie.quedan - ie.apartadas),0) disponible,
+                tp.id_cuadro_tipo_medicamento as tipo_medicamento, c.id_cuadro, coalesce(lp.tope_receta,0) tope_receta
+            
+           FROM cat_cuadro c
+            LEFT JOIN cat_cuadro_producto cp ON cp.id_cuadro = c.id_cuadro AND c.id_cliente = 135 AND cp.estatus = '1' AND cp.descripcion ILIKE '%".$term."%'
+            LEFT JOIN cat_cuadro_tipo_producto tp ON tp.id_cuadro_tipo_medicamento = cp.id_cuadro_tipo_medicamento AND tp.id_cuadro_tipo_medicamento <> 57 AND tp.estatus = '1'
+            LEFT JOIN cat_localidad_producto lp ON lp.id_cuadro = c.id_cuadro AND lp.clave_cliente = cp.clave_cliente AND lp.estatus = '1' AND lp.id_localidad = ".$request->localidad."
             INNER JOIN cat_familia cf ON cf.id_familia = cp.id_familia
-            INNER JOIN inv_existencia ie ON ie.id_localidad = lp.id_localidad
-            INNER JOIN cat_producto_cliente pc ON pc.codigo_barras = ie.codigo_barras AND pc.id_cuadro = c.id_cuadro AND pc.clave_cliente = cp.clave_cliente
-            WHERE cp.descripcion LIKE '%".$term."%'
-            AND pc.estatus = '1'
-            AND c.estatus = '1'
-            AND c.id_tipo_cuadro = '1'
-            AND cp.estatus = '1'
-            AND TIPO_PRODUCTO.estatus = '1'
-            AND lp.estatus = '1'
-            AND TIPO_PRODUCTO.id_cuadro_tipo_medicamento <> 57
-            AND (ie.quedan - ie.apartadas > 0)
-            AND ie.caducidad > now()
-            AND pc.estatus = '1'
-            GROUP BY cp.clave_cliente,cp.descripcion,cf.descripcion,cp.cantidad_presentacion,tipo_producto.id_cuadro_tipo_medicamento,c.id_cuadro,lp.tope_receta
-            ORDER BY cp.descripcion;");
+            LEFT JOIN inv_existencia ie ON ie.id_localidad = lp.id_localidad AND (ie.quedan - ie.apartadas > 0) AND ie.caducidad > now()
+            LEFT JOIN cat_producto_cliente pc ON pc.codigo_barras = ie.codigo_barras AND pc.id_cuadro = c.id_cuadro AND pc.clave_cliente = cp.clave_cliente AND pc.estatus = '1'
+            
+           WHERE c.estatus = '1' AND c.id_tipo_cuadro = '1'
+            
+           GROUP BY cp.clave_cliente,cp.descripcion,cf.descripcion,cp.cantidad_presentacion,tp.id_cuadro_tipo_medicamento,c.id_cuadro,lp.tope_receta
+            ORDER BY disponible DESC, cp.descripcion;");
         foreach ($medicamentos as $medicamento){
             $json[] = ['id'=>$medicamento->clave_cliente,
                 'text' => $medicamento->descripcion,
@@ -133,5 +133,9 @@ class RecetasController extends ControllerBase
                 'disponible'=> $medicamento->disponible];
         }
         return json_encode($json);
+    }
+
+    public function verifyStock($company,Request $request){
+
     }
 }

@@ -39,4 +39,13 @@ class Localidades extends ModelCompany
     {
         return $this->hasMany('App\Http\Models\Captura\Usuarios','id_localidad','id_localidad');
     }
+
+    /**
+     * Obtenemos jurisdiccion relacionads
+     * @return relacion
+     */
+    public function jurisdiccion() {
+        return $this->hasOne(Jurisdicciones::class, 'id_jurisdiccion', 'id_jurisdiccion');
+    }
+
 }

@@ -1,4 +1,8 @@
 /*Estílo personalizado*/
+@font-face {
+    font-family: 'Roboto';
+    src: url(../fonts/roboto/Roboto-Regular.woff);
+}
 body{
   background:#f4f4f4;
   font-family: 'Roboto', sans-serif;
@@ -205,4 +209,10 @@ cursor: pointer;
   background-image: none;
   -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
   box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.125);
+}
+.multiselect-native-select{
+  display: block;
+}
+.form-inline > .input-group{
+  width: auto;
 }

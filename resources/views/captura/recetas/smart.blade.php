@@ -10,6 +10,20 @@
                 {{Form::select('unidad',isset($localidades)?$localidades:[],null,['id'=>'unidad','class' => 'unidad form-control'])}}
             </div>
         </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                {{Form::label('medico','*Médico')}}
+                {{Form::select('medico',isset($medicos)?$medicos:[],null,['id'=>'medico','class' => 'medico form-control'])}}
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                {{Form::label('programa','*Programa')}}
+                {{Form::select('programa',isset($programas)?$programas:[],null,['id'=>'programa','class' => 'programa form-control'])}}
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-sm-2">
             <div class="form-group">
                 {{Form::label('tipo-servicio','*Tipo de servicio')}}
@@ -30,15 +44,15 @@
                 {{Form::text('paciente_externo',null,['id'=>'paciente_externo','class'=>'form-control','style'=>'display:none'])}}
             </div>
         </div>
-    </div>
-    <div class="row">
         <div class="col-sm-4">
             <div class="form-group">
                 {{Form::label('diagnostico','*Diagnóstico')}}
                 {{Form::select('diagnostico',[],null,['id'=>'diagnostico','class' => 'diagnostico form-control','data-url'=>companyRoute('getDiagnosticos')])}}
             </div>
         </div>
-        <div class="col-sm-2 col-xs-3">
+    </div>
+    <div class="row">
+        <div class="col-sm-4 col-xs-3">
             <div class="form-group">
                 <label for="peso">Peso:</label>
                 <div class="input-group">
@@ -47,7 +61,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-2 col-xs-3">
+        <div class="col-sm-4 col-xs-4">
             <div class="form-group">
                 <label for="altura">Altura:</label>
                 <div class="input-group">
@@ -56,7 +70,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-2 col-xs-3">
+        <div class="col-sm-4 col-xs-4">
             <div class="form-group">
                 <label for="presion">Presión:</label>
                 <div class="input-group">
@@ -126,7 +140,7 @@
                         </label>
                     </div>
                     {{Form::number('surtido_numero',null,['id'=>'surtido_numero','placeholder'=>'Ej: 6','class'=>'form-control','disabled'])}}
-                    {{Form::select('surtido_tiempo',['Día(s)','Mes(es)'],null,['id'=>'surtido_tiempo','class'=>'form-control','disabled'])}}
+                    {{Form::select('surtido_tiempo',['1'=>'Día(s)','7'=>'Semana(s)','30'=>'Mes(es)'],null,['id'=>'surtido_tiempo','class'=>'form-control','disabled'])}}
                 </div>
             </div>
             <div class="text-center col-sm-12">
@@ -138,7 +152,7 @@
 
         <div class="row">
             <div class="col-sm-12">
-                <table class="table table-hover" id="detalle">
+                <table class="table table-hover" id="detalle" data-url="{{companyRoute('verifyStock')}}">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -164,6 +178,7 @@
 
 @endsection
 @section('header-bottom')
+    @parent
     <script type="text/javascript" src="{{asset('js/recetas.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/toaster.js')}}"></script>
 @endsection

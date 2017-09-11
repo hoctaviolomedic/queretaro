@@ -8,7 +8,7 @@
 @endsection
 
 @section('header-bottom')
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/rivets/0.9.6/rivets.bundled.min.js"></script>
+    <script src="{{ asset('js/rivets.bundled.min.js') }}"></script>
     <script src="{{ asset('vendor/vanilla-datatables/vanilla-dataTables.js') }}"></script>
     <script src="{{ asset('js/smartindex.js') }}"></script>
     @if (session('message'))
@@ -40,20 +40,28 @@
 						<div rv-hide="actions.countItems | call < collections.items">
 							<div class="text-right">
 								<a href="{{ companyRoute('create') }}" class="btn btn-danger">Crear</a>
+							    @if (!empty($smart_exports))
 								<div style="display: inline-block; position: relative;">
 									<button class="btn btn-default" type="button" id="export-all" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 										Exportar
 										<span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="export-all">
-										<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'XLSX'])}}">Libro Excel</a></li>
-										<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'PDF'])}}">Archivo Pdf</a></li>
-										<li role="separator" class="divider"></li>
-										<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'XLS'])}}">Excel 97-2003</a></li>
-										<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'CSV'])}}">CSV</a></li>
-										<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'TXT'])}}">TXT</a></li>
+										@foreach ($smart_exports as $export_type => $export_text)
+											@if (!$loop->first)
+												<li role="separator" class="divider"></li>
+											@endif
+											@if (is_array($export_text))
+												@foreach ($export_text as $export_subtype => $export_subtext)
+													<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => $export_subtype])}}">{{$export_subtext}}</a></li>
+												@endforeach
+											@else
+												<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => $export_type])}}">{{$export_text}}</a></li>
+											@endif
+										@endforeach
 									</ul>
 								</div>
+							    @endif
 							</div>
 						</div>
 						<div rv-show="actions.countItems | call < collections.items" style="display: none;">
@@ -62,21 +70,28 @@
 								@can('delete', currentEntity())
 								<button class="btn btn-default" rv-on-click="actions.showModalDelete" data-delete-type="multiple" data-delete-url="{{companyRoute('destroyMultiple')}}"><i class="glyphicon glyphicon-trash"></i> Eliminar (<span rv-text="actions.countItems | call < collections.items"></span>)</button>
 								@endcan
+							    @if (!empty($smart_exports))
 								<div style="display: inline-block; position: relative;">
 									<button class="btn btn-default" type="button" id="export-custom" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 										Exportar (<span rv-text="actions.countItems | call < collections.items"></span>)
 										<span class="caret"></span>
 									</button>
 									<ul class="dropdown-menu dropdown-menu-right" aria-labelledby="export-custom">
-										<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'XLSX'])}}">Libro Excel</a></li>
-										<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'PDF'])}}">Archivo Pdf</a></li>
-										<li role="separator" class="divider"></li>
-										<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'XLS'])}}">Excel 97-2003</a></li>
-										<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'CSV'])}}">CSV</a></li>
-										<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => 'TXT'])}}">TXT</a></li>
+										@foreach ($smart_exports as $export_type => $export_text)
+											@if (!$loop->first)
+												<li role="separator" class="divider"></li>
+											@endif
+											@if (is_array($export_text))
+												@foreach ($export_text as $export_subtype => $export_subtext)
+													<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => $export_subtype])}}">{{$export_subtext}}</a></li>
+												@endforeach
+											@else
+												<li><a href="#" rv-on-click="actions.itemsExport" data-export-url="{{companyRoute('export', ['type' => $export_type])}}">{{$export_text}}</a></li>
+											@endif
+										@endforeach
 									</ul>
 								</div>
-
+							    @endif
 							</div>
 						</div>
 					</div>
