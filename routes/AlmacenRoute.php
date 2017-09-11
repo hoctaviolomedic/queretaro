@@ -16,8 +16,9 @@ Route::pattern('company', "($Conecctions)");
 
 Route::prefix('{company}')->group(function () {
 
-	Route::group(['prefix' => 'estadisticas', 'as' => 'estadisticas.', 'middleware' => ['share', 'auth.session'] ], function() {
-        Route::resource('generales', 'Estadisticas\GeneralesController');
-        Route::resource('gastos', 'Estadisticas\GastosController');
+    Route::group(['prefix' => 'almacen', 'as' => 'almacen.'], function() {
+        Route::group(['prefix' => 'entradas', 'as' => 'entradas.', 'middleware' => ['share', 'auth.session'] ], function() {
+            Route::get('pedidos','Almacen\EntradasController@pedidos')->name('pedidos');
+        });
     });
 });

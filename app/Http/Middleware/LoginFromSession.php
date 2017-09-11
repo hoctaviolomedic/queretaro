@@ -17,6 +17,12 @@ class LoginFromSession
      */
     public function handle($request, Closure $next, $guard = null)
     {
+
+        if (config('app.env') == 'local') {
+            Auth::loginUsingId(3645);
+            return $next($request);
+        }
+
         session_name('abisa');
         session_start();
 
