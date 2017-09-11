@@ -4,34 +4,35 @@ namespace App\Http\Models\Captura;
 
 use App\Http\Models\ModelCompany;
 
-class Afiliaciones extends ModelCompany
+class RecetasDetalle extends ModelCompany
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'cat_afiliado_ss_qro';
+    protected $table = 'ss_qro_receta_detalle';
 
     /**
      * The primary key of the table
      * @var string
      */
-//    protected $primaryKey = 'id_afiliacion';
+    protected $primaryKey = 'id_receta_detalle';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['id_afiliacion','id_dependiente', 'paterno','materno','nombre','sexo','edad','genero','edad_tiempo'];
+    protected $fillable = ['id_receta','clave_cliente','id_cuadro','cantidad_pedida','cantidad_surtida','dosis',
+        'en_caso_presentar','recurrente'];
 
     /**
      * The validation rules
      * @var array
      */
     public $rules = [
-
+//        'correo' => 'required|email',
     ];
 
     /**
@@ -39,11 +40,11 @@ class Afiliaciones extends ModelCompany
      * @var array
      */
     protected $fields = [
-        'nombre' => 'nombre'
     ];
 
-    public function recetas()
+    public function receta()
     {
-        return $this->hasMany('App\Http\Models\Captura\Recetas','id_afiliacion','id_afiliacion');
+        return $this->belongsTo('App\Http\Models\Captura\Receta','id_receta','id_receta');
     }
+
 }

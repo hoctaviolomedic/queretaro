@@ -6,20 +6,20 @@
     <div class="row">
         <div class="col-sm-4">
             <div class="form-group">
-                {{Form::label('unidad','*Unidad')}}
-                {{Form::select('unidad',isset($localidades)?$localidades:[],null,['id'=>'unidad','class' => 'unidad form-control'])}}
+                {{Form::label('id_localidad','*Unidad')}}
+                {{Form::select('id_localidad',isset($localidades)?$localidades:[],null,['id'=>'id_localidad','class' => 'unidad form-control'])}}
             </div>
         </div>
         <div class="col-sm-4">
             <div class="form-group">
-                {{Form::label('medico','*Médico')}}
-                {{Form::select('medico',isset($medicos)?$medicos:[],null,['id'=>'medico','class' => 'medico form-control'])}}
+                {{Form::label('id_medico','*Médico')}}
+                {{Form::select('id_medico',isset($medicos)?$medicos:[],null,['id'=>'id_medico','class' => 'medico form-control'])}}
             </div>
         </div>
         <div class="col-sm-4">
             <div class="form-group">
-                {{Form::label('programa','*Programa')}}
-                {{Form::select('programa',isset($programas)?$programas:[],null,['id'=>'programa','class' => 'programa form-control'])}}
+                {{Form::label('id_programa','*Programa')}}
+                {{Form::select('id_programa',isset($programas)?$programas:[],null,['id'=>'id_programa','class' => 'programa form-control'])}}
             </div>
         </div>
     </div>
@@ -39,20 +39,27 @@
         </div>
         <div class="col-sm-6">
             <div class="form-group">
-                {{Form::label('paciente','*Afiliación/Paciente')}}
-                {{Form::select('paciente',[],null,['id'=>'paciente','class' => 'paciente form-control','data-url'=>companyRoute('getAfiliados')])}}
-                {{Form::text('paciente_externo',null,['id'=>'paciente_externo','class'=>'form-control','style'=>'display:none'])}}
+                {{Form::label('id_dependiente','*Afiliación/Paciente')}}
+                {{Form::select('id_dependiente',[],null,['id'=>'id_dependiente','class' => 'paciente form-control','data-url'=>companyRoute('getAfiliados')])}}
+                {{Form::hidden('id_afiliacion',null,['id'=>'id_afiliacion'])}}
+                {{Form::text('nombre_paciente_no_afiliado',null,['id'=>'nombre_paciente_no_afiliado','class'=>'form-control','style'=>'display:none'])}}
             </div>
         </div>
         <div class="col-sm-4">
             <div class="form-group">
-                {{Form::label('diagnostico','*Diagnóstico')}}
-                {{Form::select('diagnostico',[],null,['id'=>'diagnostico','class' => 'diagnostico form-control','data-url'=>companyRoute('getDiagnosticos')])}}
+                {{Form::label('id_area','*Área de la consulta')}}
+                {{Form::select('id_area',isset($areas)?$areas:[],null,['id'=>'id_area','class' => 'area form-control'])}}
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-4 col-xs-3">
+        <div class="col-sm-4">
+            <div class="form-group">
+                {{Form::label('id_diagnostico','*Diagnóstico')}}
+                {{Form::select('id_diagnostico',[],null,['id'=>'id_diagnostico','class' => 'diagnostico form-control','data-url'=>companyRoute('getDiagnosticos')])}}
+            </div>
+        </div>
+        <div class="col-sm-2 col-xs-3">
             <div class="form-group">
                 <label for="peso">Peso:</label>
                 <div class="input-group">
@@ -61,7 +68,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4 col-xs-4">
+        <div class="col-sm-2 col-xs-4">
             <div class="form-group">
                 <label for="altura">Altura:</label>
                 <div class="input-group">
@@ -70,7 +77,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-sm-4 col-xs-4">
+        <div class="col-sm-24 col-xs-4">
             <div class="form-group">
                 <label for="presion">Presión:</label>
                 <div class="input-group">
@@ -111,17 +118,17 @@
                 </div>
             </div>
             <div class="col-sm-4 border-right">
-                <h4>Cada:</h4>
+                <h4>*Cada:</h4>
                 <div class="input-group my-group">
                     {{Form::number('cada',null,['id'=>'cada','class'=>'form-control','placeholder'=>'Ej. 6','min'=>'1'])}}
-                    {{Form::select('_cada',['Hora(s)','Día(s)','Semana(s)','Mes(es)'],null,['id'=>'_cada','class' => '_cada form-control'])}}
+                    {{Form::select('_cada',['1'=>'Hora(s)','24'=>'Día(s)','168'=>'Semana(s)','720'=>'Mes(es)'],null,['id'=>'_cada','class' => '_cada form-control'])}}
                 </div>
             </div>
             <div class="col-sm-4">
-                <h4>Por:</h4>
+                <h4>*Por:</h4>
                 <div class="input-group my-group">
                     {{Form::number('por',null,['id'=>'por','class'=>'form-control','placeholder'=>'Ej. 6','min'=>'1'])}}
-                    {{Form::select('_por',['Día(s)','Semana(s)','Mes(es)'],null,['id'=>'_por','class' => '_por form-control'])}}
+                    {{Form::select('_por',['24'=>'Día(s)','168'=>'Semana(s)','720'=>'Mes(es)'],null,['id'=>'_por','class' => '_por form-control'])}}
                 </div>
             </div>
         </div>
@@ -140,7 +147,7 @@
                         </label>
                     </div>
                     {{Form::number('surtido_numero',null,['id'=>'surtido_numero','placeholder'=>'Ej: 6','class'=>'form-control','disabled'])}}
-                    {{Form::select('surtido_tiempo',['1'=>'Día(s)','7'=>'Semana(s)','30'=>'Mes(es)'],null,['id'=>'surtido_tiempo','class'=>'form-control','disabled'])}}
+                    {{Form::select('surtido_tiempo',['24'=>'Día(s)','168'=>'Semana(s)','720'=>'Mes(es)'],null,['id'=>'surtido_tiempo','class'=>'form-control','disabled'])}}
                 </div>
             </div>
             <div class="text-center col-sm-12">
@@ -155,7 +162,7 @@
                 <table class="table table-hover" id="detalle" data-url="{{companyRoute('verifyStock')}}">
                     <thead>
                     <tr>
-                        <th>#</th>
+                        <th># Medicamento</th>
                         <th>Medicamento recetado</th>
                     </tr>
                     </thead>
@@ -168,13 +175,38 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="form-group">
-                {{Form::label('observacion','Observaciones adicionales:')}}
-                {{Form::textarea('observacion',null,['class' => 'form-control','rows'=>'1','id'=>'observacion'])}}
+                {{Form::label('observaciones','Observaciones adicionales:')}}
+                {{Form::textarea('observaciones',null,['class' => 'form-control','rows'=>'1','id'=>'observaciones'])}}
             </div>
         </div>
     </div><!--/row-->
+    @if(Route::currentRouteNamed(currentRouteName('show')))
+        <div class="row">
+            <div class="col-sm-12 text-center">
+                {{ Form::button('<span class="glyphicon glyphicon-flash"></span> Surtir', ['type' =>'button', 'class'=>'btn btn-danger','id'=>'surtir','enabled']) }}
+            </div>
+        </div><!--/row-->
+    @endif
 </div><!--/panel-body-->
     </div>
+
+    <div class="modal fade" tabindex="-1" role="dialog" id="modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Medicamento(s) agotado</h4>
+                </div>
+                <div class="modal-body">
+                    <p id="medicamento_modal"></p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="candelar" class="btn btn-default" data-dismiss="modal">No</button>
+                    <button type="button" id="aceptar" class="btn btn-danger">Sí</button>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
 @endsection
 @section('header-bottom')
