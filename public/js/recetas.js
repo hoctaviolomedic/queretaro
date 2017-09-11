@@ -306,7 +306,7 @@ $(document).ready(function () {
     })
 
     if($('#surtir')){
-        $('#surtir').prop('disabled',false);
+        $('.btn').prop('disabled',false);
     }
 
 });
