@@ -78,7 +78,7 @@ class RecetasController extends ControllerBase
 
         $request->request->set('presion',$request->presion1.'/'.$request->presion2);
         $request->request->set('id_estatus_receta',1);
-        $request->request->set('id_usuario_creacion',Auth::id());
+        $request->request->set('id_usuario_creacion',Auth::Id());
         $isSuccess = $this->entity->create($request->all());
         if ($isSuccess) {
             foreach ($request->_detalle as $detalle){
