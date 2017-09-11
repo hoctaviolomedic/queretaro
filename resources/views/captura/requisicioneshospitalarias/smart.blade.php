@@ -13,9 +13,9 @@
     <input type="hidden" name="inventario" value="0">
 
 
-            <div class="panel-heading">
-                <h3 class="panel-title text-center">Captura de Requisiciones Hospitalarias - SP DF</h3>
-            </div>
+            {{--<div class="panel-heading">--}}
+                {{--<h3 class="panel-title text-center">Captura de Requisiciones Hospitalarias - SP DF</h3>--}}
+            {{--</div>--}}
             <div class="panel-body">
 
                 <div class="row">
