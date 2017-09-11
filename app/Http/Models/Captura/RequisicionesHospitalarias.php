@@ -30,20 +30,22 @@ class RequisicionesHospitalarias extends ModelCompany
      *
      * @var array
      */
-    protected $fillable = ['id_localidad','fecha_captura','id_usuario_captura','id_area','tipo_producto','fecha_requerimiento','id_usuario_surtido'];
+    protected $fillable = ['id_requerimiento','id_localidad','fecha_captura','id_usuario_captura','id_area','tipo_producto','fecha_requerimiento','id_usuario_surtido','inventario'];
 
     /**
      * The validation rules
      * @var array
      */
     public $rules = [
+        'id_requerimiento' => 'required',
         'id_localidad' => 'required',
         'fecha_captura' => 'required',
         'id_usuario_captura' => 'required',
         'id_area' => 'required',
         'tipo_producto' => 'required',
         'fecha_requerimiento' => 'required',
-        'id_usuario_surtido' => 'required'
+        'id_usuario_surtido' => 'required',
+        'inventario' => 'required'
     ];
 
     /**
@@ -51,7 +53,7 @@ class RequisicionesHospitalarias extends ModelCompany
      * @var array
      */
     protected $fields = [
-        'id_requerimineto' => '#',
+        'id_requerimiento' => '#',
         'fecha_captura' => 'Fecha captura',
         'fecha_requerimiento' => 'Fecha requerimiento',
     ];
