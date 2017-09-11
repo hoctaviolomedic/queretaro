@@ -22,7 +22,7 @@
 
 </head>
 <body>
-<div style="background-color: black; color: white; height: 50px; text-align: center;">Aquí va el menú</div>
+<div style=" height: 50px; text-align: center;"></div>
 <div class="container-fluid">
 	@yield('content')
 </div>
