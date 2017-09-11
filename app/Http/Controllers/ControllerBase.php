@@ -468,7 +468,7 @@ class ControllerBase extends Controller
 		}
 	}
 
-	private function redirect($type)
+	public function redirect($type)
 	{
 		switch ($type) {
 			case 'store':

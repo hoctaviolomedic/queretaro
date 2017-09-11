@@ -17,14 +17,16 @@ class Recetas extends ModelCompany
      * The primary key of the table
      * @var string
      */
-    protected $primaryKey = 'folio';
+    protected $primaryKey = 'id_receta';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['folio','id_afiliacion', 'id_dependiente','id_medico','id_localidad'];
+    protected $fillable = ['id_localidad', 'fecha','id_afiliacion','id_dependiente','id_medico','id_diagnostico',
+        'id_programa','id_estatus_receta','id_area','nombre_paciente_no_afiliado','observaciones','id_usuario_creacion',
+        'id_usuario_creacion','id_usuario_modificacion','fecha_modificacion','peso','altura','presion'];
 
     /**
      * The validation rules
@@ -54,10 +56,10 @@ class Recetas extends ModelCompany
 
     public function getNombreCompletoPacienteAttribute()
     {
-        if($this->id_afiliacion != '' || $this->id_afiliacion != null){
+        if($this->id_afiliacion != '' && $this->id_afiliacion != null){
             return $this->afiliacion->paterno.' '.$this->afiliacion->materno.' '.$this->afiliacion->nombre;
         }else{
-            return $this->paciente_no_afiliado;
+            return $this->nombre_paciente_no_afiliado;
         }
     }
 
@@ -105,5 +107,10 @@ class Recetas extends ModelCompany
     public function estatus()
     {
         return $this->hasOne('App\Http\Models\Captura\EstatusRecetas','id_estatus_receta','id_estatus_receta');
+    }
+
+    public function detalles()
+    {
+        return $this->hasMany('App\Http\Models\Captura\RecetasDetalle','id_receta','id_receta');
     }
 }
