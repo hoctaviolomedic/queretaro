@@ -5,7 +5,7 @@
 
 
 @if (Route::currentRouteNamed(currentRouteName('create')))
-
+@section('form-title', 'Crear Requisiciones Hospitalaria')
     {{--<input type="hidden" name="id_requerimiento" value="3">--}}
     <input type="hidden" name="fecha_captura" value="{{date('Y-m-d h:i:s')}}">
     <input type="hidden" name="id_usuario_captura" value="2">
@@ -201,9 +201,6 @@
 @endsection
 
 {{-- DONT DELETE --}}
-@if (Route::currentRouteNamed(currentRouteName('index')))
-    @include('layouts.smart.index')
-@endif
 
 @if (Route::currentRouteNamed(currentRouteName('create')))
     @include('layouts.smart.create')
@@ -274,6 +271,11 @@
             });
         });
     </script>
+@endif
+
+@if (Route::currentRouteNamed(currentRouteName('index')))
+    @section('title', 'Requisiciones Hospitalarias')
+    @include('layouts.smart.index')
 @endif
 
 @if (Route::currentRouteNamed(currentRouteName('edit')))
