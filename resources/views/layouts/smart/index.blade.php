@@ -22,7 +22,7 @@
 <br>
 <div class="panel shadow-3 panel-danger">
 	<div class="panel-heading">
-		{{ HTML::tag('h3', currentEntityBaseName(),['class'=>'panel-title text-center']) }}
+		<h3 class='panel-title text-center'>@yield('title')</h3>
 	</div>
 	<div class="panel-body">
 		<div class="row">
