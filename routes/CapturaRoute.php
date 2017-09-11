@@ -22,6 +22,7 @@ Route::prefix('{company}')->group(function () {
         Route::post('getMedicamentos','Captura\RecetasController@getMedicamentos')->name('recetas.getMedicamentos');
         Route::resource('recetas', 'Captura\RecetasController');
         Route::resource('requisicioneshospitalarias', 'Captura\RequisicionesHospitalariasController');
+        Route::post('getAreas','Captura\RequisicionesHospitalariasController@getAreas')->name('requisicioneshospitalarias.getAreas');
         Route::resource('pedidos', 'Captura\PedidosController');
     });
 });
