@@ -149,7 +149,7 @@ class RequisicionesHospitalariasController extends ControllerBase
 
         $estatus = Estatus::all()->pluck('estatus','id_estatus');
 
-        $detalle_requerimiento = DB::select("SELECT rd.*, a.area, cp.descripcion
+        $detalle_requisicion = DB::select("SELECT rd.*, a.area, cp.descripcion
             FROM ss_qro_requisicion_detalle as rd
             LEFT JOIN cat_area as a ON a.id_area = rd.id_area
             LEFT JOIN cat_cuadro c ON C.id_cuadro = rd.id_cuadro
@@ -157,7 +157,7 @@ class RequisicionesHospitalariasController extends ControllerBase
             WHERE rd.id_requisicion = $id");
 
 
-//        dd($detalle_requerimiento);
+//        dd($detalle_requisicion);
 
         $data = $this->entity->findOrFail($id);
         $dataview = isset($attributes['dataview']) ? $attributes['dataview'] : [];
@@ -168,8 +168,8 @@ class RequisicionesHospitalariasController extends ControllerBase
 //            'producto_licitacion'=>$datos_productos,
 //            'areas'=>$areas,
             'solicitante'=>$usuario,
-            'datos_requerimiento'=> $datos_requerimiento,
-            'detalle_requerimiento'=> $detalle_requerimiento,
+            'datos_requisicion'=> $datos_requerimiento,
+            'detalle_requisicion'=> $detalle_requisicion,
             'estatus' => $estatus
             ]);
     }
@@ -182,7 +182,7 @@ class RequisicionesHospitalariasController extends ControllerBase
      */
     public function edit($company, $id, $attributes = [])
     {
-        $datos_requerimiento = RequisicionesHospitalarias::all()->where('id_requisicion','=',$id)->first();
+        $datos_requisicion = RequisicionesHospitalarias::all()->where('id_requisicion','=',$id)->first();
 
         $localidad = RequisicionesHospitalarias::join('cat_localidad','ss_qro_requisicion.id_localidad','=','cat_localidad.id_localidad')
             ->where('ss_qro_requisicion.id_requisicion','=',$id)
@@ -196,7 +196,7 @@ class RequisicionesHospitalariasController extends ControllerBase
 
         $estatus = Estatus::all()->pluck('estatus','id_estatus');
 
-        $detalle_requerimiento = DB::select("SELECT rd.*, a.area, cp.descripcion
+        $detalle_requisicion = DB::select("SELECT rd.*, a.area, cp.descripcion
             FROM ss_qro_requisicion_detalle as rd
             LEFT JOIN cat_area as a ON a.id_area = rd.id_area
             LEFT JOIN cat_cuadro c ON C.id_cuadro = rd.id_cuadro
@@ -204,19 +204,15 @@ class RequisicionesHospitalariasController extends ControllerBase
             WHERE rd.id_requisicion = $id");
 
 
-//        dd($detalle_requerimiento);
-
         $data = $this->entity->findOrFail($id);
         $dataview = isset($attributes['dataview']) ? $attributes['dataview'] : [];
 
         return view(currentRouteName('smart'), $dataview+[
                 'data'=>$data,
                 'localidades'=>$localidad->pluck('localidad','id_localidad'),
-//            'producto_licitacion'=>$datos_productos,
-//            'areas'=>$areas,
                 'solicitante'=>$usuario,
-                'datos_requerimiento'=> $datos_requerimiento,
-                'detalle_requerimiento'=> $detalle_requerimiento,
+                'datos_requisicion'=> $datos_requisicion,
+                'detalle_requisicion'=> $detalle_requisicion,
                 'estatus' => $estatus
             ]);
     }
@@ -233,8 +229,8 @@ class RequisicionesHospitalariasController extends ControllerBase
 
         foreach ($request->datos_requisicion as $dato)
         {
-//            dump($dato);
-            DB::update('UPDATE ss_qro_requisicion_detalle set cantidad_surtida = '.$dato['cantidad'].' where id_requisicion_detalle = ?', [$dato['id']]);
+            $cantidad = $dato['cantidad']+$dato['cantidad_surtida'];
+            DB::update('UPDATE ss_qro_requisicion_detalle set cantidad_surtida = '.$cantidad .' where id_requisicion_detalle = ?', [$dato['id']]);
         }
 
 //        $this->validate($request, $this->entity->rules);

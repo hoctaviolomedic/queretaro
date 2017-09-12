@@ -73,3 +73,53 @@ $('select[name="id_localidad"]').on('change', function() {
         $('select[name="producto"]').empty();
     }
 });
+
+function surtirRequisicion()
+{
+
+    // var detalle = JSON.stringify(detalle_requisicion);
+    //
+    // alert($('#lista_productos tr').length)
+
+    //alert(detalle_requisicion[0].cantidad_pedida);
+
+    var validado = 0;
+
+    for( var i=0 ; i < $('#lista_productos tr').length; i++)
+    {
+        // alert(parseInt($("#renglon_"+i).val())+ parseInt(detalle_requisicion[0].cantidad_surtida)) +'--'+ detalle_requisicion[0].cantidad_pedida)
+        if((parseInt($("#renglon_"+i).val())+ parseInt(detalle_requisicion[i].cantidad_surtida)) > detalle_requisicion[i].cantidad_pedida)
+        {
+            validado++;
+        }
+
+    }
+
+    if(validado == 0)
+    {
+        return true;
+    }
+    else
+    {
+        alert('Se esta excediendo la cantdad de producto solicitada.');
+        return false;
+    }
+
+    // alert($('#renglon_1').val());
+    // console.info(datos_requisicion[1][cantidad]);
+    // detalle = $.parseJSON(detalle);
+    // $.each(detalle_requisicion, function(data,obj) {
+    //    console.info(obj.cantidad_pedida);
+    //
+    //    // if(obj.clave_cliente ==)
+    //
+    // });
+
+}
+
+//
+// $( ".surtir_requisicion" ).submit(function() {
+//     //data_areas = $.parseJSON(detalle_requisicion);
+//
+//     //alert(JSON.stringify(detalle_requisicion));
+// });

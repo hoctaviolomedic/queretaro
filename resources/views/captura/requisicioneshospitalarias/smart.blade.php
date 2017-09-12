@@ -134,7 +134,7 @@
                 <div class="form-group">
                     <label for="fecha">*Fecha:</label>
                     <div id="datetimepicker3" class="input-group">
-                        <input type="text" class="form-control" name="fecha_requerido" value="{{$datos_requerimiento->fecha_requerido}}" data-format="yyyy-MM-dd">
+                        <input type="text" class="form-control" name="fecha_requerido" value="{{$datos_requisicion->fecha_requerido}}" data-format="yyyy-MM-dd">
                         <span class="input-group-btn add-on">
                                 <button data-date-icon="icon-calendar" class="btn btn-check" type="button"><span class="glyphicon glyphicon-calendar"></span></button>
                               </span>
@@ -155,7 +155,7 @@
                     </tr>
                     </thead>
                     <tbody id="lista_productos">
-                        @foreach($detalle_requerimiento as $detalle)
+                        @foreach($detalle_requisicion as $detalle)
                             <tr>
                                 <td>{{$detalle->area}}</td>
                                 <td>{{$detalle->descripcion}}</td>
@@ -171,27 +171,36 @@
 
 @if (Route::currentRouteNamed(currentRouteName('edit')))
     @section('form-title', 'Surtir requisicion')
+
+    @section('form-actions')
+
+        <div class="text-right ">
+            <button type="submit" id="surtir_requisicion" onclick="return surtirRequisicion()" class="btn btn-danger"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+            <a class="btn btn-default" href="{{ companyRoute('index') }}"> Cerrar</a>
+        </div>
+    @endsection
+
     <div class="panel-body">
 
         <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">
                     {{ Form::label('id_localidad', 'Localidad:') }}
-                    {{ Form::select('id_localidad', $localidades, null, ['id'=>'id_localidad','class'=>'js-data-example-ajax1 form-control','style'=>'100%']) }}
+                    {{ Form::select('id_localidad', $localidades, null, ['id'=>'id_localidad','class'=>'js-data-example-ajax1 form-control','style'=>'100%','disabled'=>'true']) }}
                     {{--{{ $errors->has('id_localidad') ? HTML::tag('span', $errors->first('id_localidad'), ['class'=>'help-block deep-orange-text']) : '' }}--}}
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
                     {{ Form::label('id_solicitante', 'Solicitante:') }}
-                    {{ Form::select('id_solicitante', $solicitante, null, ['id'=>'id_solicitante','class'=>'js-data-example-ajax1 form-control','style'=>'100%']) }}
+                    {{ Form::select('id_solicitante', $solicitante, null, ['id'=>'id_solicitante','class'=>'js-data-example-ajax1 form-control','style'=>'100%','disabled'=>'true']) }}
                     {{ $errors->has('id_solicitante') ? HTML::tag('span', $errors->first('id_solicitante'), ['class'=>'help-block deep-orange-text']) : '' }}
                 </div>
             </div>
             <div class="col-sm-2 col-xs-6">
                 <div class="form-group">
                     {{ Form::label('id_estatus', 'Estatus:') }}
-                    {{ Form::select('id_estatus', $estatus, null, ['id'=>'id_estatus','class'=>'js-data-example-ajax1 form-control','style'=>'100%']) }}
+                    {{ Form::select('id_estatus', $estatus, null, ['id'=>'id_estatus','class'=>'js-data-example-ajax1 form-control','style'=>'100%','disabled'=>'true']) }}
                     {{ $errors->has('id_estatus') ? HTML::tag('span', $errors->first('id_estatus'), ['class'=>'help-block deep-orange-text']) : '' }}
                 </div>
             </div>
@@ -199,7 +208,7 @@
                 <div class="form-group">
                     <label for="fecha">*Fecha:</label>
                     <div id="datetimepicker3" class="input-group">
-                        <input type="text" class="form-control" name="fecha_requerido" value="{{$datos_requerimiento->fecha_requerido}}" data-format="yyyy-MM-dd">
+                        <input type="text" class="form-control" name="fecha_requerido" value="{{$datos_requisicion->fecha_requerido}}" data-format="yyyy-MM-dd" disabled='true'>
                         <span class="input-group-btn add-on">
                                 <button data-date-icon="icon-calendar" class="btn btn-check" type="button"><span class="glyphicon glyphicon-calendar"></span></button>
                               </span>
@@ -210,7 +219,7 @@
 
         <div class="divider"></div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-12 table-responsive" >
                 <table class="table table-hover table-striped">
                     <thead>
                     <tr>
@@ -223,7 +232,7 @@
                     </tr>
                     </thead>
                     <tbody id="lista_productos">
-                    @foreach($detalle_requerimiento as $index => $detalle)
+                    @foreach($detalle_requisicion as $index => $detalle)
                         <tr>
                             <td>{{$detalle->area}}</td>
                             <td>{{$detalle->clave_cliente}}</td>
@@ -233,8 +242,9 @@
                             <td>
                                 <div class="input-group">
                                     @if( $detalle->cantidad_surtida < $detalle->cantidad_pedida )
-                                        <input type="number" class="form-control" name="datos_requisicion[{{$index}}][cantidad]" placeholder="Ej: 6">
+                                        <input type="number" class="form-control" id="renglon_{{$index}}" name="datos_requisicion[{{$index}}][cantidad]" placeholder="Ej: 6">
                                         <input type="hidden" name="datos_requisicion[{{$index}}][id]" value="{{$detalle->id_requisicion_detalle}}">
+                                        <input type="hidden" name="datos_requisicion[{{$index}}][cantidad_surtida]" value="{{$detalle->cantidad_surtida}}">
                                     @else
                                         <label>Producto entregado en su totalidad</label>
                                     @endif
@@ -336,6 +346,9 @@
 
 @if (Route::currentRouteNamed(currentRouteName('edit')))
     @include('layouts.smart.edit')
+    <script>
+        var detalle_requisicion = {!!json_encode($detalle_requisicion)!!};
+    </script>
 @endif
 
 @if (Route::currentRouteNamed(currentRouteName('show')))
