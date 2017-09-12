@@ -334,7 +334,7 @@
 @endif
 
 @if (Route::currentRouteNamed(currentRouteName('show')))
-    @section('title', 'Requisiciones Hospitalarias')
+    @section('form-title', ' Datos de las Requisiciones Hospitalarias')
     @include('layouts.smart.show')
 
 @endif
