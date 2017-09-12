@@ -53,7 +53,7 @@
                 <div class="divider"></div>
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-hover table-striped" id="detalle" data-url="{{companyRoute('verifyStockSurtir')}}">
+                        <table class="table table-hover table-striped table-responsive" id="detalle" data-url="{{companyRoute('verifyStockSurtir')}}">
                             <thead>
                             <tr>
                                 <th>Clave Producto</th>

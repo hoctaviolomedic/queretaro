@@ -174,7 +174,7 @@ class ControllerBase extends Controller
 	public function edit($company, $id, $attributes =[])
 	{
 		# ¿Usuario tiene permiso para actualizar?
-		// $this->authorize('update', $this->entity);
+		 $this->authorize('update', $this->entity);
 
 		$data = $this->entity->findOrFail($id);
 		$dataview = $attributes['dataview'] ?? [];
@@ -223,7 +223,7 @@ class ControllerBase extends Controller
 	public function destroy(Request $request, $company, $idOrIds)
 	{
 		# ¿Usuario tiene permiso para eliminar?
-		// $this->authorize('delete', $this->entity);
+		 $this->authorize('delete', $this->entity);
 
 		# Unico
 		if (!is_array($idOrIds)) {

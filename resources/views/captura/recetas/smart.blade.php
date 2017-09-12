@@ -164,9 +164,8 @@
                 <button type="button" id="agregar" class="btn btn-default"><span class="glyphicon glyphicon-plus" aria-hidden="true"></span> Agregar</button>
             </div>
         </div>
-
         <div class="row">
-            <div class="col-sm-12">
+            <div class="col-sm-12 table-responsive">
                 <table class="table table-hover" id="detalle" data-url="{{companyRoute('verifyStock')}}">
                     <thead>
                     <tr>
@@ -236,6 +235,21 @@
     @parent
     <script type="text/javascript" src="{{asset('js/recetas.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/toaster.js')}}"></script>
+
+    @if (Route::currentRouteNamed(currentRouteName('show')))
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#id_localidad').select2('destroy');
+                $('#id_medico').select2('destroy');
+                $('#id_programa').select2('destroy');
+                $('#id_dependiente').select2('destroy');
+                $('#id_area').select2('destroy');
+                $('#id_diagnostico').select2('destroy');
+                $('#medicamento').select2('destroy');
+            });
+
+        </script>
+    @endif
 @endsection
 
 {{-- DONT DELETE --}}
