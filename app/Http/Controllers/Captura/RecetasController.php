@@ -249,7 +249,7 @@ class RecetasController extends ControllerBase
     public function surtirReceta($company,$id)
     {
         $receta = Recetas::all()->find($id);
-        return view('captura\recetas\surtir',[
+        return view('captura.recetas.surtir',[
             'receta' => $receta,
         ]);
     }
@@ -312,7 +312,7 @@ class RecetasController extends ControllerBase
             }
         }
         $receta = Recetas::all()->find($id);
-        return view('captura\recetas\surtir',[
+        return view('captura.recetas.surtir',[
             'receta' => $receta,
         ]);
     }
