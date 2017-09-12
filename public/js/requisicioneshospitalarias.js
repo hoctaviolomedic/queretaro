@@ -15,7 +15,7 @@ function agregarProducto() {
         '<td>' + area_nombre + '</td>' +
         '<td>' + producto_nombre + '</td>' +
         '<td>'+ cantidad +'</td> ' +
-        '<td><a href="#" class="waves-effect waves-light btn btn-flat no-padding" onclick="eliminarFila(\'' + id_renglon + '\')"><i class="material-icons">delete</i></a></td>  ' +
+        '<td>' + '<a href="#" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"  onclick="eliminarFila(\'' + id_renglon + '\')"></span> </a></td>  ' +
         '</tr>' +
         '<input type="hidden" value="'+id_area+'" name="producto_requisicion['+$cont_producto+'][id_area]">' +
         '<input type="hidden" value="'+producto_clave+'" name="producto_requisicion['+$cont_producto+'][producto_clave]">' +

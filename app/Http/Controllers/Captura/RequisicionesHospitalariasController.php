@@ -93,7 +93,7 @@ class RequisicionesHospitalariasController extends ControllerBase
 
 //        dd($request->all());
 //        $isSuccess = $this->entity->create($request->all()+['id_requerimiento' => $id_max+1]);
-        $isSuccess = $this->entity->create($request->all()+['fecha' => date('Y-m-d h:i:s')]);
+        $isSuccess = $this->entity->create($request->all()+['fecha' => date('Y-m-d h:i:s'),'id_usuario_captura'=>2]);
 //        $cont_id = DB::table('ss_qro_requisicion_detalle')->max('id_requerimiento')+1;
         foreach ($request->input('producto_requisicion') as $productos_requiscion )
         {
@@ -219,6 +219,42 @@ class RequisicionesHospitalariasController extends ControllerBase
                 'detalle_requerimiento'=> $detalle_requerimiento,
                 'estatus' => $estatus
             ]);
+    }
+
+
+    public function update(Request $request, $company, $id)
+    {
+        # ¿Usuario tiene permiso para actualizar?
+        // $this->authorize('update', $this->entity);
+
+        # Validamos request, si falla regresamos atras
+
+//        dd($request);
+
+        foreach ($request->datos_requisicion as $dato)
+        {
+//            dump($dato);
+            DB::update('UPDATE ss_qro_requisicion_detalle set cantidad_surtida = '.$dato['cantidad'].' where id_requisicion_detalle = ?', [$dato['id']]);
+        }
+
+//        $this->validate($request, $this->entity->rules);
+//
+//        $entity = $this->entity->findOrFail($id);
+//
+//        $entity->fill($request->all());
+//        if ($entity->save()) {
+//
+//            if (config('app.env') != 'standalone') {
+//                # Eliminamos cache
+//                Cache::tags(getCacheTag('index'))->flush();
+//            }
+//
+//            $this->log('update', $id);
+            return $this->redirect('update');
+//        } else {
+//            $this->log('error_update', $id);
+//            return $this->redirect('error_update');
+//        }
     }
 
 //    public function getAreas()

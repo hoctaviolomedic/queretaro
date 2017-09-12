@@ -232,7 +232,12 @@
                             <td>{{$detalle->cantidad_surtida}}</td>
                             <td>
                                 <div class="input-group">
-                                    <input type="number" class="form-control" name="datos_requisicion[{{$index}}][id=>{{$detalle->id_requisicion_detalle}}]" placeholder="Ej: 6">
+                                    @if( $detalle->cantidad_surtida < $detalle->cantidad_pedida )
+                                        <input type="number" class="form-control" name="datos_requisicion[{{$index}}][cantidad]" placeholder="Ej: 6">
+                                        <input type="hidden" name="datos_requisicion[{{$index}}][id]" value="{{$detalle->id_requisicion_detalle}}">
+                                    @else
+                                        <label>Producto entregado en su totalidad</label>
+                                    @endif
                                 </div><!-- /input-group -->
                             </td>
                         </tr>
