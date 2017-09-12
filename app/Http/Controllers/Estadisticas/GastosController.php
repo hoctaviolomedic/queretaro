@@ -4,7 +4,6 @@ namespace App\Http\Controllers\Estadisticas;
 use Illuminate\Http\Request;
 use App\Http\Controllers\ControllerBase;
 use App\Http\Models\Captura\Localidades;
-use Auth;
 use DB;
 
 class GastosController extends ControllerBase
@@ -29,8 +28,6 @@ class GastosController extends ControllerBase
 	
 	public function store(Request $request, $company)
 	{
-	    #dd($request);
-	    
 	    $fecha_inicio = isset($request->datetimepicker1) ? $request->datetimepicker1 : '1900-01-01';
 	    $fecha_fin = isset($request->datetimepicker2) ? $request->datetimepicker2 : '1900-01-01';
 	    $localidad = isset($request->localidades) ? $request->localidades : -999;
@@ -56,7 +53,6 @@ class GastosController extends ControllerBase
 	    ->whereBetween('r.fecha_folio', [$fecha_inicio, $fecha_fin])->whereraw("(r.id_localidad = $localidad or $localidad = -999)")
 	    ->groupBy(['r.folio', 'l.localidad'])->orderByRaw('cantidad desc')->limit(5)->get();
 	    
-	    
 	    $medicos = DB::table('sp_df_receta_detalle as d')
 	    ->leftJoin('sp_df_receta as r', function($q) {
 	        $q->on('r.folio', '=', 'd.folio');
@@ -67,8 +63,6 @@ class GastosController extends ControllerBase
 	    ->selectRaw("max(concat(m.nombre,' ',m.paterno,' ',m.materno)) as medico, p.clave_cliente as clave, max(p.descripcion) producto, sum(d.cantidad_surtida) cantidad, concat('#',substring(md5(random()::text) from 4 for 6)) as color")
 	    ->whereBetween('r.fecha_folio', [$fecha_inicio, $fecha_fin])->whereraw("(r.id_localidad = $localidad or $localidad = -999)")
 	    ->whereRaw('r.id_medico is not null')->groupBy(['m.cedula', 'p.clave_cliente'])->orderByRaw('cantidad desc')->limit(15)->get();
-	    
-	    #dd($medicos);
 	    
 	    $pacientes = DB::table('sp_df_receta_detalle as d')
 	    ->leftJoin('sp_df_receta as r', function($q) {
@@ -88,7 +82,5 @@ class GastosController extends ControllerBase
 	        'medicos' => $medicos,
 	        'pacientes' => $pacientes,
 	    ]);
-	    
-	    
 	}
 }

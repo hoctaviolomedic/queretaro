@@ -1,36 +1,21 @@
 @extends('layouts.dashboard')
 
 @section('header-top')
-	<!-- Bootstrap -->
-    <link href="{{asset('css/select2.min.css')}}" rel="stylesheet" />
-    <link href="{{asset('css/style.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/export.css')}}" type="text/css" media="all" />
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="{{asset('js/html5shiv.min.js')}}"></script>
-      <script src="{{asset('js/respond.min.js')}}"></script>
-    <![endif]-->
-    <style>
-    #piepacientes .amcharts-chart-div, #piepacientes .amcharts-chart-div svg,
-    #piemedicos .amcharts-chart-div, #piemedicos .amcharts-chart-div svg {
-        height: 90vh !important;
-    }	
+	<style>
+        #piepacientes .amcharts-chart-div, #piepacientes .amcharts-chart-div svg,
+        #piemedicos .amcharts-chart-div, #piemedicos .amcharts-chart-div svg {
+            height: 90vh !important;
+        }	
     </style>
 @endsection
 
 @section('header-bottom')
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="{{asset('js/jquery.min.js')}}"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{{asset('js/select2.min.js')}}"></script>
-    <!--Date Picker-->
-    <script src="{{asset('js/bootstrap-datetimepicker.min.js')}}"></script>
     <!--Plugins para los charts-->
-    <script src="{{asset('js/amcharts/amcharts.js')}}"></script>
-    <script src="{{asset('js/amcharts/serial.js')}}"></script>
-    <script src="{{asset('js/amcharts/export.min.js')}}"></script>
-    <script src="{{asset('js/amcharts/themes/light.js')}}"></script>
+    {{ HTML::script(asset('js/amcharts/amcharts.js')) }}
+    {{ HTML::script(asset('js/amcharts/serial.js')) }}
+    {{ HTML::script(asset('js/amcharts/export.min.js')) }}
+    {{ HTML::script(asset('js/amcharts/themes/light.js')) }}
+
     <script type="text/javascript">
 		$(document).ready(function() {
         	$(".js-example-basic-single").select2({       
@@ -136,7 +121,6 @@
                 	"enabled": true
                   }
             });
-
             
             var chart = AmCharts.makeChart( "piepacientes", {
                 "type": "serial",
@@ -224,7 +208,7 @@
 <div class="container-fluid">
 	<div class="panel shadow-3 panel-danger">
     	<div class="panel-heading">
-    		<h3 class="panel-title text-center">Gastos</h3>
+    		<h3 class="panel-title text-center">Estad&#237;sticas de Consumo</h3>
     	</div>
     	<div class="panel-body">
     		{!! Form::open(['url' => companyRoute('index'), 'id' => 'form-model', 'class' => 'row']) !!}
@@ -267,8 +251,9 @@
     
             <div class="row">
             	<div class="col-md-6 col-sm-12">
+                    <h4>Consumo general por productos:</h4>
+            		@if(!empty($productos))
             		<div class="row">
-                    	<h4>Consumo productos:</h4>
                       	<div class="form-group">
                         	<div class="charts">
                         		<div id="pieproductos" class="chart"></div>
@@ -299,10 +284,12 @@
                         </tbody>
                         @endif
                 	</table>
+                	@endif
                 </div>
                 <div class="col-md-6 col-sm-12 border-right">
+                    <h4>Productos por Receta:</h4>
+                	@if(!empty($recetas))
                 	<div class="row">
-                    	<h4>Productos por Receta:</h4>
                       	<div class="form-group">
                         	<div class="charts">
                         		<div id="pierecetas" class="chart"></div>
@@ -333,6 +320,7 @@
                         </tbody>
                         @endif
                 	</table>
+                	@endif
                 </div>
     		</div>
     
@@ -341,7 +329,7 @@
             <!-- Nav tabs -->
             <ul class="nav nav-tabs" role="tablist">
               <li role="presentation" class="active"><a href="#paciente" aria-controls="paciente" role="tab" data-toggle="tab">Paciente</a></li>
-              <li role="presentation"><a href="#medico" aria-controls="medico" role="tab" data-toggle="tab">M�dico</a></li>
+              <li role="presentation"><a href="#medico" aria-controls="medico" role="tab" data-toggle="tab">Médico</a></li>
             </ul>
         
             <!-- Tab panes -->
@@ -349,14 +337,17 @@
         		<div role="tabpanel" class="tab-pane fade in active" id="paciente">
               		<div class="row">
                     	<div class="col-md-6 col-sm-12">
+                        	<h4>Productos por paciente:</h4>
+                        	@if(!empty($pacientes))
                     		<div class="row">
-                            	<h4>Productos por paciente:</h4>
                             	<div class="charts">
                             		<div id="piepacientes" class="chart chartpaciente"></div>
                             	</div>
                             </div>
+                            @endif
                         </div>
                         <div class="col-md-6 col-sm-12">
+                        	@if(!empty($pacientes))
                         	<table class="table table-striped table-hover row">
                         		@if(isset($pacientes[0]))
                                 <thead>
@@ -381,23 +372,26 @@
                                 </tbody>
                                 @endif
                         	</table>
+                        	@endif
                         </div>
                     </div>
                 </div>
         		<div role="tabpanel" class="tab-pane fade in" id="medico">
                 	<div class="row">
                     	<div class="col-md-6 col-sm-12">
+                        	<h4>Productos por médico:</h4>
+                        	@if(!empty($medicos))
                     		<div class="row">
-                            	<h4>Productos por medico:</h4>
                               	<div class="form-group">
                                 	<div class="charts">
                                 		<div id="piemedicos" class="chart"></div>
                                 	</div>
                               	</div>
                             </div>
-                          	
+                          	@endif
                         </div>
                         <div class="col-md-6 col-sm-12">
+                        	@if(!empty($medicos))
                         	<table class="table table-striped table-hover row">
                         		@if(isset($medicos[0]))
                                 <thead>
@@ -422,11 +416,11 @@
                                 </tbody>
                                 @endif
                         	</table>
+                        	@endif
                         </div>
                     </div>
         		</div>
         	</div><!--/fin del tab-->
-            
 
     	</div><!--/panel-body-->
 	</div><!--/panel-->

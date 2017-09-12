@@ -1,30 +1,15 @@
 @extends('layouts.dashboard')
 
 @section('header-top')
-	<!-- Bootstrap -->
-    <link href="{{asset('css/select2.min.css')}}" rel="stylesheet" />
-    <link href="{{asset('css/style.css')}}" rel="stylesheet">
-    <link rel="stylesheet" href="{{asset('css/export.css')}}" type="text/css" media="all" />
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
-      <script src="{{asset('js/html5shiv.min.js')}}"></script>
-      <script src="{{asset('js/respond.min.js')}}"></script>
-    <![endif]-->
 @endsection
 
 @section('header-bottom')
-	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-    <script src="{{asset('js/jquery.min.js')}}"></script>
-    <!-- Include all compiled plugins (below), or include individual files as needed -->
-    <script src="{{asset('js/select2.min.js')}}"></script>
-    <!--Date Picker-->
-    <script src="{{asset('js/bootstrap-datetimepicker.min.js')}}"></script>
     <!--Plugins para los charts-->
-    <script src="{{asset('js/amcharts/amcharts.js')}}"></script>
-    <script src="{{asset('js/amcharts/pie.js')}}"></script>
-    <script src="{{asset('js/amcharts/export.min.js')}}"></script>
-    <script src="{{asset('js/amcharts/themes/light.js')}}"></script>
+    {{ HTML::script(asset('js/amcharts/amcharts.js')) }}
+    {{ HTML::script(asset('js/amcharts/pie.js')) }}
+    {{ HTML::script(asset('js/amcharts/export.min.js')) }}
+    {{ HTML::script(asset('js/amcharts/themes/light.js')) }}
+    
     <script type="text/javascript">
 		$(document).ready(function() {
         	$(".js-example-basic-single").select2({       
@@ -122,14 +107,14 @@
 <div class="container-fluid">
 	<div class="panel shadow-3 panel-danger">
     	<div class="panel-heading">
-    		<h3 class="panel-title text-center">Estadísticas</h3>
+    		<h3 class="panel-title text-center">Estad&#237;sticas Generales</h3>
     	</div>
     	<div class="panel-body">
     		{!! Form::open(['url' => companyRoute('index'), 'id' => 'form-model', 'class' => 'row']) !!}
     			<div class="col-md-6 col-sm-12 col-xs-12">
     				<div class="form-group">
                         {{ Form::label('localidades', 'Localidad:') }}
-                        {{ Form::select('localidades', $localidades, null, ['id'=>'localidades','class'=>'js-data-example-ajax1 form-control','style'=>'100%']) }}
+                        {{ Form::select('localidades', $localidades, null, ['id'=>'localidades','class'=>'form-control']) }}
                         {{ $errors->has('localidades') ? HTML::tag('span', $errors->first('localidades'), ['class'=>'help-block deep-orange-text']) : '' }}
                     </div>
         		</div>
@@ -161,8 +146,9 @@
                 </div>
     		{!! Form::close() !!}
     
+    		@if(!empty($padecimientos))
     		<div class="divider"></div>
-    
+			
             <div class="row">
             	<div class="col-md-6 col-sm-12">
                 	<h4>Padecimientos:</h4>
@@ -195,11 +181,14 @@
                 	</table>
                 </div>
     		</div>
+    		@endif
     
+    		@if(!empty($pacientes))
             <div class="divider"></div>
-    
+            
             <div class="row">
                 <div class="col-md-6 col-sm-12 border-right">
+                	<h4>Pacientes:</h4>
                 	<table class="table table-striped table-hover">
                 		@if(isset($pacientes[0]))
                         <thead>
@@ -222,7 +211,6 @@
                 	</table>
                 </div>
                 <div class="col-md-6 col-sm-12">
-                	<h4>Pacientes:</h4>
                   	<div class="charts">
                     	<div class="charts">
                     		<div id="piepacientes" class="chart"></div>
@@ -230,9 +218,11 @@
                   	</div>
                 </div>
     		</div>
+    		@endif
     
+          	@if(!empty($medicos))
           	<div class="divider"></div>
-    
+    		
             <div class="row">
             	<div class="col-md-6 col-sm-12">
                 	<h4>Medicos:</h4>
@@ -265,6 +255,8 @@
                 	</table>
                 </div>
     		</div>
+    		@endif
+
     	</div><!--/panel-body-->
 	</div><!--/panel-->
 </div>
