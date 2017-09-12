@@ -59,7 +59,7 @@ $('select[name="id_localidad"]').on('change', function() {
                     $('select[name="id_area"]').append('<option value="'+ key +'">'+ value +'</option>');
                 });
                 $.each(data_usuario, function(key, value) {
-                    $('select[name="id_usuario_surtido"]').append('<option value="'+ key +'">'+ value +'</option>');
+                    $('select[name="id_solicitante"]').append('<option value="'+ key +'">'+ value +'</option>');
                 });
                 $.each(data_producto, function(key, value) {
                     $('select[name="producto"]').append('<option value="'+ key +'">'+ value +'</option>');

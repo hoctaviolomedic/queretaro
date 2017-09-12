@@ -1,21 +1,15 @@
 
 @section('content-width', 's12 m7 xl8 offset-xl2')
+
+
+
 @section('form-content')
 {{ Form::setModel($data) }}
 
 
 @if (Route::currentRouteNamed(currentRouteName('create')))
 @section('form-title', 'Crear Requisiciones Hospitalaria')
-    {{--<input type="hidden" name="id_requerimiento" value="3">--}}
-    <input type="hidden" name="fecha_captura" value="{{date('Y-m-d h:i:s')}}">
-    <input type="hidden" name="id_usuario_captura" value="2">
-    <input type="hidden" name="tipo_producto" value="2">
-    <input type="hidden" name="inventario" value="0">
 
-
-            {{--<div class="panel-heading">--}}
-                {{--<h3 class="panel-title text-center">Captura de Requisiciones Hospitalarias - SP DF</h3>--}}
-            {{--</div>--}}
             <div class="panel-body">
 
                 <div class="row">
@@ -29,25 +23,23 @@
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
-                            {{ Form::label('id_usuario_surtido', 'Solicitante:') }}
-                            {{ Form::select('id_usuario_surtido',[], null, ['id'=>'id_usuario_surtido','class'=>'js-data-example-ajax1 form-control','style'=>'100%','data-url'=>companyRoute('getAreas')]) }}
-                            {{ $errors->has('id_usuario_surtido') ? HTML::tag('span', $errors->first('id_usuario_surtido'), ['class'=>'help-block deep-orange-text']) : '' }}
+                            {{ Form::label('id_solicitante', 'Solicitante:') }}
+                            {{ Form::select('id_solicitante',[], null, ['id'=>'id_solicitante','class'=>'js-data-example-ajax1 form-control','style'=>'100%','data-url'=>companyRoute('getAreas')]) }}
+                            {{ $errors->has('id_solicitante') ? HTML::tag('span', $errors->first('id_solicitante'), ['class'=>'help-block deep-orange-text']) : '' }}
                         </div>
                     </div>
                     <div class="col-sm-2 col-xs-6">
-                        <label>*Estatus:</label>
-                        <select class="form-control" name="estatus">
-                            <option value="1">Surtido</option>
-                            <option value="2">No surtido</option>
-                            <option value="3">Parcialmente surtido</option>
-                            <option value="4">Cancelado</option>
-                        </select>
+                        <div class="form-group">
+                            {{ Form::label('id_estatus', 'Estatus:') }}
+                            {{ Form::select('id_estatus', $estatus, null, ['id'=>'id_estatus','class'=>' form-control','style'=>'100%']) }}
+                            {{ $errors->has('id_estatus') ? HTML::tag('span', $errors->first('id_estatus'), ['class'=>'help-block deep-orange-text']) : '' }}
+                        </div>
                     </div>
                     <div class="col-sm-2 col-xs-6">
                         <div class="form-group">
                             <label for="fecha">*Fecha:</label>
                             <div id="datetimepicker3" class="input-group">
-                                <input type="text" class="form-control" name="fecha_requerimiento" data-format="yyyy-MM-dd">
+                                <input type="text" class="form-control" name="fecha_requerido" data-format="yyyy-MM-dd">
                                 <span class="input-group-btn add-on">
                                 <button data-date-icon="icon-calendar" class="btn btn-check" type="button"><span class="glyphicon glyphicon-calendar"></span></button>
                               </span>
@@ -63,7 +55,6 @@
                         <div class="form-group">
                             {{ Form::label('id_area', 'Área:') }}
                             {{ Form::select('id_area',[], null, ['class'=>'js-data-example-ajax1 form-control','style'=>'100%','data-url'=>companyRoute('getAreas')]) }}
-                            {{--{{Form::select('medicamento',[],null,['id'=>'medicamento','class' => 'medicamento form-control','data-url'=>companyRoute('getMedicamentos')])}}--}}
                             {{ $errors->has('id_area') ? HTML::tag('span', $errors->first('id_area'), ['class'=>'help-block deep-orange-text']) : '' }}
                         </div>
                     </div>
@@ -121,17 +112,20 @@
 @endif
 
 @if (Route::currentRouteNamed(currentRouteName('show')))
+@section('form-actions')
 
-    {{--<input type="hidden" name="id_requerimiento" value="3">--}}
-    <input type="hidden" name="fecha_captura" value="{{date('Y-m-d h:i:s')}}">
-    <input type="hidden" name="id_usuario_captura" value="2">
-    <input type="hidden" name="tipo_producto" value="2">
-    <input type="hidden" name="inventario" value="0">
+    <div class="text-right ">
+        <a class="btn btn-danger" href="{{ companyRoute('edit') }}">Surtir</a>
+        <a class="btn btn-default" href="{{ companyRoute('index') }}"> Cerrar</a>
+        {{--{!! Form::close() !!}--}}
+        {{--//{!! Form::open(['url' => companyRoute('index'), 'id' => 'form-model', 'class' => 'col-sm-12']) !!}--}}
+    </div>
+
+@endsection
 
 
-    {{--<div class="panel-heading">--}}
-        {{--<h3 class="panel-title text-center">Captura de Requisiciones Hospitalarias - SP DF</h3>--}}
-    {{--</div>--}}
+    {{--<input type="hidden" name="fecha_captura" value="{{date('Y-m-d h:i:s')}}">--}}
+
     <div class="panel-body">
 
         <div class="row">
@@ -144,25 +138,30 @@
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
-                    {{ Form::label('id_usuario_surtido', 'Solicitante:') }}
-                    {{ Form::select('id_usuario_surtido', $solicitante, null, ['id'=>'id_usuario_surtido','class'=>'js-data-example-ajax1 form-control','style'=>'100%']) }}
-                    {{ $errors->has('id_usuario_surtido') ? HTML::tag('span', $errors->first('id_usuario_surtido'), ['class'=>'help-block deep-orange-text']) : '' }}
+                    {{ Form::label('id_solicitante', 'Solicitante:') }}
+                    {{ Form::select('id_solicitante', $solicitante, null, ['id'=>'id_solicitante','class'=>'js-data-example-ajax1 form-control','style'=>'100%']) }}
+                    {{ $errors->has('id_solicitante') ? HTML::tag('span', $errors->first('id_solicitante'), ['class'=>'help-block deep-orange-text']) : '' }}
                 </div>
             </div>
             <div class="col-sm-2 col-xs-6">
-                <label>*Estatus:</label>
-                <select class="form-control" name="estatus">
-                    <option value="1">Surtido</option>
-                    <option value="2">No surtido</option>
-                    <option value="3">Parcialmente surtido</option>
-                    <option value="4">Cancelado</option>
-                </select>
+                <div class="form-group">
+                    {{ Form::label('id_estatus', 'Estatus:') }}
+                    {{ Form::select('id_estatus', $estatus, null, ['id'=>'id_estatus','class'=>'js-data-example-ajax1 form-control','style'=>'100%']) }}
+                    {{ $errors->has('id_estatus') ? HTML::tag('span', $errors->first('id_estatus'), ['class'=>'help-block deep-orange-text']) : '' }}
+                </div>
+                {{--<label>*Estatus:</label>--}}
+                {{--<select class="form-control" name="estatus">--}}
+                    {{--<option value="1">Surtido</option>--}}
+                    {{--<option value="2">No surtido</option>--}}
+                    {{--<option value="3">Parcialmente surtido</option>--}}
+                    {{--<option value="4">Cancelado</option>--}}
+                {{--</select>--}}
             </div>
             <div class="col-sm-2 col-xs-6">
                 <div class="form-group">
                     <label for="fecha">*Fecha:</label>
                     <div id="datetimepicker3" class="input-group">
-                        <input type="text" class="form-control" name="fecha_requerimiento" value="{{$datos_requerimiento->fecha_requerimiento}}" data-format="yyyy-MM-dd">
+                        <input type="text" class="form-control" name="fecha_requerido" value="{{$datos_requerimiento->fecha_requerido}}" data-format="yyyy-MM-dd">
                         <span class="input-group-btn add-on">
                                 <button data-date-icon="icon-calendar" class="btn btn-check" type="button"><span class="glyphicon glyphicon-calendar"></span></button>
                               </span>
@@ -197,7 +196,112 @@
         </div>
     </div><!--/panel-body-->
 @endif
+@if (Route::currentRouteNamed(currentRouteName('edit')))
+    @section('form-title', 'Surtir requisicion')
+    <div class="panel-body">
 
+        <div class="row">
+            <div class="col-sm-4">
+                <div class="form-group">
+                    {{ Form::label('id_localidad', 'Localidad:') }}
+                    {{ Form::select('id_localidad', $localidades, null, ['id'=>'id_localidad','class'=>'js-data-example-ajax1 form-control','style'=>'100%']) }}
+                    {{--{{ $errors->has('id_localidad') ? HTML::tag('span', $errors->first('id_localidad'), ['class'=>'help-block deep-orange-text']) : '' }}--}}
+                </div>
+            </div>
+            <div class="col-sm-4">
+                <div class="form-group">
+                    {{ Form::label('id_solicitante', 'Solicitante:') }}
+                    {{ Form::select('id_solicitante', $solicitante, null, ['id'=>'id_solicitante','class'=>'js-data-example-ajax1 form-control','style'=>'100%']) }}
+                    {{ $errors->has('id_solicitante') ? HTML::tag('span', $errors->first('id_solicitante'), ['class'=>'help-block deep-orange-text']) : '' }}
+                </div>
+            </div>
+            <div class="col-sm-2 col-xs-6">
+                <div class="form-group">
+                    {{ Form::label('id_estatus', 'Estatus:') }}
+                    {{ Form::select('id_estatus', $estatus, null, ['id'=>'id_estatus','class'=>'js-data-example-ajax1 form-control','style'=>'100%']) }}
+                    {{ $errors->has('id_estatus') ? HTML::tag('span', $errors->first('id_estatus'), ['class'=>'help-block deep-orange-text']) : '' }}
+                </div>
+                {{--<label>*Estatus:</label>--}}
+                {{--<select class="form-control" name="estatus">--}}
+                {{--<option value="1">Surtido</option>--}}
+                {{--<option value="2">No surtido</option>--}}
+                {{--<option value="3">Parcialmente surtido</option>--}}
+                {{--<option value="4">Cancelado</option>--}}
+                {{--</select>--}}
+            </div>
+            <div class="col-sm-2 col-xs-6">
+                <div class="form-group">
+                    <label for="fecha">*Fecha:</label>
+                    <div id="datetimepicker3" class="input-group">
+                        <input type="text" class="form-control" name="fecha_requerido" value="{{$datos_requerimiento->fecha_requerido}}" data-format="yyyy-MM-dd">
+                        <span class="input-group-btn add-on">
+                                <button data-date-icon="icon-calendar" class="btn btn-check" type="button"><span class="glyphicon glyphicon-calendar"></span></button>
+                              </span>
+                    </div><!-- /input-group -->
+                </div>
+            </div>
+        </div><!--/row-->
+
+        <div class="divider"></div>
+        <div class="row">
+            <div class="col-md-12">
+                <table class="table table-hover table-striped">
+                    <thead>
+                    <tr>
+                        <th>Área</th>
+                        <th>Clave</th>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Cantidad surtida</th>
+                        <th></th>
+
+                    </tr>
+                    </thead>
+                    <tbody id="lista_productos">
+                    @foreach($detalle_requerimiento as $detalle)
+                        <tr>
+                            <td>{{$detalle->area}}</td>
+                            <td>{{$detalle->clave_cliente}}</td>
+                            <td>{{$detalle->descripcion}}</td>
+                            <td>{{$detalle->cantidad_pedida}}</td>
+                            <td>{{$detalle->cantidad_surtida}}</td>
+                            <td>
+                            <div class="input-group">
+                            <input type="number" class="form-control" placeholder="Ej: 6">
+                            <span class="input-group-btn">
+                            <button class="btn btn-default btn-check" type="button">Aceptar</button>
+                            </span>
+                            </div><!-- /input-group -->
+                            </td>
+                        </tr>
+
+                        {{--<tr>--}}
+                        {{--<th scope="row">1</th>--}}
+                        {{--<td>123456</td>--}}
+                        {{--<td>PARACETAMOL 500MG</td>--}}
+                        {{--<td>12</td>--}}
+                        {{--<td>12</td>--}}
+                        {{--<td>--}}
+                        {{--<div class="input-group">--}}
+                        {{--<input type="number" class="form-control" placeholder="Ej: 6">--}}
+                        {{--<span class="input-group-btn">--}}
+                        {{--<button class="btn btn-default btn-check" type="button">Aceptar</button>--}}
+                        {{--</span>--}}
+                        {{--</div><!-- /input-group -->--}}
+                        {{--</td>--}}
+                        {{--</tr>--}}
+                    @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div><!--/panel-body-->
+
+
+
+
+
+@endif
 @endsection
 
 {{-- DONT DELETE --}}
@@ -273,8 +377,9 @@
     </script>
 @endif
 
+
 @if (Route::currentRouteNamed(currentRouteName('index')))
-    @section('title', 'Requisiciones Hospitalarias')
+    @section('title', 'Requisiciones aHospitalarias')
     @include('layouts.smart.index')
 @endif
 
@@ -284,6 +389,7 @@
 
 @if (Route::currentRouteNamed(currentRouteName('show')))
     @include('layouts.smart.show')
+
 @endif
 
 @if (Route::currentRouteNamed(currentRouteName('export')))

@@ -2,50 +2,44 @@
 /**
  * Created by PhpStorm.
  * User: ihernandezt
- * Date: 04/09/2017
- * Time: 12:21
+ * Date: 11/09/2017
+ * Time: 13:15
  */
+
 
 namespace App\Http\Models\Captura;
 
 use App\Http\Models\ModelCompany;
 
-class RequisicionesHospitalarias extends ModelCompany
+class Estatus extends ModelCompany
 {
     /**
      * The table associated with the model.
      *
      * @var string
      */
-    protected $table = 'ss_qro_requisicion';
+    protected $table = 'ss_qro_estatus_requisicion';
 
     /**
      * The primary key of the table
      * @var string
      */
-    protected $primaryKey = 'id_requisicion';
+    protected $primaryKey = 'id_estatus';
 
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $fillable = ['folio','id_localidad','fecha','fecha_requerido','id_usuario_captura','id_usuario_modifica','fecha_modifica','id_estatus','id_solicitante' ];
+    protected $fillable = ['id_estatus','estatus'];
 
     /**
      * The validation rules
      * @var array
      */
     public $rules = [
-        'folio' => 'required',
-        'id_localidad' => 'required',
-        'fecha' => 'required',
-        'fecha_requerido' => 'required',
-        'id_usuario_captura' => 'required',
-        'id_usuario_modifica' => 'required',
-        'fecha_modifica' => 'required',
         'id_estatus' => 'required',
-        'id_solicitante' => 'required'
+        'estatus' => 'required',
     ];
 
     /**
@@ -53,9 +47,8 @@ class RequisicionesHospitalarias extends ModelCompany
      * @var array
      */
     protected $fields = [
-        'folio' => '#',
-        'fecha' => 'Fecha captura',
-        'fecha_requerido' => 'Fecha requerimiento',
+        'id_estatus' => '#',
+        'estatus' => 'Fecha captura',
     ];
 
     /**
