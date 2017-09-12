@@ -17,6 +17,12 @@
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style type="text/css">
+      /*estílo para el botón de importar*/
+      [hidden] {
+        display: none !important;
+      }
+    </style>
   </head>
   <body>
   <div class="container-fluid">
@@ -36,7 +42,7 @@
             <select id="producto" class="js-data-example-ajax form-control" style="width: 100%">
               <option value="3620194" selected="selected">Escriba la clave o su descripción</option>
             </select>
-            <button class="btn btn-danger btn-check" role="button">Exportar datos</button>
+            <button class="btn btn-danger" role="button">Exportar datos</button>
           </div>
         </div>
       </div>
@@ -45,7 +51,12 @@
           <img src="img/import.png" class="img-responsive" alt="Importar datos">
           <div class="caption text-center">
             <p><b>Importe</b> la información de la localidad deseada:</p>
-            <p class="text-center"><button class="btn btn-danger" role="button">Importar datos</button>
+            <select id="producto" class="js-data-example-ajax form-control" style="width: 100%">
+              <option value="3620194" selected="selected">Escriba la clave o su descripción</option>
+            </select>
+            <label class="btn btn-danger">
+                Importar datos <input type="file" hidden>
+            </label>
           </div>
         </div>
       </div>
