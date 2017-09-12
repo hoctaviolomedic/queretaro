@@ -186,3 +186,7 @@ cursor: pointer;
 .form-inline > .input-group{
   width: auto;
 }
+/*estílo para el botón de importar*/
+[hidden] {
+  display: none !important;
+}
