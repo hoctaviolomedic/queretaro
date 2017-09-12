@@ -15,6 +15,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Milon\Barcode\DNS1D;
+use Milon\Barcode\DNS2D;
+use PDF;
 
 class RecetasController extends ControllerBase
 {
@@ -137,9 +140,41 @@ class RecetasController extends ControllerBase
      */
     public function show($company, $id, $attributes = [])
     {
-        return parent::show($company, $id, [
-            'dataview' => $this->getDataView()
-        ]);
+        $data = $this->entity->findOrFail($id);
+        $dataview = isset($attributes['dataview']) ? $attributes['dataview'] : [];
+        $id_localidad = $data->id_localidad;
+        $localidad = Localidades::all()->where('id_localidad',$id_localidad)->pluck('localidad','id_localidad');
+
+        $id_medico = $data->id_medico;
+        $medico = Medicos::all()->where('id_medico',$id_medico)->pluck('nombre_completo','id_medico');
+
+        $id_programa = $data->id_programa;
+        $programa = Programas::all()->where('id_programa',$id_programa)->pluck('nombre_programa','id_programa');
+
+        $id_afiliacion = $data->id_afiliacion;
+        $id_dependiente = $data->id_dependiente;
+        $afiliacion = Afiliaciones::all()->where('id_afiliacion',$id_afiliacion)->where('id_dependiente',$id_dependiente)->pluck('full_name','id_afiliacion');
+
+        $id_area = $data->id_area;
+        $area = Areas::all()->where('id_area',$id_area)->pluck('area','id_area');
+
+        $id_diagnostico = $data->id_diagnostico;
+        $diagnostico = Diagnosticos::all()->where('id_diagnostico',$id_diagnostico)->pluck('diagnostico','id_diagnostico');
+
+
+        $presion = explode('/',$data->presion);
+
+        return view(currentRouteName('smart'), $dataview+[
+                'data' => $data,
+                'localidades' => $localidad,
+                'medicos' => $medico,
+                'programas' => $programa,
+                'afiliaciones' => $afiliacion,
+                'areas' => $area,
+                'diagnosticos' => $diagnostico,
+                'presion1' => $presion[0],
+                'presion2' => $presion[1]
+            ]);
     }
 
     /**
@@ -150,9 +185,36 @@ class RecetasController extends ControllerBase
      */
     public function edit($company, $id, $attributes = [])
     {
-        return parent::edit($company, $id, [
-            'dataview' => $this->getDataView()
-        ]);
+        $data = $this->entity->findOrFail($id);
+        $dataview = isset($attributes['dataview']) ? $attributes['dataview'] : [];
+
+        $programas[null] = 'Sin programa';
+        $programas = $programas + $this->programas->pluck('nombre_programa','id_programa')->toArray();
+
+        $id_afiliacion = $data->id_afiliacion;
+        $id_dependiente = $data->id_dependiente;
+        $afiliacion = Afiliaciones::all()->where('id_afiliacion',$id_afiliacion)->where('id_dependiente',$id_dependiente)->pluck('full_name','id_afiliacion');
+
+        $id_area = $data->id_area;
+        $area = Areas::all()->where('id_area',$id_area)->pluck('area','id_area');
+
+        $id_diagnostico = $data->id_diagnostico;
+        $diagnostico = Diagnosticos::all()->where('id_diagnostico',$id_diagnostico)->pluck('diagnostico','id_diagnostico');
+
+
+        $presion = explode('/',$data->presion);
+
+        return view(currentRouteName('smart'), $dataview+[
+                'data' => $data,
+                'localidades' => $this->localidades->pluck('localidad','id_localidad'),
+                'medicos' => $this->medicos->pluck('nombre_completo','id_medico'),
+                'programas' => $programas,
+                'afiliaciones' => $afiliacion,
+                'areas' => $this->areas->pluck('area','id_area'),
+                'diagnosticos' => $diagnostico,
+                'presion1' => $presion[0],
+                'presion2' => $presion[1]
+            ]);
     }
 
     public function getAfiliados($company,Request $request)
@@ -315,5 +377,31 @@ class RecetasController extends ControllerBase
         return view('captura.recetas.surtir',[
             'receta' => $receta,
         ]);
+    }
+
+    public function imprimirReceta($company,$id){
+        $receta = Recetas::where('id_receta',$id)->first();
+        $detalles = RecetasDetalle::where('id_receta',$id)->get();
+
+        $qr = DNS2D::getBarcodePNG(asset(companyAction('show',['id'=>$receta->id_receta])), "QRCODE");
+//        $barcode = '<img src="data:image/png,base64,' . DNS1D::getBarcodePNG("$solicitud->id_solicitud", "EAN8") . '" alt="barcode"   />';
+//        $codigo = "<img width='150px' src='data:image/png;charset=binary;base64,".base64_encode($barcode)."' />";
+
+//        dd($barcode);
+        $pdf = PDF::loadView(currentRouteName('imprimir'),[
+            'receta' => $receta,
+            'detalles' => $detalles,
+            'qr' => $qr
+        ]);
+        $pdf->setPaper('letter','landscape');
+        $pdf->output();
+        $dom_pdf = $pdf->getDomPDF();
+        $canvas = $dom_pdf->get_canvas();
+        $canvas->page_text(38,580,"Página {PAGE_NUM} de {PAGE_COUNT}",null,8,array(0,0,0));
+        $canvas->text(665,580,'PSAI-PN06-F01 Rev. 01',null,8);
+//        $canvas->image('data:image/png;charset=binary;base64,'.$barcode,355,580,100,16);
+
+        return $pdf->stream('solicitud')->header('Content-Type',"application/pdf");
+//        return view(currentRouteName('imprimir'));
     }
 }

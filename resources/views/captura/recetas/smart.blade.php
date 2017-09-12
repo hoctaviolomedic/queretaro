@@ -7,19 +7,25 @@
         <div class="col-sm-4">
             <div class="form-group">
                 {{Form::label('id_localidad','*Unidad')}}
-                {{Form::select('id_localidad',isset($localidades)?$localidades:[],null,['id'=>'id_localidad','class' => 'unidad form-control'])}}
+                @if(!Route::currentRouteNamed(currentRouteName('index')))
+                    {{Form::select('id_localidad',isset($localidades)?$localidades:[],isset($data->id_localidad)?$data->id_localidad:null,['id'=>'id_localidad','class' => 'unidad form-control',])}}
+                @endif
             </div>
         </div>
         <div class="col-sm-4">
             <div class="form-group">
                 {{Form::label('id_medico','*Médico')}}
-                {{Form::select('id_medico',isset($medicos)?$medicos:[],null,['id'=>'id_medico','class' => 'medico form-control'])}}
+                @if(!Route::currentRouteNamed(currentRouteName('index')))
+                    {{Form::select('id_medico',isset($medicos)?$medicos:[],isset($data->id_medico)?$data->id_medico:null,['id'=>'id_medico','class' => 'medico form-control'])}}
+                @endif
             </div>
         </div>
         <div class="col-sm-4">
             <div class="form-group">
                 {{Form::label('id_programa','*Programa')}}
-                {{Form::select('id_programa',isset($programas)?$programas:[],null,['id'=>'id_programa','class' => 'programa form-control'])}}
+                @if(!Route::currentRouteNamed(currentRouteName('index')))
+                    {{Form::select('id_programa',isset($programas)?$programas:[],isset($data->id_programa)?$data->id_programa:null,['id'=>'id_programa','class' => 'programa form-control'])}}
+                @endif
             </div>
         </div>
     </div>
@@ -40,7 +46,7 @@
         <div class="col-sm-6">
             <div class="form-group">
                 {{Form::label('id_dependiente','*Afiliación/Paciente')}}
-                {{Form::select('id_dependiente',[],null,['id'=>'id_dependiente','class' => 'paciente form-control','data-url'=>companyRoute('getAfiliados')])}}
+                {{Form::select('id_dependiente',isset($afiliaciones)?$afiliaciones:[],null,['id'=>'id_dependiente','class' => 'paciente form-control','data-url'=>companyRoute('getAfiliados')])}}
                 {{Form::hidden('id_afiliacion',null,['id'=>'id_afiliacion'])}}
                 {{Form::text('nombre_paciente_no_afiliado',null,['id'=>'nombre_paciente_no_afiliado','class'=>'form-control','style'=>'display:none'])}}
             </div>
@@ -48,7 +54,9 @@
         <div class="col-sm-4">
             <div class="form-group">
                 {{Form::label('id_area','*Área de la consulta')}}
-                {{Form::select('id_area',isset($areas)?$areas:[],null,['id'=>'id_area','class' => 'area form-control'])}}
+                @if(!Route::currentRouteNamed(currentRouteName('index')))
+                    {{Form::select('id_area',isset($areas)?$areas:[],isset($data->id_area)?$data->id_area:null,['id'=>'id_area','class' => 'area form-control'])}}
+                @endif
             </div>
         </div>
     </div>
@@ -56,7 +64,7 @@
         <div class="col-sm-4">
             <div class="form-group">
                 {{Form::label('id_diagnostico','*Diagnóstico')}}
-                {{Form::select('id_diagnostico',[],null,['id'=>'id_diagnostico','class' => 'diagnostico form-control','data-url'=>companyRoute('getDiagnosticos')])}}
+                {{Form::select('id_diagnostico',isset($diagnosticos)?$diagnosticos:[],null,['id'=>'id_diagnostico','class' => 'diagnostico form-control','data-url'=>companyRoute('getDiagnosticos')])}}
             </div>
         </div>
         <div class="col-sm-2 col-xs-3">
@@ -81,9 +89,9 @@
             <div class="form-group">
                 <label for="presion">Presión:</label>
                 <div class="input-group">
-                    {{Form::text('presion1',null,['id'=>'presion1','class' =>'form-control', 'placeholder' => 'Ej: 120','aria-describedby'=>'presion-addon'])}}
+                    {{Form::text('presion1',isset($presion1)?$presion1:null,['id'=>'presion1','class' =>'form-control', 'placeholder' => 'Ej: 120','aria-describedby'=>'presion-addon'])}}
                     <span class="input-group-addon" id="presion-addon">/</span>
-                    {{Form::text('presion2',null,['id'=>'presion2','class' =>'form-control', 'placeholder' => 'Ej: 80','aria-describedby'=>'presion-addon'])}}
+                    {{Form::text('presion2',isset($presion2)?$presion2:null,['id'=>'presion2','class' =>'form-control', 'placeholder' => 'Ej: 80','aria-describedby'=>'presion-addon'])}}
                 </div>
             </div>
         </div>
@@ -167,6 +175,19 @@
                     </tr>
                     </thead>
                     <tbody class="medicine_detail">
+                    @if(isset($data->detalles))
+                        @foreach($data->detalles as $detalle)
+                            <tr>
+                            <td>{{$detalle->clave_cliente}}</td>
+                                <td>
+                                    <p>{{$detalle->producto->descripcion}}</p>
+                                    <p>{{$detalle->dosis}}</p>
+                                    <p>{{isset($detalle->en_caso_presentar)?$detalle->en_caso_presentar:''}}</p>
+                                    <p>{{isset($detalle->recurrente)?'Recoger '.$detalle->cantidad_pedida.' cada '.$detalle->recurrente/24 .' días':''}}</p>
+                                </td>
+                            </tr>
+                        @endforeach
+                    @endif
                     </tbody>
                 </table>
             </div>
@@ -176,7 +197,7 @@
         <div class="col-sm-12">
             <div class="form-group">
                 {{Form::label('observaciones','Observaciones adicionales:')}}
-                {{Form::textarea('observaciones',null,['class' => 'form-control','rows'=>'1','id'=>'observaciones'])}}
+                {{Form::textarea('observaciones',isset($data->observaciones)?$data->observaciones:null,['class' => 'form-control','rows'=>'1','id'=>'observaciones'])}}
             </div>
         </div>
     </div><!--/row-->
@@ -185,6 +206,7 @@
             <div class="col-sm-12 text-center">
 {{--                {{ Form::button('<span class="glyphicon glyphicon-flash"></span> Surtir', ['type' =>'button', 'class'=>'btn btn-danger','id'=>'surtir','enabled']) }}--}}
                 <a href="{{companyAction('surtirReceta',['id'=>$data->id_receta])}}" role="button" class="btn btn-danger gotUndisable"><span class="glyphicon glyphicon-gift"></span> Surtir receta</a>
+                <a href="{{companyAction('imprimirReceta',['id'=>$data->id_receta])}}" role="button" class="btn btn-default gotUndisable"><span class="glyphicon glyphicon-print"></span> Imprimir receta</a>
             </div>
         </div><!--/row-->
     @endif

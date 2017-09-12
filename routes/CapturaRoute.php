@@ -24,6 +24,7 @@ Route::prefix('{company}')->group(function () {
         Route::post('verifyStockSurtir','Captura\RecetasController@verifyStockSurtir')->name('recetas.verifyStockSurtir');
         Route::get('recetas/{id}/surtirReceta','Captura\RecetasController@surtirReceta')->name('recetas.surtirReceta');
         Route::post('recetas/{id}/surtir','Captura\RecetasController@surtir')->name('recetas.surtir');
+        Route::get('recetas/{id}/imprimirReceta','Captura\RecetasController@imprimirReceta')->name('recetas.imprimirReceta');
         Route::resource('recetas', 'Captura\RecetasController');
         Route::resource('requisicioneshospitalarias', 'Captura\RequisicionesHospitalariasController');
         Route::post('getAreas','Captura\RequisicionesHospitalariasController@getAreas')->name('requisicioneshospitalarias.getAreas');
