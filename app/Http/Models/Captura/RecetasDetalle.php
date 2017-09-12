@@ -25,7 +25,7 @@ class RecetasDetalle extends ModelCompany
      * @var array
      */
     protected $fillable = ['id_receta','clave_cliente','id_cuadro','cantidad_pedida','cantidad_surtida','dosis',
-        'en_caso_presentar','recurrente'];
+        'en_caso_presentar','recurrente','fecha_surtido'];
 
     /**
      * The validation rules
@@ -45,6 +45,11 @@ class RecetasDetalle extends ModelCompany
     public function receta()
     {
         return $this->belongsTo('App\Http\Models\Captura\Receta','id_receta','id_receta');
+    }
+
+    public function producto()
+    {
+        return $this->hasOne('App\Http\Models\Captura\CuadroProductos','clave_cliente','clave_cliente');
     }
 
 }
