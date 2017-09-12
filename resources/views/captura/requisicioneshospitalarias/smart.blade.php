@@ -334,6 +334,7 @@
 @endif
 
 @if (Route::currentRouteNamed(currentRouteName('show')))
+    @section('title', 'Requisiciones Hospitalarias')
     @include('layouts.smart.show')
 
 @endif
