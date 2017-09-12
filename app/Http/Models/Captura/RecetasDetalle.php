@@ -25,7 +25,7 @@ class RecetasDetalle extends ModelCompany
      * @var array
      */
     protected $fillable = ['id_receta','clave_cliente','id_cuadro','cantidad_pedida','cantidad_surtida','dosis',
-        'en_caso_presentar','recurrente','fecha_surtido'];
+        'en_caso_presentar','recurrente','fecha_surtido','veces_surtir','veces_surtidas'];
 
     /**
      * The validation rules

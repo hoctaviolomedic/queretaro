@@ -3,7 +3,7 @@
 
 @section('header-bottom')
     @parent
-    <script type="text/javascript" src="{{asset('js/recetas.js')}}"></script>
+    <script type="text/javascript" src="{{asset('js/surtirReceta.js')}}"></script>
     <script type="text/javascript" src="{{asset('js/toaster.js')}}"></script>
 @endsection
     @section('title', currentEntityBaseName() . '@Surtir')
@@ -13,13 +13,14 @@
 
     @section('form-content')
         {{ Form::setModel($receta) }}
-        <div class="container-fluid">
+        <div class="container-fluid" id="container-fluid"  data-url="{{companyRoute('surtir',['id'=>$receta->id_receta])}}">
             <div class="panel-body">
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="localidad">Localidad:</label>
                             <br><label>{{$receta->localidad->localidad}}</label>
+                            <input type="hidden" name="id_localidad" id="id_localidad" value="{{$receta->id_localidad}}">
                         </div>
                     </div>
                     <div class="col-sm-3">
@@ -52,7 +53,7 @@
                 <div class="divider"></div>
                 <div class="row">
                     <div class="col-md-12">
-                        <table class="table table-hover table-striped">
+                        <table class="table table-hover table-striped" id="detalle" data-url="{{companyRoute('verifyStockSurtir')}}">
                             <thead>
                             <tr>
                                 <th>Clave Producto</th>
@@ -62,22 +63,34 @@
                                 <th>Cantidad por surtir</th>
                                 <th>Cantidad surtida</th>
                                 <th>Cantidad a surtir</th>
+                                <th>Veces por surtir</th>
+                                <th>Veces surtidas</th>
                             </tr>
                             </thead>
                             <tbody>
 {{--                            {{ dump($receta->detalles()->whereRaw('(recurrente > 0 OR cantidad_surtida < cantidad_pedida)')->toSql()) }}--}}
                             {{--//Por cada receta que sea recurrente--}}
                             @foreach($receta->detalles()->whereRaw('(recurrente > 0 OR cantidad_surtida < cantidad_pedida)')->get() as $detalle)
-                                <tr>
-                                    <td>{{$detalle->clave_cliente}}</td>
-                                    <td>{{$detalle->producto->descripcion}}</td>
+                                <tr id="{{$detalle->id_receta_detalle}}" title="{{$detalle->clave_cliente}}">
+                                    <td>
+                                        {{$detalle->clave_cliente}}
+                                        <input type="hidden" name="detalle[{{$detalle->id_receta_detalle}}][id_receta_detalle]" value="{{$detalle->id_receta_detalle}}">
+                                        <input type="hidden" name="detalle[{{$detalle->id_receta_detalle}}][clave_cliente]" value="{{$detalle->clave_cliente}}">
+                                    </td>
+                                    <td>{{$detalle->producto->descripcion}}<input type="hidden" id="descripcion{{$detalle->clave_cliente}}" value="{{$detalle->producto->descripcion}}"></td>
                                     <td>{{empty($detalle->fecha_surtido)?'Nunca':$detalle->fecha_surtido}}</td>
-                                    <td>{{empty($detalle->fecha_surtido)?'Nunca':$detalle->fecha_surtido}}</td>
-                                    <td>{{$detalle->cantidad_pedida}}</td>
+                                    <td>{{empty($detalle->fecha_surtido)?DB::select("select date 'now()' + integer '" . $detalle->recurrente . "' as diferencia")[0]->diferencia:DB::select("select date '" . $detalle->fecha_surtido . "' + integer '" . $detalle->recurrente . "' as diferencia")[0]->diferencia}}</td>
+                                    <td>{{$detalle->cantidad_pedida}}<input type="hidden" id="cantidad_pedida{{$detalle->id_receta_detalle}}" value="{{$detalle->cantidad_pedida}}"></td>
                                     <td>{{$detalle->cantidad_surtida}}</td>
                                     <td>
-                                        <input type="number" class="form-control" placeholder="Ej: 6">
+                                        @if($detalle->veces_surtir>$detalle->veces_surtidas)
+                                            <input type="number" class="form-control" placeholder="Ej: 6" id="cantidadsurtir{{$detalle->clave_cliente}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]">
+                                        @else
+                                            <label>Producto entregado en su totalidad</label>
+                                        @endif
                                     </td>
+                                    <td>{{$detalle->veces_surtir}}</td>
+                                    <td>{{empty($detalle->veces_surtidas)?0:$detalle->veces_surtidas}}</td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -92,14 +105,13 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Medicamento(s) agotado</h4>
+                        <h4 class="modal-title">Medicamento(s) agotado(s) o insuficiente(s)</h4>
                     </div>
                     <div class="modal-body">
                         <p id="medicamento_modal"></p>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" id="candelar" class="btn btn-default" data-dismiss="modal">No</button>
-                        <button type="button" id="aceptar" class="btn btn-danger">Sí</button>
+                        <button type="button" id="candelar" class="btn btn-default" data-dismiss="modal">De acuerdo</button>
                     </div>
                 </div><!-- /.modal-content -->
             </div><!-- /.modal-dialog -->

@@ -146,6 +146,7 @@ $(document).ready(function () {
         var cantidad_final = 1;
         var recurrencia_text = '';
         var recurrencia_hidden = 0;
+        var veces_surtir = 0;
         if($('#surtido_recurrente').prop('checked') == true){
             var cantidad_medicamento_necesaria = (($('#surtido_tiempo option:selected').val()*$('#surtido_numero').val())/($('#_cada option:selected').val()*$('#cada').val()))*dosis_hidden;
             if (medicamento[0].cantidad_presentacion > 1) {
@@ -185,8 +186,8 @@ $(document).ready(function () {
                 });
                 return
             }
-            var veces_surtir = (parseInt($('#por').val())*parseInt($('#_por option:selected').val())/24);
-            veces_surtir = veces_surtir/recurrencia_hidden;
+            veces_surtir = parseInt($('#por').val())*(parseInt($('#_por option:selected').val())/24);
+            veces_surtir = veces_surtir/(recurrencia_hidden/24);
         }else {//Si no es recurrente
             var cantidad_medicamento_necesaria = (($('#_por option:selected').val()*$('#por').val())/($('#_cada option:selected').val()*($('#cada').val())))*dosis_hidden;
             if (medicamento[0].cantidad_presentacion > 1) {
@@ -235,7 +236,7 @@ $(document).ready(function () {
                     '<p><input id="_detalle['+medicamento[0].id+'][en_caso_presentar]" name="_detalle['+medicamento[0].id+'][en_caso_presentar]" type="hidden" value="'+nota_medicamento+'" />'+nota_medicamento+'</p>' +
                     '<p><input id="_detalle['+medicamento[0].id+'][por]" name="_detalle['+medicamento[0].id+'][por]" type="hidden" value="'+$('#por').val()*$('#_por option:selected').val()+'"/><input id="_detalle['+medicamento[0].id+'][recurrente]" name="_detalle['+medicamento[0].id+'][recurrente]" type="hidden" value="'+recurrencia_hidden+'"/>'+recurrencia_text+'</p>' +
                     '<input id="_detalle['+medicamento[0].id+'][id_cuadro]" name="_detalle['+medicamento[0].id+'][id_cuadro]" type="hidden" value="'+medicamento[0].id_cuadro+'"/>'+
-                    '<input id="_detalle['+medicamento[0].id+'][veces_surtir]" name="_detalle['+medicamento[0].id+'][veces_surtir]" type="hidden" value="'+medicamento[0].id_cuadro+'"/>'+
+                    '<input id="_detalle['+medicamento[0].id+'][veces_surtir]" name="_detalle['+medicamento[0].id+'][veces_surtir]" type="hidden" value="'+veces_surtir+'"/>'+
                 '</td>' +
                 '<td>' +
                     '<a onclick="eliminarFila(this)" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger" id="'+filas+'"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a> ' +
@@ -280,9 +281,9 @@ $(document).ready(function () {
                 async: false,
                 success:function (response) {
                     var arreglo = $.parseJSON(response);
-                    // if(arreglo['disponible']<$('#cantidad'+id).val()){//Si ya no está disponible, agregar al arreglo de medicamentos agotados
+                    if(arreglo['disponible']<$('#cantidad'+id).val()){//Si ya no está disponible, agregar al arreglo de medicamentos agotados
                         medicamento_agotado.push(arreglo);
-                    // }
+                    }
                 }
             });
         });

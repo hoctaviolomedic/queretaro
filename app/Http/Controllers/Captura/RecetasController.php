@@ -228,42 +228,92 @@ class RecetasController extends ControllerBase
         return json_encode($query[0]);
     }
 
+    public function verifyStockSurtir($company,Request $data){
+//        dd($data);
+        $query = DB::select("SELECT cp.clave_cliente, cp.descripcion, cf.descripcion as familia, coalesce(cp.cantidad_presentacion,0) cantidad_presentacion, coalesce(SUM(ie.quedan - ie.apartadas),0) disponible,
+                tp.id_cuadro_tipo_medicamento as tipo_medicamento, c.id_cuadro, coalesce(lp.tope_receta,0) tope_receta            
+                FROM cat_cuadro c
+                LEFT JOIN cat_cuadro_producto cp ON cp.id_cuadro = c.id_cuadro AND c.id_cliente = 135 AND cp.estatus = '1' AND cp.clave_cliente = '".$data->clave_cliente."'
+                LEFT JOIN cat_cuadro_tipo_producto tp ON tp.id_cuadro_tipo_medicamento = cp.id_cuadro_tipo_medicamento AND tp.id_cuadro_tipo_medicamento <> 57 AND tp.estatus = '1'
+                LEFT JOIN cat_localidad_producto lp ON lp.id_cuadro = c.id_cuadro AND lp.clave_cliente = cp.clave_cliente AND lp.estatus = '1' AND lp.id_localidad = ".$data->localidad."
+                INNER JOIN cat_familia cf ON cf.id_familia = cp.id_familia
+                LEFT JOIN inv_existencia ie ON ie.id_localidad = lp.id_localidad AND (ie.quedan - ie.apartadas > 0) AND ie.caducidad > now()
+                LEFT JOIN cat_producto_cliente pc ON pc.codigo_barras = ie.codigo_barras AND pc.id_cuadro = c.id_cuadro AND pc.clave_cliente = cp.clave_cliente AND pc.estatus = '1'
+                WHERE c.estatus = '1' AND c.id_tipo_cuadro = '1'
+                GROUP BY cp.clave_cliente,cp.descripcion,cf.descripcion,cp.cantidad_presentacion,tp.id_cuadro_tipo_medicamento,c.id_cuadro,lp.tope_receta
+                ORDER BY disponible DESC, cp.descripcion;");
+
+        return json_encode($query[0]);
+    }
+
     public function surtirReceta($company,$id)
     {
         $receta = Recetas::all()->find($id);
-//        $detalles = Recetas::all()->find($id)->detalles()->where('recurrente','>',0)->first();
         return view('captura\recetas\surtir',[
             'receta' => $receta,
-//            'detalles' => $detalles
         ]);
     }
 
-    public function surtir($company,$id)
+    public function surtir($company,$id,Request $request)
     {
-        $detalles = Recetas::all()->find($id)->detalles()->get();
-        $medicamentos_surtidos = [];
-        $medicamentos_no_surtidos = [];
-        foreach ($detalles as $detalle) {
+        foreach ($request->detalle as $detalle_actual) {
+            $flag = true;
+            $detalle = Recetas::all()->find($id)->detalles()->find($detalle_actual['id_receta_detalle']);
             $now = DB::select("select now()")[0]->now;
             if(empty($detalle->fecha_surtido) && $detalle->recurrente > 0) {//Si es la primer vez que se surte
                 $cantidad_nueva = $detalle->cantidad_pedida + $detalle->cantidad_surtida;
-                $detalle->update(['cantidad_surtida' => $cantidad_nueva,'fecha_surtido'=>DB::select("select now()::TIMESTAMP(0) as fecha")[0]->fecha]);
-                array_push($medicamentos_surtidos,$detalle->clave_cliente);
-            }elseif($detalle->fecha_surtido != null && $detalle->fecha_surtido != '' && $detalle->recurrente>0){
+                $veces_surtidas = $detalle->veces_surtidas + 1;
+                $detalle->update(['cantidad_surtida' => $cantidad_nueva,
+                    'fecha_surtido'=>DB::select("select now()::TIMESTAMP(0) as fecha")[0]->fecha,
+                    'veces_surtidas' => $veces_surtidas]);
+            }elseif(!empty($detalle->fecha_surtido) && $detalle->recurrente>0 && $detalle->veces_surtidas < $detalle->veces_surtir){//Si no se ha llegado al límite
                 $fecha_surtido = $detalle->fecha_surtido;
                 if (DB::select("select date '" . $now . "' - date '" . $fecha_surtido . "' as diferencia")[0]->diferencia >= $detalle->recurrente) {
                     $cantidad_nueva = $detalle->cantidad_pedida + $detalle->cantidad_surtida;
-                    $detalle->update(['cantidad_surtida' => $cantidad_nueva,'fecha_surtido'=>DB::select("select now()::TIMESTAMP(0) as fecha")[0]->fecha]);
-                    array_push($medicamentos_surtidos,$detalle->clave_cliente);
+                    $veces_surtidas = $detalle->veces_surtidas + 1;
+                    dd($veces_surtidas);
+                    $detalle->update(['cantidad_surtida' => $cantidad_nueva,
+                        'fecha_surtido'=>DB::select("select now()::TIMESTAMP(0) as fecha")[0]->fecha,
+                        'veces_surtidas'=>$veces_surtidas]);
                 }else{
-                    array_push($medicamentos_no_surtidos,$detalle->clave_cliente);
+
+                    $flag=false;
                 }
             }else{
-                array_push($medicamentos_no_surtidos,$detalle->clave_cliente);
+                $flag=false;
+            }
+            if($flag){
+                $disponibles = DB::select("SELECT ie.codigo_barras,ie.quedan,ie.apartadas,ie.no_lote
+                FROM cat_cuadro c
+                LEFT JOIN cat_cuadro_producto cp ON cp.id_cuadro = c.id_cuadro AND c.id_cliente = 135 AND cp.estatus = '1' AND cp.clave_cliente = '".$detalle['clave_cliente']."'
+                LEFT JOIN cat_cuadro_tipo_producto tp ON tp.id_cuadro_tipo_medicamento = cp.id_cuadro_tipo_medicamento AND tp.id_cuadro_tipo_medicamento <> 57 AND tp.estatus = '1'
+                LEFT JOIN cat_localidad_producto lp ON lp.id_cuadro = c.id_cuadro AND lp.clave_cliente = cp.clave_cliente AND lp.estatus = '1' AND lp.id_localidad = ".$request->id_localidad."
+                INNER JOIN cat_familia cf ON cf.id_familia = cp.id_familia
+                LEFT JOIN inv_existencia ie ON ie.id_localidad = lp.id_localidad AND (ie.quedan - ie.apartadas > 0) AND ie.caducidad > now()
+                LEFT JOIN cat_producto_cliente pc ON pc.codigo_barras = ie.codigo_barras AND pc.id_cuadro = c.id_cuadro AND pc.clave_cliente = cp.clave_cliente AND pc.estatus = '1'
+                WHERE c.estatus = '1' AND c.id_tipo_cuadro = '1'
+                GROUP BY cp.clave_cliente,cp.descripcion,cf.descripcion,cp.cantidad_presentacion,tp.id_cuadro_tipo_medicamento,c.id_cuadro,lp.tope_receta,ie.codigo_barras,ie.caducidad,ie.quedan,ie.apartadas,ie.no_lote
+                ORDER BY ie.caducidad ASC;");
+                $index = 0;
+                while(true){
+                    $quedan = $disponibles[$index]->quedan;
+                    $quedan = $quedan - $detalle_actual['cantidadsurtir'];
+                    $apartadas = $disponibles[$index]->apartadas;
+                    $apartadas = $apartadas - $detalle_actual['cantidadsurtir'];
+                        $update = DB::update("UPDATE inv_existencia
+                        SET apartadas = ".$apartadas.", quedan = ".$quedan."
+                        WHERE codigo_barras = '".$disponibles[$index]->codigo_barras."'
+                        AND no_lote = '".$disponibles[$index]->no_lote."'
+                        AND id_localidad = '".$request->id_localidad."'");
+                    $index++;
+                    if($update)
+                        break;
+                }
             }
         }
-        dump($medicamentos_surtidos);
-        dump($medicamentos_no_surtidos);
-        exit();
+        $receta = Recetas::all()->find($id);
+        return view('captura\recetas\surtir',[
+            'receta' => $receta,
+        ]);
     }
 }
