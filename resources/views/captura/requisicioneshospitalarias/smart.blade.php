@@ -196,6 +196,7 @@
         </div>
     </div><!--/panel-body-->
 @endif
+
 @if (Route::currentRouteNamed(currentRouteName('edit')))
     @section('form-title', 'Surtir requisicion')
     <div class="panel-body">
@@ -251,9 +252,9 @@
                         <th>Área</th>
                         <th>Clave</th>
                         <th>Producto</th>
-                        <th>Cantidad</th>
+                        <th>Cantidad solicitada</th>
                         <th>Cantidad surtida</th>
-                        <th></th>
+                        <th>Cantidad a surtir</th>
 
                     </tr>
                     </thead>
@@ -268,9 +269,9 @@
                             <td>
                             <div class="input-group">
                             <input type="number" class="form-control" placeholder="Ej: 6">
-                            <span class="input-group-btn">
-                            <button class="btn btn-default btn-check" type="button">Aceptar</button>
-                            </span>
+                            {{--<span class="input-group-btn">--}}
+                            {{--<button class="btn btn-default btn-check" type="button">Aceptar</button>--}}
+                            {{--</span>--}}
                             </div><!-- /input-group -->
                             </td>
                         </tr>
