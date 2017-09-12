@@ -190,3 +190,15 @@ cursor: pointer;
 [hidden] {
   display: none !important;
 }
+/*columnas padres e hijas*/
+.cod-parent{
+  border-left:5px solid #e81123;
+}
+.cod-child{
+  background: #e8e8e8;
+  border-top:none;
+  border-left:5px solid #6a0810;
+}
+.table>tbody>tr.cod-child>th,.table>tbody>tr.cod-child>td{
+  border-top:none;
+}
