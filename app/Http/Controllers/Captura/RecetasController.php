@@ -73,12 +73,14 @@ class RecetasController extends ControllerBase
         # ¿Usuario tiene permiso para crear?
         // $this->authorize('create', $this->entity);
 
+        dd( Auth::Id() );
+
         # Validamos request, si falla regresamos pagina
         $this->validate($request, $this->entity->rules);
 
         $request->request->set('presion',$request->presion1.'/'.$request->presion2);
         $request->request->set('id_estatus_receta',1);
-        $request->request->set('id_usuario_creacion',Auth::id());
+        $request->request->set('id_usuario_creacion',Auth::Id());
         $isSuccess = $this->entity->create($request->all());
         if ($isSuccess) {
             foreach ($request->_detalle as $detalle){
@@ -117,8 +119,8 @@ class RecetasController extends ControllerBase
                 $isSuccess->detalles()->save(new RecetasDetalle($detalle));
             }
             # Eliminamos cache
-//            Cache::tags(getCacheTag('index'))->flush();
-//            $this->log('store', $isSuccess->id_receta);
+            Cache::tags(getCacheTag('index'))->flush();
+            $this->log('store', $isSuccess->id_receta);
 
             return $this->redirect('store');
         } else {

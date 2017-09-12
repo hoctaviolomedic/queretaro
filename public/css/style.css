@@ -216,3 +216,9 @@ cursor: pointer;
 .form-inline > .input-group{
   width: auto;
 }
+
+.gotUndisable {
+    pointer-events: initial !important;
+    cursor: pointer !important;;
+    opacity: 1 !important;;
+}

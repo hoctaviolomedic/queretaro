@@ -183,7 +183,8 @@
     @if(Route::currentRouteNamed(currentRouteName('show')))
         <div class="row">
             <div class="col-sm-12 text-center">
-                {{ Form::button('<span class="glyphicon glyphicon-flash"></span> Surtir', ['type' =>'button', 'class'=>'btn btn-danger','id'=>'surtir','enabled']) }}
+{{--                {{ Form::button('<span class="glyphicon glyphicon-flash"></span> Surtir', ['type' =>'button', 'class'=>'btn btn-danger','id'=>'surtir','enabled']) }}--}}
+                <a href="{{companyRoute('surtir',['id'=>$data->id_receta])}}" role="button" class="btn btn-danger gotUndisable"><span class="glyphicon glyphicon-gift"></span> Surtir receta</a>
             </div>
         </div><!--/row-->
     @endif
