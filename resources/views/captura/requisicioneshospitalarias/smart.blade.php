@@ -85,25 +85,7 @@
                                 <th></th>
                             </tr>
                             </thead>
-                            <tbody id="lista_productos">
-
-                            {{--<tr>--}}
-                                {{--<th scope="row">1</th>--}}
-                                {{--<td>123456</td>--}}
-                                {{--<td>PARACETAMOL 500MG</td>--}}
-                                {{--<td>12</td>--}}
-                                {{--<td>12</td>--}}
-                                {{--<td>--}}
-                                    {{--<div class="input-group">--}}
-                                        {{--<input type="number" class="form-control" placeholder="Ej: 6">--}}
-                                        {{--<span class="input-group-btn">--}}
-                                            {{--<button class="btn btn-default btn-check" type="button">Aceptar</button>--}}
-                                            {{--</span>--}}
-                                    {{--</div><!-- /input-group -->--}}
-                                {{--</td>--}}
-                            {{--</tr>--}}
-
-                            </tbody>
+                            <tbody id="lista_productos"></tbody>
                         </table>
                     </div>
                 </div>
@@ -117,8 +99,6 @@
     <div class="text-right ">
         <a class="btn btn-danger" href="{{ companyRoute('edit') }}">Surtir</a>
         <a class="btn btn-default" href="{{ companyRoute('index') }}"> Cerrar</a>
-        {{--{!! Form::close() !!}--}}
-        {{--//{!! Form::open(['url' => companyRoute('index'), 'id' => 'form-model', 'class' => 'col-sm-12']) !!}--}}
     </div>
 
 @endsection
@@ -149,13 +129,6 @@
                     {{ Form::select('id_estatus', $estatus, null, ['id'=>'id_estatus','class'=>'js-data-example-ajax1 form-control','style'=>'100%']) }}
                     {{ $errors->has('id_estatus') ? HTML::tag('span', $errors->first('id_estatus'), ['class'=>'help-block deep-orange-text']) : '' }}
                 </div>
-                {{--<label>*Estatus:</label>--}}
-                {{--<select class="form-control" name="estatus">--}}
-                    {{--<option value="1">Surtido</option>--}}
-                    {{--<option value="2">No surtido</option>--}}
-                    {{--<option value="3">Parcialmente surtido</option>--}}
-                    {{--<option value="4">Cancelado</option>--}}
-                {{--</select>--}}
             </div>
             <div class="col-sm-2 col-xs-6">
                 <div class="form-group">
@@ -179,7 +152,6 @@
                         <th>Área</th>
                         <th>Producto</th>
                         <th>cantidad</th>
-
                     </tr>
                     </thead>
                     <tbody id="lista_productos">
@@ -222,13 +194,6 @@
                     {{ Form::select('id_estatus', $estatus, null, ['id'=>'id_estatus','class'=>'js-data-example-ajax1 form-control','style'=>'100%']) }}
                     {{ $errors->has('id_estatus') ? HTML::tag('span', $errors->first('id_estatus'), ['class'=>'help-block deep-orange-text']) : '' }}
                 </div>
-                {{--<label>*Estatus:</label>--}}
-                {{--<select class="form-control" name="estatus">--}}
-                {{--<option value="1">Surtido</option>--}}
-                {{--<option value="2">No surtido</option>--}}
-                {{--<option value="3">Parcialmente surtido</option>--}}
-                {{--<option value="4">Cancelado</option>--}}
-                {{--</select>--}}
             </div>
             <div class="col-sm-2 col-xs-6">
                 <div class="form-group">
@@ -255,11 +220,10 @@
                         <th>Cantidad solicitada</th>
                         <th>Cantidad surtida</th>
                         <th>Cantidad a surtir</th>
-
                     </tr>
                     </thead>
                     <tbody id="lista_productos">
-                    @foreach($detalle_requerimiento as $detalle)
+                    @foreach($detalle_requerimiento as $index => $detalle)
                         <tr>
                             <td>{{$detalle->area}}</td>
                             <td>{{$detalle->clave_cliente}}</td>
@@ -267,30 +231,11 @@
                             <td>{{$detalle->cantidad_pedida}}</td>
                             <td>{{$detalle->cantidad_surtida}}</td>
                             <td>
-                            <div class="input-group">
-                            <input type="number" class="form-control" placeholder="Ej: 6">
-                            {{--<span class="input-group-btn">--}}
-                            {{--<button class="btn btn-default btn-check" type="button">Aceptar</button>--}}
-                            {{--</span>--}}
-                            </div><!-- /input-group -->
+                                <div class="input-group">
+                                    <input type="number" class="form-control" name="datos_requisicion[{{$index}}][id=>{{$detalle->id_requisicion_detalle}}]" placeholder="Ej: 6">
+                                </div><!-- /input-group -->
                             </td>
                         </tr>
-
-                        {{--<tr>--}}
-                        {{--<th scope="row">1</th>--}}
-                        {{--<td>123456</td>--}}
-                        {{--<td>PARACETAMOL 500MG</td>--}}
-                        {{--<td>12</td>--}}
-                        {{--<td>12</td>--}}
-                        {{--<td>--}}
-                        {{--<div class="input-group">--}}
-                        {{--<input type="number" class="form-control" placeholder="Ej: 6">--}}
-                        {{--<span class="input-group-btn">--}}
-                        {{--<button class="btn btn-default btn-check" type="button">Aceptar</button>--}}
-                        {{--</span>--}}
-                        {{--</div><!-- /input-group -->--}}
-                        {{--</td>--}}
-                        {{--</tr>--}}
                     @endforeach
                     </tbody>
                 </table>
@@ -380,7 +325,7 @@
 
 
 @if (Route::currentRouteNamed(currentRouteName('index')))
-    @section('title', 'Requisiciones aHospitalarias')
+    @section('title', 'Requisiciones Hospitalarias')
     @include('layouts.smart.index')
 @endif
 
