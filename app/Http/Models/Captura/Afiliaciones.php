@@ -42,6 +42,11 @@ class Afiliaciones extends ModelCompany
         'nombre' => 'nombre'
     ];
 
+    public function getFullNameAttribute()
+    {
+        return $this->paterno.' '.$this->materno.' '.$this->nombre;
+    }
+
     public function recetas()
     {
         return $this->hasMany('App\Http\Models\Captura\Recetas','id_afiliacion','id_afiliacion');

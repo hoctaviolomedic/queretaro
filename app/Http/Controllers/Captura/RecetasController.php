@@ -12,6 +12,7 @@ use App\Http\Models\Captura\Localidades;
 use App\Http\Models\Captura\Recetas;
 use App\Http\Models\Captura\RecetasDetalle;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
@@ -73,7 +74,6 @@ class RecetasController extends ControllerBase
         # ¿Usuario tiene permiso para crear?
         // $this->authorize('create', $this->entity);
 
-        dd( Auth::Id() );
 
         # Validamos request, si falla regresamos pagina
         $this->validate($request, $this->entity->rules);
@@ -120,7 +120,7 @@ class RecetasController extends ControllerBase
             }
             # Eliminamos cache
             Cache::tags(getCacheTag('index'))->flush();
-            $this->log('store', $isSuccess->id_receta);
+//            $this->log('store', $isSuccess->id_receta);
 
             return $this->redirect('store');
         } else {
@@ -226,5 +226,44 @@ class RecetasController extends ControllerBase
                 ORDER BY disponible DESC, cp.descripcion;");
 
         return json_encode($query[0]);
+    }
+
+    public function surtirReceta($company,$id)
+    {
+        $receta = Recetas::all()->find($id);
+//        $detalles = Recetas::all()->find($id)->detalles()->where('recurrente','>',0)->first();
+        return view('captura\recetas\surtir',[
+            'receta' => $receta,
+//            'detalles' => $detalles
+        ]);
+    }
+
+    public function surtir($company,$id)
+    {
+        $detalles = Recetas::all()->find($id)->detalles()->get();
+        $medicamentos_surtidos = [];
+        $medicamentos_no_surtidos = [];
+        foreach ($detalles as $detalle) {
+            $now = DB::select("select now()")[0]->now;
+            if(empty($detalle->fecha_surtido) && $detalle->recurrente > 0) {//Si es la primer vez que se surte
+                $cantidad_nueva = $detalle->cantidad_pedida + $detalle->cantidad_surtida;
+                $detalle->update(['cantidad_surtida' => $cantidad_nueva,'fecha_surtido'=>DB::select("select now()::TIMESTAMP(0) as fecha")[0]->fecha]);
+                array_push($medicamentos_surtidos,$detalle->clave_cliente);
+            }elseif($detalle->fecha_surtido != null && $detalle->fecha_surtido != '' && $detalle->recurrente>0){
+                $fecha_surtido = $detalle->fecha_surtido;
+                if (DB::select("select date '" . $now . "' - date '" . $fecha_surtido . "' as diferencia")[0]->diferencia >= $detalle->recurrente) {
+                    $cantidad_nueva = $detalle->cantidad_pedida + $detalle->cantidad_surtida;
+                    $detalle->update(['cantidad_surtida' => $cantidad_nueva,'fecha_surtido'=>DB::select("select now()::TIMESTAMP(0) as fecha")[0]->fecha]);
+                    array_push($medicamentos_surtidos,$detalle->clave_cliente);
+                }else{
+                    array_push($medicamentos_no_surtidos,$detalle->clave_cliente);
+                }
+            }else{
+                array_push($medicamentos_no_surtidos,$detalle->clave_cliente);
+            }
+        }
+        dump($medicamentos_surtidos);
+        dump($medicamentos_no_surtidos);
+        exit();
     }
 }

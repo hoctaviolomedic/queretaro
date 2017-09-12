@@ -131,7 +131,6 @@ $(document).ready(function () {
             $.toaster({ priority : 'danger', title : 'Verifica los siguientes campos', message : campos,settings:{'donotdismiss':['danger']}});
             return
         }
-
         var filas = $('#detalle tr').length;
         var dosis_text = '<b>';
         var dosis_hidden = parseInt($('#dosis').val());
@@ -186,6 +185,8 @@ $(document).ready(function () {
                 });
                 return
             }
+            var veces_surtir = (parseInt($('#por').val())*parseInt($('#_por option:selected').val())/24);
+            veces_surtir = veces_surtir/recurrencia_hidden;
         }else {//Si no es recurrente
             var cantidad_medicamento_necesaria = (($('#_por option:selected').val()*$('#por').val())/($('#_cada option:selected').val()*($('#cada').val())))*dosis_hidden;
             if (medicamento[0].cantidad_presentacion > 1) {
@@ -212,7 +213,6 @@ $(document).ready(function () {
             }
         }
 
-
         dosis_hidden += ' '+medicamento[0].familia;
         dosis_text += medicamento[0].familia+'</b>';
 
@@ -235,6 +235,7 @@ $(document).ready(function () {
                     '<p><input id="_detalle['+medicamento[0].id+'][en_caso_presentar]" name="_detalle['+medicamento[0].id+'][en_caso_presentar]" type="hidden" value="'+nota_medicamento+'" />'+nota_medicamento+'</p>' +
                     '<p><input id="_detalle['+medicamento[0].id+'][por]" name="_detalle['+medicamento[0].id+'][por]" type="hidden" value="'+$('#por').val()*$('#_por option:selected').val()+'"/><input id="_detalle['+medicamento[0].id+'][recurrente]" name="_detalle['+medicamento[0].id+'][recurrente]" type="hidden" value="'+recurrencia_hidden+'"/>'+recurrencia_text+'</p>' +
                     '<input id="_detalle['+medicamento[0].id+'][id_cuadro]" name="_detalle['+medicamento[0].id+'][id_cuadro]" type="hidden" value="'+medicamento[0].id_cuadro+'"/>'+
+                    '<input id="_detalle['+medicamento[0].id+'][veces_surtir]" name="_detalle['+medicamento[0].id+'][veces_surtir]" type="hidden" value="'+medicamento[0].id_cuadro+'"/>'+
                 '</td>' +
                 '<td>' +
                     '<a onclick="eliminarFila(this)" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger" id="'+filas+'"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a> ' +
