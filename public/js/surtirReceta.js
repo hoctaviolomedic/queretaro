@@ -10,7 +10,7 @@ $(document).ready(function () {
         $('#detalle tbody tr').each(function (index) {
             var data = {};
             var id = this.title;
-            if($('#cantidad_pedida'+id).val()<$('#cantidadsurtir'+id).val() || !$('#cantidadsurtir'+id).val()){
+            if($('#cantidad_pedida'+id).val()<$('#cantidadsurtir'+id).val()){
                 cantidad_alta += '<br>'+$('#descripcion'+id).val();
             }
             data.clave_cliente = id;
@@ -39,6 +39,22 @@ $(document).ready(function () {
                 priority : 'danger',
                 title : 'Verifica las cantidades a surtir de los siguientes productos',
                 message : cantidad_alta,
+                settings:{
+                    'donotdismiss':['danger'],
+                    'toaster':{
+                        'css':{
+                            'top':'3em'
+                        }
+                    }
+                }
+            });
+            return
+        }else if($('#detalle tbody tr').length < 1){
+            e.preventDefault();
+            $.toaster({
+                priority : 'success',
+                title : '¡Éxito!',
+                message : 'No hay más medicamentos por surtir',
                 settings:{
                     'donotdismiss':['danger'],
                     'toaster':{

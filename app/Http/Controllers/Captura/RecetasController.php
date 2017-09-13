@@ -116,11 +116,12 @@ class RecetasController extends ControllerBase
                         }
                         $index++;
                     }
-                    //Guardar detalle
+                }
+
+                //Guardar detalle
 //                dd($detalle);
                     $detalle['cantidad_surtida'] = 0;
                     $isSuccess->detalles()->save(new RecetasDetalle($detalle));
-                }
             }
 
             # Eliminamos cache
@@ -359,21 +360,23 @@ class RecetasController extends ControllerBase
                 WHERE c.estatus = '1' AND c.id_tipo_cuadro = '1'
                 GROUP BY cp.clave_cliente,cp.descripcion,cf.descripcion,cp.cantidad_presentacion,tp.id_cuadro_tipo_medicamento,c.id_cuadro,lp.tope_receta,ie.codigo_barras,ie.caducidad,ie.quedan,ie.apartadas,ie.no_lote
                 ORDER BY ie.caducidad ASC;");
-                $index = 0;
-                while(true){
-                    $quedan = $disponibles[$index]->quedan;
-                    $quedan = $quedan - $detalle_actual['cantidadsurtir'];
-                    $apartadas = $disponibles[$index]->apartadas;
-                    $apartadas = $apartadas - $detalle_actual['cantidadsurtir'];
+                if ($disponibles[0]->quedan > 0) {
+                    $index = 0;
+                    while (true) {
+                        $quedan = $disponibles[$index]->quedan;
+                        $quedan = $quedan - $detalle_actual['cantidadsurtir'];
+                        $apartadas = $disponibles[$index]->apartadas;
+                        $apartadas = $apartadas - $detalle_actual['cantidadsurtir'];
 
                         $update = DB::update("UPDATE inv_existencia
-                        SET apartadas = ".$apartadas.", quedan = ".$quedan."
-                        WHERE codigo_barras = '".$disponibles[$index]->codigo_barras."'
-                        AND no_lote = '".$disponibles[$index]->no_lote."'
-                        AND id_localidad = '".$request->id_localidad."'");
-                    $index++;
-                    if($update)
-                        break;
+                        SET apartadas = " . $apartadas . ", quedan = " . $quedan . "
+                        WHERE codigo_barras = '" . $disponibles[$index]->codigo_barras . "'
+                        AND no_lote = '" . $disponibles[$index]->no_lote . "'
+                        AND id_localidad = '" . $request->id_localidad . "'");
+                        $index++;
+                        if ($update)
+                            break;
+                    }
                 }
             }
         }
@@ -402,7 +405,7 @@ class RecetasController extends ControllerBase
         $dom_pdf = $pdf->getDomPDF();
         $canvas = $dom_pdf->get_canvas();
         $canvas->page_text(38,580,"Página {PAGE_NUM} de {PAGE_COUNT}",null,8,array(0,0,0));
-        $canvas->text(665,580,'PSAI-PN06-F01 Rev. 01',null,8);
+        $canvas->text(665,580,'RECETA',null,8);
 //        $canvas->image('data:image/png;charset=binary;base64,'.$barcode,355,580,100,16);
 
         return $pdf->stream('solicitud')->header('Content-Type',"application/pdf");

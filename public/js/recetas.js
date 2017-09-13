@@ -263,7 +263,7 @@ $(document).ready(function () {
                     '<p><input id="_detalle['+medicamento[0].id+'][en_caso_presentar]" name="_detalle['+medicamento[0].id+'][en_caso_presentar]" type="hidden" value="'+nota_medicamento+'" />'+nota_medicamento+'</p>' +
                     '<p><input id="_detalle['+medicamento[0].id+'][por]" name="_detalle['+medicamento[0].id+'][por]" type="hidden" value="'+$('#por').val()*$('#_por option:selected').val()+'"/><input id="_detalle['+medicamento[0].id+'][recurrente]" name="_detalle['+medicamento[0].id+'][recurrente]" type="hidden" value="'+recurrencia_hidden+'"/>'+recurrencia_text+'</p>' +
                     '<input id="_detalle['+medicamento[0].id+'][id_cuadro]" name="_detalle['+medicamento[0].id+'][id_cuadro]" type="hidden" value="'+medicamento[0].id_cuadro+'"/>'+
-                    '<input id="_detalle['+medicamento[0].id+'][veces_surtir]" name="_detalle['+medicamento[0].id+'][veces_surtir]" type="hidden" value="'+veces_surtir+'"/>'+
+                    '<input id="_detalle['+medicamento[0].id+'][veces_surtir]" name="_detalle['+medicamento[0].id+'][veces_surtir]" type="hidden" value="'+Math.ceil(veces_surtir)+'"/>'+
                 '</td>' +
                 '<td>' +
                     '<a onclick="eliminarFila(this)" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger" id="'+filas+'"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a> ' +

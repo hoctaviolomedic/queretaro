@@ -46,7 +46,7 @@
             </div>
             <div class="width-25 float-left text-center">
                 <span>Nombre Paciente:</span>
-                <br><b>{{$receta->afiliacion->getFullNameAttribute()}}</b>
+                <br><b>{{$receta->id_afiliacion != null ? $receta->afiliacion->getFullNameAttribute() : $receta->nombre_paciente_no_afiliado}}</b>
             </div>
             <div class="width-25 float-left text-center">
                 <span>Edad:</span>
