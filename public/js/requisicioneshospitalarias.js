@@ -4,7 +4,7 @@
 $cont_producto = 0;
 function agregarProducto() {
 
-    if($('#id_area').val() != '' && $('#producto').val() != '' && parseInt($('#cantidad').val()) > 0)
+    if( parseInt($('#id_area').val()) > 0 && parseInt($('#producto').val()) > 0 && parseInt($('#cantidad').val()) > 0 )
     {
         var id_area =  $('#id_area').val();
         var area_nombre =  $('#id_area option:selected').text();
@@ -48,12 +48,17 @@ function agregarProducto() {
             }
         });
     }
+    var filas = $('#detalle tr').length;
+    $('#guardar').prop('disabled',(filas<=1));
 
 }
 
 function eliminarFila(fila)
 {
     $('#'+fila).remove();
+    
+    var filas = $('#detalle tr').length;
+    $('#guardar').prop('disabled',(filas<=1));
 }
 
 $('select[name="id_localidad"]').on('change', function() {

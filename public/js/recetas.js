@@ -14,7 +14,7 @@ $(document).ready(function () {
     initPaciente();
 
     $(".diagnostico").select2({
-        placeholder: 'Escriba el diagnóstico del paciente',
+        placeholder: 'Escriba el diagnÃ³stico del paciente',
         ajax: {
             type: 'POST',
             url: $(".diagnostico").data('url'),
@@ -86,14 +86,14 @@ $(document).ready(function () {
         var medicamento = $('.medicamento').select2('data');
         var campos = '';
         if($('#medicamento').select2('data').length ==0){
-            campos += '<br><br>Medicamento: ¿Seleccionaste un medicamento?';
+            campos += '<br><br>Medicamento: Â¿Seleccionaste un medicamento?';
         }
         if(!parseInt($('#dosis').val())>0)
             campos += '<br><br>Necesito que me indiques la <b>dosis</b> del medicamento';
         if(!parseInt($('#cada').val())>0)
-            campos += '<br><br>Necesito que me indiques <b>cada</b> cuando tomará el medicamento';
+            campos += '<br><br>Necesito que me indiques <b>cada</b> cuando tomarÃ¡ el medicamento';
         if(!parseInt($('#por').val())>0 )
-            campos += '<br><br>Necesito que me indiques <b>la duración</b> del medicamento';
+            campos += '<br><br>Necesito que me indiques <b>la duraciÃ³n</b> del medicamento';
 
         if(campos!=''){
             $.toaster({
@@ -137,7 +137,7 @@ $(document).ready(function () {
                     $.toaster({
                         priority: 'danger',
                         title: 'Medicamento',
-                        message: 'Asegúrate que la cantidad entregable no sea mayor al tope de entrega',
+                        message: 'AsegÃºrate que la cantidad entregable no sea mayor al tope de entrega',
                         settings: {
                             'timeout':10000,
                             'toaster':{
@@ -156,7 +156,7 @@ $(document).ready(function () {
                         'top': '3em'
                     },
                     title: 'Medicamento',
-                    message: 'Este medicamento no cuenta con la información necesaria. Te recomendamos seleccionar otro.',
+                    message: 'Este medicamento no cuenta con la informaciÃ³n necesaria. Te recomendamos seleccionar otro.',
                     settings: {
                         'timeout':10000,
                         'toaster':{
@@ -178,7 +178,7 @@ $(document).ready(function () {
                 $.toaster({
                     priority: 'danger',
                     title: 'Medicamento',
-                    message: 'Verifica el tiempo de recurrencia y el de la duración del tratamiento',
+                    message: 'Verifica el tiempo de recurrencia y el de la duraciÃ³n del tratamiento',
                     settings: {
                         'timeout':10000,
                         'toaster':{
@@ -206,7 +206,7 @@ $(document).ready(function () {
                           'top': '3em'
                         },
                         title: 'Medicamento',
-                        message: 'Asegúrate que la cantidad entregable no sea mayor al tope de entrega',
+                        message: 'AsegÃºrate que la cantidad entregable no sea mayor al tope de entrega',
                         settings: {
                             'timeout':10000,
                             'toaster':{
@@ -225,7 +225,7 @@ $(document).ready(function () {
                         'top': '3em'
                     },
                     title: 'Medicamento',
-                    message: 'Este medicamento no cuenta con la información necesaria. Te recomendamos seleccionar otro.',
+                    message: 'Este medicamento no cuenta con la informaciÃ³n necesaria. Te recomendamos seleccionar otro.',
                     settings: {
                         'timeout':10000,
                         'toaster':{
@@ -269,15 +269,13 @@ $(document).ready(function () {
                     '<a onclick="eliminarFila(this)" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger" id="'+filas+'"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a> ' +
                 '</td>'+
             '</tr>');
-        if(filas>0){
-            $('#guardar').prop('disabled',false);
-        }
+        $('#guardar').prop('disabled',filas=0);
         $.toaster({
             priority : 'success',
             css:{
                 'top': '3em'
             },
-            title : '¡Éxito!',
+            title : 'Â¡Ã‰xito!',
             message : '<br>Medicamento agregado exitosamente',
             settings:{
                 'toaster':{
@@ -301,7 +299,7 @@ $(document).ready(function () {
         medicamento();
     });
 
-    //Validación de medicamentos
+    //ValidaciÃ³n de medicamentos
     $('#guardar').on('click',function (e) {
         $('#medicamento_modal').text('');
         var medicamento = [];
@@ -314,14 +312,14 @@ $(document).ready(function () {
             data.en_caso_presentar = $('#indicaciones'+id).val();
 
             if($('#recurrencia'+id).val()>0){
-                data.recurrente = $('#recurrencia'+id).val()/24;//Se divide entre 24 para convertirlo a días
+                data.recurrente = $('#recurrencia'+id).val()/24;//Se divide entre 24 para convertirlo a dÃ­as
             }else{
                 data.recurrente = 0;
             }
             data.cantidad_pedida = $('#cantidad'+id).val();//Cantidad que se va a dar cada vez que se surta
             data.localidad = $('.unidad').val();
             medicamento.push(data);
-            // validación; si los medicamentos siguen disponibles, valid = true
+            // validaciÃ³n; si los medicamentos siguen disponibles, valid = true
             $.ajax({
                 url: $('#detalle').data('url'),
                 type: 'GET',
@@ -329,25 +327,25 @@ $(document).ready(function () {
                 async: false,
                 success:function (response) {
                     var arreglo = $.parseJSON(response);
-                    if(arreglo['disponible']<$('#cantidad'+id).val()){//Si ya no está disponible, agregar al arreglo de medicamentos agotados
+                    if(arreglo['disponible']<$('#cantidad'+id).val()){//Si ya no estÃ¡ disponible, agregar al arreglo de medicamentos agotados
                         medicamento_agotado.push(arreglo);
                     }
                 }
             });
         });
         if(medicamento_agotado.length>0){
-            e.preventDefault();//Evita que se envíe el formulario si se agotó un medicamento
+            e.preventDefault();//Evita que se envÃ­e el formulario si se agotÃ³ un medicamento
             for(var i = 0;i<medicamento_agotado.length;i++){
                 $('#medicamento_modal').append(medicamento_agotado[i].descripcion+'<br>');
             }
-            $('#medicamento_modal').append('¿Aún así deseas agregarlos a la receta?');
+            $('#medicamento_modal').append('Â¿AÃºn asÃ­ deseas agregarlos a la receta?');
             $('#modal').modal('show');
-        }else{//Si no se agotó ningún medicamento
+        }else{//Si no se agotÃ³ ningÃºn medicamento
             $('form').submit();
         }
     });
 
-    $('#aceptar').on('click',function () {//En caso de que un medicamento se agotara y aún así se desee surtir
+    $('#aceptar').on('click',function () {//En caso de que un medicamento se agotara y aÃºn asÃ­ se desee surtir
         $('form').submit();
     });
 
@@ -363,7 +361,7 @@ $(document).ready(function () {
 
 function initPaciente() {
     $(".paciente").select2({
-        placeholder: 'Escriba el número de afiliación o el nombre del paciente',
+        placeholder: 'Escriba el nÃºmero de afiliaciÃ³n o el nombre del paciente',
         ajax: {
             type: 'POST',
             url: $(".paciente").data('url'),
@@ -397,8 +395,8 @@ function initPaciente() {
 
 function formatMedicine(medicine) {
     if(!medicine.id){return medicine.text;}
-    return $('<span>'+medicine.text+'</span><br>Presentación: <b>'+medicine.familia+'</b> Cantidad en la presentación: <b>'+medicine.cantidad_presentacion+'</b>' +
-        '<br>Disponibilidad: <b>'+medicine.disponible+'</b> Máximo para recetar: <b>'+medicine.tope_receta+'</b>');
+    return $('<span>'+medicine.text+'</span><br>PresentaciÃ³n: <b>'+medicine.familia+'</b> Cantidad en la presentaciÃ³n: <b>'+medicine.cantidad_presentacion+'</b>' +
+        '<br>Disponibilidad: <b>'+medicine.disponible+'</b> MÃ¡ximo para recetar: <b>'+medicine.tope_receta+'</b>');
 }
 
 function eliminarFila(a) {

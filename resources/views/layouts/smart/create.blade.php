@@ -8,8 +8,8 @@
 
 @section('form-actions')
 <div class="text-right">
-	{{ Form::button('<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar', ['type' =>'submit', 'class'=>'btn btn-danger']) }}
-	{{ link_to(companyRoute('index'), 'Cerrar', ['class'=>'btn btn-default']) }}
+	{{ Form::button('<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar', ['id'=>'guardar','type' =>'submit', 'class'=>'btn btn-danger']) }}
+	{{ link_to(companyRoute('index'), 'Cerrar', ['id'=>'cerrar','class'=>'btn btn-default']) }}
 </div>
 @endsection
 

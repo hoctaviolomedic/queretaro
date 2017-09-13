@@ -58,7 +58,7 @@ class RequisicionesHospitalariasController extends ControllerBase
         // $this->authorize('create', $this->entity);
 
         $data = $this->entity->getColumnsDefaultsValues();
-        $localidades = Localidades::where('tipo',0)->where('id_cliente',135)->pluck('localidad','id_localidad');
+        $localidades = Localidades::where('tipo',0)->where('id_cliente',135)->where('tipo',0)->pluck('localidad','id_localidad');
         $estatus = Estatus::all()->pluck('estatus','id_estatus');
         $dataview = isset($attributes['dataview']) ? $attributes['dataview'] : [];
 

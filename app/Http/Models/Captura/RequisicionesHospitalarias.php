@@ -44,6 +44,8 @@ class RequisicionesHospitalarias extends ModelCompany
         'fecha_requerido' => 'required',
         'id_solicitante' => 'required',
     ];
+    
+    protected $eagerLoaders = ['localidad','estatus'];
 
     /**
      * Los atributos que seran visibles en index-datable
@@ -51,11 +53,11 @@ class RequisicionesHospitalarias extends ModelCompany
      */
     protected $fields = [
         'folio' => '#',
-        'localidad.localidad' => 'Localidad',
+        'ilocalidad' => 'Localidad',
         'solicitante' => 'Solicitante',
         'fecha' => 'Fecha captura',
         'fecha_requerido' => 'Fecha requerimiento',
-        'estatus.estatus' => 'Estatus',
+        'iestatus' => 'Estatus',
     ];
     
     public function estatus()
@@ -75,7 +77,21 @@ class RequisicionesHospitalarias extends ModelCompany
     
     public function getSolicitanteAttribute()
     {
-        return $this->solicitantes->paterno.' '.$this->solicitantes->materno.' '.$this->solicitantes->nombre;
+        $paterno = !empty($this->solicitantes->paterno) ? $this->solicitantes->paterno : '';
+        $materno = !empty($this->solicitantes->materno) ? $this->solicitantes->materno : '';
+        $nombre  = !empty($this->solicitantes->nombre) ? $this->solicitantes->nombre : '';
+        
+        return "$paterno $materno $nombre";
+    }
+    
+    public function getIlocalidadAttribute()
+    {
+        return !empty($this->localidad->localidad) ? $this->localidad->localidad : '';
+    }
+    
+    public function getIestatusAttribute()
+    {
+        return !empty($this->estatus->estatus) ? $this->estatus->estatus : '';
     }
     
 }

@@ -1,11 +1,7 @@
-
 @section('content-width', 's12 m7 xl8 offset-xl2')
-
-
 
 @section('form-content')
 {{ Form::setModel($data) }}
-
 
 @if (Route::currentRouteNamed(currentRouteName('create')))
 @section('form-title', 'Crear Requisiciones Hospitalaria')
@@ -15,7 +11,6 @@
                 <div class="row">
                     <div class="col-sm-4 ">
                         <div class="form-group">
-                            {{--{{dd($localidades)}}--}}
                             {{ Form::label('id_localidad', 'Localidad:') }}
                             {!! Form::select('id_localidad',$localidades , null, ['placeholder' => 'Seleccionar una localidad...','id'=>'id_localidad','class'=>'js-data-example-ajax1 form-control','style'=>'width:100%','data-url'=>companyRoute('getAreas')]) !!}
                             {{ $errors->has('id_localidad') ? HTML::tag('span', $errors->first('id_localidad'), ['class'=>'text-danger']) : '' }}
@@ -77,7 +72,7 @@
 
                 <div class="row">
                     <div class="col-md-12 table-responsive">
-                        <table class="table table-hover table-striped">
+                        <table id="detalle" class="table table-hover table-striped">
                             <thead>
                             <tr>
                                 <th>Área</th>
@@ -96,16 +91,11 @@
 
 @if (Route::currentRouteNamed(currentRouteName('show')))
 @section('form-actions')
-
     <div class="text-right ">
         <a class="btn btn-danger" href="{{ companyRoute('edit') }}">Surtir</a>
         <a class="btn btn-default" href="{{ companyRoute('index') }}"> Cerrar</a>
     </div>
-
 @endsection
-
-
-    {{--<input type="hidden" name="fecha_captura" value="{{date('Y-m-d h:i:s')}}">--}}
 
     <div class="panel-body">
 
@@ -114,7 +104,7 @@
                 <div class="form-group">
                     {{ Form::label('id_localidad', 'Localidad:') }}
                     {{ Form::select('id_localidad', $localidades, null, ['id'=>'id_localidad','class'=>'js-data-example-ajax1 form-control','style'=>'width:100%']) }}
-                    {{--{{ $errors->has('id_localidad') ? HTML::tag('span', $errors->first('id_localidad'), ['class'=>'help-block deep-orange-text']) : '' }}--}}
+                    {{ $errors->has('id_localidad') ? HTML::tag('span', $errors->first('id_localidad'), ['class'=>'help-block deep-orange-text']) : '' }}
                 </div>
             </div>
             <div class="col-sm-4">
@@ -188,7 +178,7 @@
                 <div class="form-group">
                     {{ Form::label('id_localidad', 'Localidad:') }}
                     {{ Form::select('id_localidad', $localidades, null, ['id'=>'id_localidad','class'=>'js-data-example-ajax1 form-control','style'=>'width:100%','disabled'=>'true']) }}
-                    {{--{{ $errors->has('id_localidad') ? HTML::tag('span', $errors->first('id_localidad'), ['class'=>'help-block deep-orange-text']) : '' }}--}}
+                    {{ $errors->has('id_localidad') ? HTML::tag('span', $errors->first('id_localidad'), ['class'=>'help-block deep-orange-text']) : '' }}
                 </div>
             </div>
             <div class="col-sm-4">
@@ -259,18 +249,18 @@
         </div>
     </div><!--/panel-body-->
 
-
-
-
-
 @endif
 @endsection
 
 
 @section('header-bottom')
+	@parent
     @if (Route::currentRouteNamed(currentRouteName('create')))
         <script type="text/javascript">
             $(document).ready(function() {
+            	var filas = $('#detalle tr').length;
+            	$('#guardar').prop('disabled',(filas<=1));
+                
                 $('a[data-toggle="tooltip"]').tooltip({
                     animated: 'fade',
                     placement: 'bottom',
@@ -302,8 +292,6 @@
                 });
                 $('#datetimepicker3').datetimepicker({
                     pickTime: false,
-                    //pick12HourFormat: true,
-                    //language: 'en'
                 });
             });
         </script>

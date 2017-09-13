@@ -250,7 +250,7 @@ class RecetasController extends ControllerBase
         $json = [];
         $term = strtoupper($request->medicamento);
         $medicamentos = DB::select("SELECT cp.clave_cliente, cp.descripcion, cf.descripcion as familia, coalesce(cp.cantidad_presentacion,0) cantidad_presentacion, coalesce(SUM(ie.quedan - ie.apartadas),0) disponible,
-                tp.id_cuadro_tipo_medicamento as tipo_medicamento, c.id_cuadro, coalesce(lp.tope_receta,0) tope_receta
+                tp.id_cuadro_tipo_medicamento as tipo_medicamento, c.id_cuadro, coalesce(cp.tope_receta,0) tope_receta
             
            FROM cat_cuadro c
             LEFT JOIN cat_cuadro_producto cp ON cp.id_cuadro = c.id_cuadro AND c.id_cliente = 135 AND cp.estatus = '1' AND cp.descripcion LIKE '%".$term."%'
@@ -262,7 +262,7 @@ class RecetasController extends ControllerBase
             
            WHERE c.estatus = '1' AND c.id_tipo_cuadro = '1'
             
-           GROUP BY cp.clave_cliente,cp.descripcion,cf.descripcion,cp.cantidad_presentacion,tp.id_cuadro_tipo_medicamento,c.id_cuadro,lp.tope_receta
+           GROUP BY cp.clave_cliente,cp.descripcion,cf.descripcion,cp.cantidad_presentacion,tp.id_cuadro_tipo_medicamento,c.id_cuadro,cp.tope_receta
             ORDER BY disponible DESC, cp.descripcion;");
         foreach ($medicamentos as $medicamento){
             $json[] = ['id'=>$medicamento->clave_cliente,
