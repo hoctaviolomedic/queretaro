@@ -33,7 +33,13 @@ class Recetas extends ModelCompany
      * @var array
      */
     public $rules = [
-//        'correo' => 'required|email',
+        'peso' => 'numeric|max:999',
+        'altura' => 'numeric|max:999',
+        'presion1' => 'numeric|max:999',
+        'presion2' => 'numeric|max:999',
+        'id_diagnostico' => 'required',
+        'id_dependiente' => 'required_if:nombre_paciente_no_afiliado,size:0',
+        'nombre_paciente_no_afiliado' => 'required_if:id_dependiente,size:0'
     ];
 
     /**
