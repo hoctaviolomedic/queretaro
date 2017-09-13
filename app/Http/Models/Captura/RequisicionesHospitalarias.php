@@ -77,17 +77,21 @@ class RequisicionesHospitalarias extends ModelCompany
     
     public function getSolicitanteAttribute()
     {
-        return $this->solicitantes->paterno.' '.$this->solicitantes->materno.' '.$this->solicitantes->nombre;
+        $paterno = !empty($this->solicitantes->paterno) ? $this->solicitantes->paterno : '';
+        $materno = !empty($this->solicitantes->materno) ? $this->solicitantes->materno : '';
+        $nombre  = !empty($this->solicitantes->nombre) ? $this->solicitantes->nombre : '';
+        
+        return "$paterno $materno $nombre";
     }
     
     public function getIlocalidadAttribute()
     {
-        return $this->localidad->localidad;
+        return !empty($this->localidad->localidad) ? $this->localidad->localidad : '';
     }
     
     public function getIestatusAttribute()
     {
-        return $this->estatus->estatus;
+        return !empty($this->estatus->estatus) ? $this->estatus->estatus : '';
     }
     
 }
