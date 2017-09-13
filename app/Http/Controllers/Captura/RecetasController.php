@@ -402,7 +402,7 @@ class RecetasController extends ControllerBase
         $dom_pdf = $pdf->getDomPDF();
         $canvas = $dom_pdf->get_canvas();
         $canvas->page_text(38,580,"Página {PAGE_NUM} de {PAGE_COUNT}",null,8,array(0,0,0));
-        $canvas->text(665,580,'PSAI-PN06-F01 Rev. 01',null,8);
+        $canvas->text(665,580,'RECETA',null,8);
 //        $canvas->image('data:image/png;charset=binary;base64,'.$barcode,355,580,100,16);
 
         return $pdf->stream('solicitud')->header('Content-Type',"application/pdf");
