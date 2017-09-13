@@ -94,6 +94,8 @@
 					app.$data[e.target.dataset.callback](response, e.target, e.target.dataset.target);
 				})
 			},
+			changeSelectUbicacion: function() {
+			},
 			updateSelectUbicacion: function(response, element, target) {
 				console.log(response, element, target)
 				var almacenes = [];
@@ -103,6 +105,8 @@
 					})
 				};
 				$(target).empty().append(almacenes.join(''));
+				this.$data.validaSelects();
+
 			},
 			getItemsPedido: function() {
 				if (app.$data.resurtidos.length) {
@@ -128,6 +132,11 @@
 				})
 				return options.join('')
 			},
+			getUbicacionOptions: function() {
+				var options = [];
+				options.push('<option value="0" selected disabled>Almacén ...</option>');
+				return options.join('')
+			},
 			addOne: function(int) {
 				return int + 1;
 			},
@@ -143,7 +152,7 @@
 			},
 			getTotalCantidadEntrada: function() {
 				return this.$data.clone.reduce(function(acc, item) {
-					return acc + parseInt(item['cantidad_entrada']);
+					return acc + parseInt(item['cantidad_entrada'] == '' ? 0: item['cantidad_entrada']);
 				}, 0);
 			},
 			someFunc: function(e) {
@@ -151,6 +160,11 @@
 				this.set('clone', this.get('clone'))
 			},
 			enviarDatos: function(e) {
+
+				if (!this.$data.validaSelects()) {
+					return;
+				}
+
 				console.log('enviar')
 				if (app.$data.resurtidos.length) {
 					$.post(this.$el.dataset.endpoint, {
@@ -184,7 +198,76 @@
 					}
 					console.log(e.target.value)
 					this.set('clone', this.get('clone'))
+					document.querySelector('#codebar-input').value = '';
 				}
+			},
+			someMethodTwo: function() {
+				if (app.$data.resurtidos.length) {
+					var codes = app.$data.items.reduce(function(acc, item, index) {
+						if ( Object.keys(acc).indexOf(item['codigo_barras']) < 0 ) acc[item['codigo_barras']] = index
+						return acc;
+					}, {});
+					var pos = Object.keys(codes).indexOf(document.querySelector('#codebar-input').value);
+					if ( pos >= 0) {
+						this.$data.clone[pos]['cantidad_entrada']++
+					}
+					this.set('clone', this.get('clone'))
+					document.querySelector('#codebar-input').value = '';
+				}
+			},
+			checkCantidades: function(e) {
+				var pendiente = (this.$data.items[e.target.dataset.itempos].cantidad - this.$data.items[e.target.dataset.itempos].cantidad_entrada)
+				if (e.target.value > pendiente) {
+					document.querySelector('#enviar-datos').disabled = true
+					var span = document.createElement('span');
+						span.classList.add('text-danger')
+						span.textContent = 'El valor debe menor de o igual a '+ pendiente +'.';
+					if (!e.target.parentNode.querySelector('span')) {
+						e.target.parentNode.classList.add('has-warning')
+						e.target.parentNode.append(span)
+					}
+				} else if (e.target.value < 0) {
+					document.querySelector('#enviar-datos').disabled = true
+					var span = document.createElement('span');
+						span.classList.add('text-danger')
+						span.textContent = 'El valor debe mayor de o igual a 0.';
+					if (!e.target.parentNode.querySelector('span')) {
+						e.target.parentNode.classList.add('has-warning')
+						e.target.parentNode.append(span)
+					}
+				} else {
+					e.target.parentNode.classList.remove('has-warning')
+					document.querySelector('#enviar-datos').disabled = false
+					if (e.target.parentNode.querySelector('span')) {
+						e.target.parentNode.querySelector('span').remove()
+					}
+				}
+			},
+			validaSelects: function() {
+				var r = true
+				document.querySelector('table').querySelectorAll('select').forEach(function(item, key){
+					console.log(item.value)
+
+					if (item.value == 0) {
+						document.querySelector('#enviar-datos').disabled = true
+						var span = document.createElement('span');
+							span.classList.add('text-danger')
+							span.textContent = 'Requerido.';
+						if (!item.parentNode.parentNode.querySelector('.text-danger')) {
+							item.parentNode.parentNode.classList.add('has-warning')
+							item.parentNode.parentNode.append(span)
+						}
+						r = false;
+					} else {
+						item.parentNode.parentNode.classList.remove('has-warning')
+						document.querySelector('#enviar-datos').disabled = false
+						if (item.parentNode.parentNode.querySelector('span.text-danger')) {
+							item.parentNode.parentNode.querySelector('span.text-danger').remove()
+						}
+					}
+
+				})
+				return r;
 			}
 		}
 	});
@@ -231,11 +314,11 @@
 			<div class="row">
 				<div class="col-sm-6">
 					<div class="form-group">
-						<label for="pedido">Código de barras</label>
+						<label for="codebar-input">Código de barras</label>
 						<div class="input-group">
-							<input id="pedido" type="number" class="form-control" placeholder="Buscar..." m-on:keyup.enter="someMethod">
+							<input id="codebar-input" type="number" class="form-control" placeholder="Buscar..." m-on:keyup.enter="someMethod">
 							<span class="input-group-btn">
-								<button class="btn btn-default btn-check" type="button"><span class="glyphicon glyphicon-plus"></span> Aceptar</button>
+								<button class="btn btn-default btn-check" type="button" m-on:click="someMethodTwo"><span class="glyphicon glyphicon-plus"></span> Aceptar</button>
 							</span>
 						</div>
 					</div>
@@ -268,7 +351,7 @@
 							<td>@{{item.cantidad - item.cantidad_entrada}}</td>
 							<td>
 								<div class="input-group">
-									<input type="number" class="form-control" placeholder="Ej: 6" min="0" value="0" m-model="clone[key].cantidad_entrada" data-hoho="@{{key}}" data-dummyoninput="someFunc">
+									<input type="number" class="form-control" placeholder="Ej: 6" min="0" max="@{{item.cantidad - item.cantidad_entrada}}" value="0" m-model="clone[key].cantidad_entrada" m-on:change="checkCantidades" data-itempos="@{{key}}" data-dummyoninput="someFunc">
 								</div>
 							</td>
 							<td>@{{item.no_lote}}</td>
@@ -278,9 +361,7 @@
 									<span class="input-group-addon" id="a">A</span>
 									<select id="almacen-@{{key}}" class="form-control" data-action="change-almacen" data-codigo_barras="@{{item.codigo_barras}}" data-callback="updateSelectUbicacion" data-target="#ubicacion-@{{key}}" m-on:change="changeSelectAlmacen" m-html="getAlmacenOptions()"></select>
 									<span class="input-group-addon" id="u">U</span>
-									<select id="ubicacion-@{{key}}" class="form-control">
-										<option value="0" selected disabled>Seleccione Almacén...</option>
-									</select>
+									<select id="ubicacion-@{{key}}" class="form-control" m-html="getUbicacionOptions()" m-on:change="changeSelectUbicacion"></select>
 								</div>
 							</td>
 						</tr>
@@ -304,7 +385,7 @@
 		</div>
 
 		<div class="text-right" m-literal:hidden="toRefresh">
-			<button type="button" class="btn btn-danger" m-on:click="enviarDatos"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+			<button id="enviar-datos" type="button" class="btn btn-danger" m-on:click="enviarDatos"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
 			<button type="button" class="btn btn-default">Cancelar y regresar</button>
 		</div>
 
