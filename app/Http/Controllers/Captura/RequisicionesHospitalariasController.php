@@ -241,7 +241,6 @@ class RequisicionesHospitalariasController extends ControllerBase
             ->pluck('cat_area.area','cat_area_localidad.id_area')
             ->toJson();
 
-
         $usuarios =Usuarios::join('adm_usuario_localidad','adm_usuario.id_usuario','=','adm_usuario.id_usuario')
             ->where('adm_usuario_localidad.id_localidad','=',$_POST['id_localidad'])
             ->select(DB::raw("CONCAT(adm_usuario.nombre,' ',adm_usuario.paterno,' ',adm_usuario.materno) AS nombre"),'adm_usuario.id_usuario')

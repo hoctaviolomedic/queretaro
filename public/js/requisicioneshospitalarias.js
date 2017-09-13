@@ -4,7 +4,7 @@
 $cont_producto = 0;
 function agregarProducto() {
 
-    if($('#id_area').val() != '' && $('#producto').val() != '' && $('#cantidad').val() != '')
+    if($('#id_area').val() != '' && $('#producto').val() != '' && parseInt($('#cantidad').val()) > 0)
     {
         var id_area =  $('#id_area').val();
         var area_nombre =  $('#id_area option:selected').text();
@@ -31,7 +31,22 @@ function agregarProducto() {
     }
     else
     {
-        alert('Uno o varios de los campos de área, producto o cantidad están vacíos.');
+    	$.toaster({
+            priority : 'danger',
+            css:{
+                'top': '3em'
+            },
+            title : 'Error!',
+            message : '<br>Uno o varios de los campos de Area, producto o cantidad estan vacios.',
+            settings:{
+            	'timeout':8000,
+            	'toaster':{
+                    'css':{
+                        'top':'3em'
+                    }
+                }
+            }
+        });
     }
 
 }
@@ -62,6 +77,10 @@ $('select[name="id_localidad"]').on('change', function() {
                 $('select[name="id_usuario_surtido"]').empty();
                 $('select[name="producto"]').empty();
 
+                $('select[name="id_area"]').empty().append('<option value="0" selected disabled>Selecciona un Area...</option>');
+                $('select[name="id_solicitante"]').empty().append('<option value="0" selected disabled>Selecciona un Solicitante...</option>');
+                $('select[name="producto"]').empty().append('<option value="0" selected disabled>Selecciona un Producto...</option>');
+                
                 $.each(data_areas, function(key, value) {
                     $('select[name="id_area"]').append('<option value="'+ key +'">'+ value +'</option>');
                 });

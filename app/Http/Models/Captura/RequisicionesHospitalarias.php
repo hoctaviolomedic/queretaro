@@ -9,6 +9,9 @@
 namespace App\Http\Models\Captura;
 
 use App\Http\Models\ModelCompany;
+use App\Http\Models\Captura\Localidades;
+use App\Http\Models\Captura\Estatus;
+use App\Http\Models\Administracion\Usuarios;
 
 class RequisicionesHospitalarias extends ModelCompany
 {
@@ -38,13 +41,8 @@ class RequisicionesHospitalarias extends ModelCompany
      */
     public $rules = [
         'id_localidad' => 'required',
-        'fecha' => 'required',
         'fecha_requerido' => 'required',
-        'id_usuario_captura' => 'required',
-        'id_usuario_modifica' => 'required',
-        'fecha_modifica' => 'required',
-        'id_estatus' => 'required',
-        'id_solicitante' => 'required'
+        'id_solicitante' => 'required',
     ];
 
     /**
@@ -53,31 +51,31 @@ class RequisicionesHospitalarias extends ModelCompany
      */
     protected $fields = [
         'folio' => '#',
+        'localidad.localidad' => 'Localidad',
+        'solicitante' => 'Solicitante',
         'fecha' => 'Fecha captura',
         'fecha_requerido' => 'Fecha requerimiento',
+        'estatus.estatus' => 'Estatus',
     ];
-
-    /**
-     * Atributos de carga optimizada
-     * @var array
-     */
-    // protected $eagerLoaders = ['empresa', 'usuario'];
-
-    /**
-     * Obtenemos usuario relacionado
-     * @return Usuario
-     */
-    // public function usuario()
-    // {
-    //     return $this->belongsTo(Usuarios::class, 'fk_id_usuario', 'id_usuario');
-    // }
-
-    /**
-     * Obtenemos empresa relacionada
-     * @return Empresa
-     */
-    // public function empresa()
-    // {
-    //     return $this->belongsTo(Empresas::class, 'fk_id_empresa', 'id_empresa');
-    // }
+    
+    public function estatus()
+    {
+        return $this->hasOne(Estatus::class,'id_estatus','id_estatus');
+    }
+    
+    public function localidad()
+    {
+        return $this->hasOne(Localidades::class,'id_localidad','id_localidad');
+    }
+    
+    public function solicitantes()
+    {
+        return $this->hasOne(Usuarios::class,'id_usuario','id_solicitante');
+    }
+    
+    public function getSolicitanteAttribute()
+    {
+        return $this->solicitantes->paterno.' '.$this->solicitantes->materno.' '.$this->solicitantes->nombre;
+    }
+    
 }
