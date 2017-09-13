@@ -15,7 +15,7 @@ class ModelBase extends Model
 	protected $smart_exports = [
 		[
 			'XLSX' => 'Libro Excel',
-			'PDF' => 'Documento PDF',
+			#'PDF' => 'Documento PDF',
 		],
 		[
 			'XLS' => 'Excel 93-2003',
