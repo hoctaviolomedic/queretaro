@@ -360,21 +360,23 @@ class RecetasController extends ControllerBase
                 WHERE c.estatus = '1' AND c.id_tipo_cuadro = '1'
                 GROUP BY cp.clave_cliente,cp.descripcion,cf.descripcion,cp.cantidad_presentacion,tp.id_cuadro_tipo_medicamento,c.id_cuadro,lp.tope_receta,ie.codigo_barras,ie.caducidad,ie.quedan,ie.apartadas,ie.no_lote
                 ORDER BY ie.caducidad ASC;");
-                $index = 0;
-                while(true){
-                    $quedan = $disponibles[$index]->quedan;
-                    $quedan = $quedan - $detalle_actual['cantidadsurtir'];
-                    $apartadas = $disponibles[$index]->apartadas;
-                    $apartadas = $apartadas - $detalle_actual['cantidadsurtir'];
+                if ($disponibles[0]->quedan > 0) {
+                    $index = 0;
+                    while (true) {
+                        $quedan = $disponibles[$index]->quedan;
+                        $quedan = $quedan - $detalle_actual['cantidadsurtir'];
+                        $apartadas = $disponibles[$index]->apartadas;
+                        $apartadas = $apartadas - $detalle_actual['cantidadsurtir'];
 
                         $update = DB::update("UPDATE inv_existencia
-                        SET apartadas = ".$apartadas.", quedan = ".$quedan."
-                        WHERE codigo_barras = '".$disponibles[$index]->codigo_barras."'
-                        AND no_lote = '".$disponibles[$index]->no_lote."'
-                        AND id_localidad = '".$request->id_localidad."'");
-                    $index++;
-                    if($update)
-                        break;
+                        SET apartadas = " . $apartadas . ", quedan = " . $quedan . "
+                        WHERE codigo_barras = '" . $disponibles[$index]->codigo_barras . "'
+                        AND no_lote = '" . $disponibles[$index]->no_lote . "'
+                        AND id_localidad = '" . $request->id_localidad . "'");
+                        $index++;
+                        if ($update)
+                            break;
+                    }
                 }
             }
         }
