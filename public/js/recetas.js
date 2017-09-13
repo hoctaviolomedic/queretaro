@@ -45,39 +45,7 @@ $(document).ready(function () {
         }
     });
 
-    $(".medicamento").select2({
-        placeholder: 'Escriba el medicamento',
-        ajax: {
-            type: 'POST',
-            url: $(".medicamento").data('url'),
-            dataType: 'json',
-            data: function(params) {
-                return {
-                    medicamento: $.trim(params.term), // search term
-                    localidad: $('.unidad').val()
-                };
-            },
-            processResults: function(data) {
-                return {
-                    results: data
-                };
-            },
-            cache: true
-        },
-        escapeMarkup: function(markup) {
-            return markup;
-        },
-        minimumInputLength: 3,
-        language: {
-            "noResults": function() {
-                return "No se encontraron resultados";
-            }
-        },
-        escapeMarkup: function(markup) {
-            return markup;
-        },
-        templateResult: formatMedicine,
-    });
+    medicamento();
 
     $('input[name=tipo_servicio]').change(function () {
         if(this.value == 'afiliado') {
@@ -120,15 +88,27 @@ $(document).ready(function () {
         if($('#medicamento').select2('data').length ==0){
             campos += '<br><br>Medicamento: ¿Seleccionaste un medicamento?';
         }
-        if(parseInt($('#dosis').val())<1)
+        if(!parseInt($('#dosis').val())>0)
             campos += '<br><br>Necesito que me indiques la <b>dosis</b> del medicamento';
-        if(parseInt($('#cada').val())<1)
+        if(!parseInt($('#cada').val())>0)
             campos += '<br><br>Necesito que me indiques <b>cada</b> cuando tomará el medicamento';
-        if(parseInt($('#por').val())<1 )
+        if(!parseInt($('#por').val())>0 )
             campos += '<br><br>Necesito que me indiques <b>la duración</b> del medicamento';
 
         if(campos!=''){
-            $.toaster({ priority : 'danger', title : 'Verifica los siguientes campos', message : campos,settings:{'donotdismiss':['danger']}});
+            $.toaster({
+                priority : 'danger',
+                title : 'Verifica los siguientes campos',
+                message : campos,
+                settings:{
+                    'timeout':10000,
+                    'toaster':{
+                        'css':{
+                            'top':'3em'
+                        }
+                    }
+                }
+            });
             return
         }
         var filas = $('#detalle tr').length;
@@ -158,16 +138,33 @@ $(document).ready(function () {
                         priority: 'danger',
                         title: 'Medicamento',
                         message: 'Asegúrate que la cantidad entregable no sea mayor al tope de entrega',
-                        settings: {'donotdismiss': ['danger']}
+                        settings: {
+                            'timeout':10000,
+                            'toaster':{
+                                'css':{
+                                    'top':'3em'
+                                }
+                            }
+                        }
                     });
                     return
                 }
             }else {
                 $.toaster({
                     priority: 'danger',
+                    css:{
+                        'top': '3em'
+                    },
                     title: 'Medicamento',
-                    message: 'Asegúrate que esta presentación contenga medicamento',
-                    settings: {'donotdismiss': ['danger']}
+                    message: 'Este medicamento no cuenta con la información necesaria. Te recomendamos seleccionar otro.',
+                    settings: {
+                        'timeout':10000,
+                        'toaster':{
+                            'css':{
+                                'top':'3em'
+                            }
+                        }
+                    }
                 });
                 return
             }
@@ -182,7 +179,14 @@ $(document).ready(function () {
                     priority: 'danger',
                     title: 'Medicamento',
                     message: 'Verifica el tiempo de recurrencia y el de la duración del tratamiento',
-                    settings: {'donotdismiss': ['danger']}
+                    settings: {
+                        'timeout':10000,
+                        'toaster':{
+                            'css':{
+                                'top':'3em'
+                            }
+                        }
+                    }
                 });
                 return
             }
@@ -198,18 +202,38 @@ $(document).ready(function () {
                 if (cantidad_final > medicamento[0].tope_receta) {
                     $.toaster({
                         priority: 'danger',
+                        css:{
+                          'top': '3em'
+                        },
                         title: 'Medicamento',
                         message: 'Asegúrate que la cantidad entregable no sea mayor al tope de entrega',
-                        settings: {'donotdismiss': ['danger']}
+                        settings: {
+                            'timeout':10000,
+                            'toaster':{
+                                'css':{
+                                    'top':'3em'
+                                }
+                            }
+                        }
                     });
                     return
                 }
             } else {
                 $.toaster({
                     priority: 'danger',
+                    css:{
+                        'top': '3em'
+                    },
                     title: 'Medicamento',
-                    message: 'Asegúrate que esta presentación contenga medicamento',
-                    settings: {'donotdismiss': ['danger']}
+                    message: 'Este medicamento no cuenta con la información necesaria. Te recomendamos seleccionar otro.',
+                    settings: {
+                        'timeout':10000,
+                        'toaster':{
+                            'css':{
+                                'top':'3em'
+                            }
+                        }
+                    }
                 });
                 return
             }
@@ -248,12 +272,33 @@ $(document).ready(function () {
         if(filas>0){
             $('#guardar').prop('disabled',false);
         }
-        $.toaster({ priority : 'success', title : '¡Éxito!', message : '<br>Medicamento agregado exitosamente'});
+        $.toaster({
+            priority : 'success',
+            css:{
+                'top': '3em'
+            },
+            title : '¡Éxito!',
+            message : '<br>Medicamento agregado exitosamente',
+            settings:{
+                'toaster':{
+                    'css':{
+                        'top':'3em'
+                    }
+                }
+            }
+            });
     });
 
     $('#medicamento').on('change',function () {
         var medicamento = $('#medicamento').select2('data');
         $('#_dosis').val(medicamento[0].familia);
+    });
+
+    $('.unidad').on('change',function () {
+        $('.medicine_detail').empty();
+        $('.medicamento').select2('destroy');
+        $('.medicamento').empty();
+        medicamento();
     });
 
     //Validación de medicamentos
@@ -360,4 +405,40 @@ function eliminarFila(a) {
     $(a).closest('tr').remove();
     if($('#detalle tr').length-1<1)
         $('#guardar').prop('disabled',true);
+}
+
+function medicamento() {
+    $(".medicamento").select2({
+        placeholder: 'Escriba el medicamento',
+        ajax: {
+            type: 'POST',
+            url: $(".medicamento").data('url'),
+            dataType: 'json',
+            data: function(params) {
+                return {
+                    medicamento: $.trim(params.term), // search term
+                    localidad: $('.unidad').val()
+                };
+            },
+            processResults: function(data) {
+                return {
+                    results: data
+                };
+            },
+            cache: true
+        },
+        escapeMarkup: function(markup) {
+            return markup;
+        },
+        minimumInputLength: 3,
+        language: {
+            "noResults": function() {
+                return "No se encontraron resultados";
+            }
+        },
+        escapeMarkup: function(markup) {
+            return markup;
+        },
+        templateResult: formatMedicine,
+    });
 }

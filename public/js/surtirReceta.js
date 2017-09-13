@@ -35,7 +35,19 @@ $(document).ready(function () {
 
         if(cantidad_alta!=''){
             e.preventDefault();
-            $.toaster({ priority : 'danger', title : 'Verifica las cantidades a surtir de los siguientes productos', message : cantidad_alta,settings:{'donotdismiss':['danger']}});
+            $.toaster({
+                priority : 'danger',
+                title : 'Verifica las cantidades a surtir de los siguientes productos',
+                message : cantidad_alta,
+                settings:{
+                    'donotdismiss':['danger'],
+                    'toaster':{
+                        'css':{
+                            'top':'3em'
+                        }
+                    }
+                }
+            });
             return
         }
 

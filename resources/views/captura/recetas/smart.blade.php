@@ -6,7 +6,7 @@
     <div class="row">
         <div class="col-sm-4">
             <div class="form-group">
-                {{Form::label('id_localidad','*Unidad')}}
+                {{Form::label('id_localidad','Unidad')}}
                 @if(!Route::currentRouteNamed(currentRouteName('index')))
                     {{Form::select('id_localidad',isset($localidades)?$localidades:[],isset($data->id_localidad)?$data->id_localidad:null,['id'=>'id_localidad','class' => 'unidad form-control',])}}
                 @endif
@@ -50,8 +50,8 @@
                 {{Form::hidden('id_afiliacion',null,['id'=>'id_afiliacion'])}}
                 {{Form::text('nombre_paciente_no_afiliado',null,['id'=>'nombre_paciente_no_afiliado','class'=>'form-control','style'=>'display:none'])}}
             </div>
-            {{ $errors->has('id_dependiente') ? HTML::tag('span', $errors->first('id_dependiente'), ['class'=>'help-block deep-orange-text']) : '' }}
-            {{ $errors->has('nombre_paciente_no_afiliado') ? HTML::tag('span', $errors->first('nombre_paciente_no_afiliado'), ['class'=>'help-block deep-orange-text']) : '' }}
+            {{ $errors->has('id_dependiente') ? HTML::tag('span', $errors->first('id_dependiente'), ['class'=>'help-block text-danger']) : '' }}
+            {{ $errors->has('nombre_paciente_no_afiliado') ? HTML::tag('span', $errors->first('nombre_paciente_no_afiliado'), ['class'=>'help-block text-danger']) : '' }}
         </div>
         <div class="col-sm-4">
             <div class="form-group">
@@ -76,7 +76,7 @@
                     {{Form::number('peso',null,['id'=>'peso','class' =>'form-control', 'placeholder' => 'Ej:70','aria-describedby'=>'peso-addon'])}}
                     <span class="input-group-addon" id="peso-addon">Kg</span>
                 </div>
-                {{ $errors->has('peso') ? HTML::tag('span', $errors->first('peso'), ['class'=>'help-block deep-orange-text']) : '' }}
+                {{ $errors->has('peso') ? HTML::tag('span', $errors->first('peso'), ['class'=>'help-block text-danger']) : '' }}
             </div>
         </div>
         <div class="col-sm-2 col-xs-4">
@@ -86,7 +86,7 @@
                     {{Form::number('altura',null,['id'=>'altura','class' =>'form-control', 'placeholder' => 'Ej: 1.70','aria-describedby'=>'altura-addon'])}}
                     <span class="input-group-addon" id="altura-addon">Mts</span>
                 </div>
-                {{ $errors->has('altura') ? HTML::tag('span', $errors->first('altura'), ['class'=>'help-block deep-orange-text']) : '' }}
+                {{ $errors->has('altura') ? HTML::tag('span', $errors->first('altura'), ['class'=>'help-block text-danger']) : '' }}
             </div>
         </div>
         <div class="col-sm-24 col-xs-4">
@@ -97,8 +97,8 @@
                     <span class="input-group-addon" id="presion-addon">/</span>
                     {{Form::number('presion2',isset($presion2)?$presion2:null,['id'=>'presion2','class' =>'form-control', 'placeholder' => 'Ej: 80','aria-describedby'=>'presion-addon'])}}
                 </div>
-                {{ $errors->has('presion1') ? HTML::tag('span', $errors->first('presion1'), ['class'=>'help-block deep-orange-text']) : '' }}
-                {{ $errors->has('presion2') ? HTML::tag('span', $errors->first('presion2'), ['class'=>'help-block deep-orange-text']) : '' }}
+                {{ $errors->has('presion1') ? HTML::tag('span', $errors->first('presion1'), ['class'=>'help-block text-danger']) : '' }}
+                {{ $errors->has('presion2') ? HTML::tag('span', $errors->first('presion2'), ['class'=>'help-block text-danger']) : '' }}
             </div>
         </div>
     </div><!--/row-->
