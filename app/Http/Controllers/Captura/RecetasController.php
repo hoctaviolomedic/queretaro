@@ -116,11 +116,12 @@ class RecetasController extends ControllerBase
                         }
                         $index++;
                     }
-                    //Guardar detalle
+                }
+
+                //Guardar detalle
 //                dd($detalle);
                     $detalle['cantidad_surtida'] = 0;
                     $isSuccess->detalles()->save(new RecetasDetalle($detalle));
-                }
             }
 
             # Eliminamos cache
