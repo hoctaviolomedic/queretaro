@@ -239,7 +239,7 @@ $(document).ready(function () {
             }
         }
 
-        if(veces_surtir<1 || empty(veces_surtir))
+        if(veces_surtir<1 || veces_surtir == null)
             veces_surtir=1;
         dosis_hidden += ' '+medicamento[0].familia;
         dosis_text += medicamento[0].familia+'</b>';
