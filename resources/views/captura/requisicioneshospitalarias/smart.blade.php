@@ -93,7 +93,7 @@
 @section('form-actions')
     <div class="text-right ">
     	@if(in_array($data->id_estatus,[1,2])) 
-        <a id="surtir" class="btn btn-danger" href="{{ companyRoute('edit') }}">Surtir</a>
+        <a id="surtir" class="btn btn-danger" href="{{ companyRoute('edit') }}"><span class="glyphicon glyphicon-gift"></span> Surtir</a>
         @endif
         <a class="btn btn-default" href="{{ companyRoute('index') }}"> Cerrar</a>
     </div>
