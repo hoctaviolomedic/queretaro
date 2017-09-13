@@ -1,9 +1,7 @@
 $(document).ready(function () {
-
     //Deshabilitar siempre al iniciar
     $('#surtido_numero').prop('disabled',true);
     $('#tiempo').prop('disabled',true);
-    $(':submit').prop('disabled',true);
     $(':submit').attr('id','guardar');
     $(':submit').attr('type','button');
 
@@ -122,10 +120,12 @@ $(document).ready(function () {
         if($('#medicamento').select2('data').length ==0){
             campos += '<br><br>Medicamento: ¿Seleccionaste un medicamento?';
         }
-        if($('#cada').val()<1)
-            campos += '<br><br>Cada cuanto tomar la medicina';
-        if($('#por').val()<1 )
-            campos += '<br><br>Duración del tratamiento de la medicina';
+        if(parseInt($('#dosis').val())<1)
+            campos += '<br><br>Necesito que me indiques la <b>dosis</b> del medicamento';
+        if(parseInt($('#cada').val())<1)
+            campos += '<br><br>Necesito que me indiques <b>cada</b> cuando tomará el medicamento';
+        if(parseInt($('#por').val())<1 )
+            campos += '<br><br>Necesito que me indiques <b>la duración</b> del medicamento';
 
         if(campos!=''){
             $.toaster({ priority : 'danger', title : 'Verifica los siguientes campos', message : campos,settings:{'donotdismiss':['danger']}});
@@ -177,7 +177,7 @@ $(document).ready(function () {
 
             recurrencia_text += 'Recoger '+cantidad_final+'<b> caja(s)</b> cada <b>'+$('#surtido_numero').val()+' '+$('#surtido_tiempo option:selected').text()+'</b> durante '+_duracion;
             recurrencia_hidden += $('#surtido_numero').val()*$('#surtido_tiempo option:selected').val();
-            if(($('#surtido_tiempo option:selected').val()*$('#surtido_numero').val())>=$('#_por option:selected').val()*$('#por').val()){
+            if(($('#surtido_tiempo option:selected').val()*$('#surtido_numero').val())>=$('#_por option:selected').val()*$('#por').val() || !($('#surtido_numero').val()>0)){
                 $.toaster({
                     priority: 'danger',
                     title: 'Medicamento',
@@ -188,6 +188,7 @@ $(document).ready(function () {
             }
             veces_surtir = parseInt($('#por').val())*(parseInt($('#_por option:selected').val())/24);
             veces_surtir = veces_surtir/(recurrencia_hidden/24);
+
         }else {//Si no es recurrente
             var cantidad_medicamento_necesaria = (($('#_por option:selected').val()*$('#por').val())/($('#_cada option:selected').val()*($('#cada').val())))*dosis_hidden;
             if (medicamento[0].cantidad_presentacion > 1) {
@@ -214,6 +215,8 @@ $(document).ready(function () {
             }
         }
 
+        if(veces_surtir<1 || empty(veces_surtir))
+            veces_surtir=1;
         dosis_hidden += ' '+medicamento[0].familia;
         dosis_text += medicamento[0].familia+'</b>';
 
@@ -310,7 +313,7 @@ $(document).ready(function () {
     if($('#surtir')){
         $('.btn').prop('disabled',false);
     }
-
+    $('#guardar').prop('disabled',true);
 });
 
 function initPaciente() {

@@ -321,7 +321,7 @@ class RecetasController extends ControllerBase
             $flag = true;
             $detalle = Recetas::all()->find($id)->detalles()->find($detalle_actual['id_receta_detalle']);
             $now = DB::select("select now()")[0]->now;
-            if(empty($detalle->fecha_surtido) && $detalle->recurrente > 0) {//Si es la primer vez que se surte
+            if(empty($detalle->fecha_surtido)) {//Si es la primer vez que se surte
                 $cantidad_nueva = $detalle->cantidad_pedida + $detalle->cantidad_surtida;
                 $veces_surtidas = $detalle->veces_surtidas + 1;
                 $detalle->update(['cantidad_surtida' => $cantidad_nueva,
@@ -361,6 +361,7 @@ class RecetasController extends ControllerBase
                     $quedan = $quedan - $detalle_actual['cantidadsurtir'];
                     $apartadas = $disponibles[$index]->apartadas;
                     $apartadas = $apartadas - $detalle_actual['cantidadsurtir'];
+
                         $update = DB::update("UPDATE inv_existencia
                         SET apartadas = ".$apartadas.", quedan = ".$quedan."
                         WHERE codigo_barras = '".$disponibles[$index]->codigo_barras."'

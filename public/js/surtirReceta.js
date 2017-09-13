@@ -24,7 +24,9 @@ $(document).ready(function () {
                 async: false,
                 success:function (response) {
                     var arreglo = $.parseJSON(response);
-                    if(arreglo['disponible']<$('#cantidadsurtir'+id).val()){//Si ya no está disponible, agregar al arreglo de medicamentos agotados
+                     var cantidad = $('#cantidadsurtir'+id).val();
+                     var disponible = arreglo['disponible'];
+                    if( parseInt(disponible)< parseInt(cantidad)){//Si ya no está disponible, agregar al arreglo de medicamentos agotados
                         medicamento_agotado.push(arreglo);
                     }
                 }
