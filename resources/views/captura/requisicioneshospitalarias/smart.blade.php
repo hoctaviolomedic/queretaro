@@ -92,7 +92,9 @@
 @if (Route::currentRouteNamed(currentRouteName('show')))
 @section('form-actions')
     <div class="text-right ">
-        <a class="btn btn-danger" href="{{ companyRoute('edit') }}">Surtir</a>
+    	@if(in_array($data->id_estatus,[1,2])) 
+        <a id="surtir" class="btn btn-danger" href="{{ companyRoute('edit') }}">Surtir</a>
+        @endif
         <a class="btn btn-default" href="{{ companyRoute('index') }}"> Cerrar</a>
     </div>
 @endsection
@@ -166,7 +168,9 @@
     @section('form-actions')
 
         <div class="text-right ">
+        	@if(in_array($data->id_estatus,[1,2]))
             <button type="submit" id="surtir_requisicion" onclick="return surtirRequisicion()" class="btn btn-danger"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+            @endif
             <a class="btn btn-default" href="{{ companyRoute('index') }}"> Cerrar</a>
         </div>
     @endsection
@@ -260,6 +264,11 @@
             $(document).ready(function() {
             	var filas = $('#detalle tr').length;
             	$('#guardar').prop('disabled',(filas<=1));
+
+				if($('#id_estatus').val() = 1 || $('#id_estatus').val() = 2) {
+            		$('#surtir')..hide();
+				}
+            	
                 
                 $('a[data-toggle="tooltip"]').tooltip({
                     animated: 'fade',
