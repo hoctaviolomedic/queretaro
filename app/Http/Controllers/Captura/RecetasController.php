@@ -121,10 +121,11 @@ class RecetasController extends ControllerBase
                     $detalle['cantidad_surtida'] = 0;
                     $isSuccess->detalles()->save(new RecetasDetalle($detalle));
                 }
-                # Eliminamos cache
+            }
+
+            # Eliminamos cache
                 Cache::tags(getCacheTag('index'))->flush();
 //            $this->log('store', $isSuccess->id_receta);
-            }
                 return $this->redirect('store');
             }
         else {
