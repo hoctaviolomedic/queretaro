@@ -3,28 +3,37 @@
  */
 $cont_producto = 0;
 function agregarProducto() {
-    var id_area =  $('#id_area').val();
-    var area_nombre =  $('#id_area option:selected').text();
-    var producto_clave = $('#producto').val();
-    var producto_nombre = $('#producto option:selected').text();
-    var cantidad = $('#cantidad').val();
-    var id_renglon = $cont_producto+'_'+producto_clave;
-    // var company_id = $('#company_email option:selected').val();
 
-    $('#lista_productos').append('<tr id="' + id_renglon + '"> ' +
-        '<td>' + area_nombre + '</td>' +
-        '<td>' + producto_nombre + '</td>' +
-        '<td>'+ cantidad +'</td> ' +
-        '<td>' + '<a href="#" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"  onclick="eliminarFila(\'' + id_renglon + '\')"></span> </a></td>  ' +
-        '</tr>' +
-        '<input type="hidden" value="'+id_area+'" name="producto_requisicion['+$cont_producto+'][id_area]">' +
-        '<input type="hidden" value="'+producto_clave+'" name="producto_requisicion['+$cont_producto+'][producto_clave]">' +
-        '<input type="hidden" value="'+cantidad+'" name="producto_requisicion['+$cont_producto+'][cantidad]">'
-       );
-    // $('#email_list').append('<tr id="' + id_mail + '"> <td>' + email + '</td><td>' + company_email + '</td> <td><a href="#" class="waves-effect waves-light btn btn-flat no-padding" onclick="eliminarFila(\'' + id_mail + '\')"><i class="material-icons">delete</i></a></td>     <input type="hidden" value="' + company_id + '" name="correo_empresa[' + cont_email + '][id_empresa]"><input type="hidden" value="' + email + '" name="correo_empresa[' + cont_email + '][correo]"></tr>');
-    // cont_email++;
-    // $('#email').val('');
-    $cont_producto++;
+    if($('#id_area').val() != '' && $('#producto').val() != '' && $('#cantidad').val() != '')
+    {
+        var id_area =  $('#id_area').val();
+        var area_nombre =  $('#id_area option:selected').text();
+        var producto_clave = $('#producto').val();
+        var producto_nombre = $('#producto option:selected').text();
+        var cantidad = $('#cantidad').val();
+        var id_renglon = $cont_producto+'_'+producto_clave;
+        // var company_id = $('#company_email option:selected').val();
+
+
+
+        $('#lista_productos').append('<tr id="' + id_renglon + '"> ' +
+            '<td>' + area_nombre + '</td>' +
+            '<td>' + producto_nombre + '</td>' +
+            '<td>'+ cantidad +'</td> ' +
+            '<td>' + '<a href="#" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"  onclick="eliminarFila(\'' + id_renglon + '\')"></span> </a></td>  ' +
+            '</tr>' +
+            '<input type="hidden" value="'+id_area+'" name="producto_requisicion['+$cont_producto+'][id_area]">' +
+            '<input type="hidden" value="'+producto_clave+'" name="producto_requisicion['+$cont_producto+'][producto_clave]">' +
+            '<input type="hidden" value="'+cantidad+'" name="producto_requisicion['+$cont_producto+'][cantidad]">'
+        );
+
+        $cont_producto++;
+    }
+    else
+    {
+        alert('Uno o varios de los campos de área, producto o cantidad están vacíos.');
+    }
+
 }
 
 function eliminarFila(fila)
@@ -44,9 +53,7 @@ $('select[name="id_localidad"]').on('change', function() {
             dataType: "json",
             success:function(data) {
 
-                // data = $.parseJSON(data);
                 console.info(data.producto);
-                // alert(data);
                 data_areas = $.parseJSON(data.areas);
                 data_usuario = $.parseJSON(data.usuario);
                 data_producto = $.parseJSON(data.producto);
@@ -77,22 +84,14 @@ $('select[name="id_localidad"]').on('change', function() {
 function surtirRequisicion()
 {
 
-    // var detalle = JSON.stringify(detalle_requisicion);
-    //
-    // alert($('#lista_productos tr').length)
-
-    //alert(detalle_requisicion[0].cantidad_pedida);
-
     var validado = 0;
 
     for( var i=0 ; i < $('#lista_productos tr').length; i++)
     {
-        // alert(parseInt($("#renglon_"+i).val())+ parseInt(detalle_requisicion[0].cantidad_surtida)) +'--'+ detalle_requisicion[0].cantidad_pedida)
         if((parseInt($("#renglon_"+i).val())+ parseInt(detalle_requisicion[i].cantidad_surtida)) > detalle_requisicion[i].cantidad_pedida)
         {
             validado++;
         }
-
     }
 
     if(validado == 0)
@@ -104,16 +103,6 @@ function surtirRequisicion()
         alert('Se esta excediendo la cantdad de producto solicitada.');
         return false;
     }
-
-    // alert($('#renglon_1').val());
-    // console.info(datos_requisicion[1][cantidad]);
-    // detalle = $.parseJSON(detalle);
-    // $.each(detalle_requisicion, function(data,obj) {
-    //    console.info(obj.cantidad_pedida);
-    //
-    //    // if(obj.clave_cliente ==)
-    //
-    // });
 
 }
 

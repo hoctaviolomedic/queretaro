@@ -58,46 +58,25 @@ class RequisicionesHospitalariasController extends ControllerBase
         // $this->authorize('create', $this->entity);
 
         $data = $this->entity->getColumnsDefaultsValues();
-        $localidades = Localidades::where('tipo',0)->where('id_cliente',92)->pluck('localidad','id_localidad');
+        $localidades = Localidades::where('tipo',0)->where('id_cliente',135)->pluck('localidad','id_localidad');
         $estatus = Estatus::all()->pluck('estatus','id_estatus');
-//        $localidades = Localidades::where('tipo',0)->where('id_cliente',135)->where('id_usuario',3)->pluck('localidad','id_localidad');
-//        $localidades->first('');
-        //        $producto_licitacion = ProductosLicitacion::all()->pluck('descripcion','id_tipo_producto');
-//        $areas = Areas::all()->pluck('area','id_area');
-////        $areas = Areas::join('cat_localidad','cat_area.idarea','=','cat_localidad')->pluck('area','id_area');
-//
-//        $usuarios = Usuarios::select(DB::raw("CONCAT(nombre,' ',paterno,' ',materno) AS nombre"),'id_usuario')
-//            ->pluck('nombre','id_usuario');
-//        $productos = Productos::select(DB::raw("CONCAT(clave,' - ',nombre_comercial) AS nombre"),'clave')
-//            ->pluck('nombre','clave');
         $dataview = isset($attributes['dataview']) ? $attributes['dataview'] : [];
 
         return view(currentRouteName('smart'), $dataview+[
             'data'=>$data,
             'localidades'=>$localidades,
             'estatus'=>$estatus,
-//            'producto_licitacion'=>$producto_licitacion,
-//            'areas'=>$areas,
-//            'solicitante'=>$usuarios,
-//            'productos'=>$productos,
-
-            ]);
+        ]);
     }
 
     public function store(Request $request, $company)
     {
 
+        $this->validate($request, $this->entity->rules);
 
-//        $id_max = RequisicionesHospitalarias::all()->max('id_requerimiento');
-//        $request->all()->merge(['id_requisicion' => $id_max]);
-
-//        dd($request->all());
-//        $isSuccess = $this->entity->create($request->all()+['id_requerimiento' => $id_max+1]);
         $isSuccess = $this->entity->create($request->all()+['fecha' => date('Y-m-d h:i:s'),'id_usuario_captura'=>2]);
-//        $cont_id = DB::table('ss_qro_requisicion_detalle')->max('id_requerimiento')+1;
         foreach ($request->input('producto_requisicion') as $productos_requiscion )
         {
-//            dump($cont_id);
             DB::table('ss_qro_requisicion_detalle')->insert([
                 'id_requisicion' => $isSuccess->id_requisicion ,
                 'clave_cliente' => $productos_requiscion['producto_clave'],
@@ -106,7 +85,6 @@ class RequisicionesHospitalariasController extends ControllerBase
                 'cantidad_pedida' => $productos_requiscion['cantidad'],
 
             ]);
-//            $cont_id++;
         }
 
 

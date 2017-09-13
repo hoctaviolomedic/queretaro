@@ -30,14 +30,13 @@ class RequisicionesHospitalarias extends ModelCompany
      *
      * @var array
      */
-    protected $fillable = ['folio','id_localidad','fecha','fecha_requerido','id_usuario_captura','id_usuario_modifica','fecha_modifica','id_estatus','id_solicitante' ];
+    protected $fillable = ['id_localidad','fecha','fecha_requerido','id_usuario_captura','id_usuario_modifica','fecha_modifica','id_estatus','id_solicitante' ];
 
     /**
      * The validation rules
      * @var array
      */
     public $rules = [
-        'folio' => 'required',
         'id_localidad' => 'required',
         'fecha' => 'required',
         'fecha_requerido' => 'required',

@@ -13,25 +13,25 @@
             <div class="panel-body">
 
                 <div class="row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-4 ">
                         <div class="form-group">
                             {{--{{dd($localidades)}}--}}
                             {{ Form::label('id_localidad', 'Localidad:') }}
-                            {!! Form::select('id_localidad',$localidades , null, ['placeholder' => 'Seleccionar una localidad...','id'=>'id_localidad','class'=>'js-data-example-ajax1 form-control','style'=>'100%','data-url'=>companyRoute('getAreas')]) !!}
+                            {!! Form::select('id_localidad',$localidades , null, ['placeholder' => 'Seleccionar una localidad...','id'=>'id_localidad','class'=>'js-data-example-ajax1 form-control','style'=>'width:100%','data-url'=>companyRoute('getAreas')]) !!}
                             {{ $errors->has('id_localidad') ? HTML::tag('span', $errors->first('id_localidad'), ['class'=>'help-block deep-orange-text']) : '' }}
                         </div>
                     </div>
                     <div class="col-sm-4">
                         <div class="form-group">
                             {{ Form::label('id_solicitante', 'Solicitante:') }}
-                            {{ Form::select('id_solicitante',[], null, ['id'=>'id_solicitante','class'=>'js-data-example-ajax1 form-control','style'=>'100%','data-url'=>companyRoute('getAreas')]) }}
+                            {{ Form::select('id_solicitante',[], null, ['id'=>'id_solicitante','class'=>'js-data-example-ajax1 form-control','style'=>'width:100%','data-url'=>companyRoute('getAreas')]) }}
                             {{ $errors->has('id_solicitante') ? HTML::tag('span', $errors->first('id_solicitante'), ['class'=>'help-block deep-orange-text']) : '' }}
                         </div>
                     </div>
                     <div class="col-sm-2 col-xs-6">
                         <div class="form-group">
                             {{ Form::label('id_estatus', 'Estatus:') }}
-                            {{ Form::select('id_estatus', $estatus, null, ['id'=>'id_estatus','class'=>' form-control','style'=>'100%']) }}
+                            {{ Form::select('id_estatus', $estatus, null, ['id'=>'id_estatus','class'=>' form-control','style'=>'width:100%','disabled'=>'true']) }}
                             {{ $errors->has('id_estatus') ? HTML::tag('span', $errors->first('id_estatus'), ['class'=>'help-block deep-orange-text']) : '' }}
                         </div>
                     </div>
@@ -44,6 +44,7 @@
                                 <button data-date-icon="icon-calendar" class="btn btn-check" type="button"><span class="glyphicon glyphicon-calendar"></span></button>
                               </span>
                             </div><!-- /input-group -->
+                            {{ $errors->has('fecha') ? HTML::tag('span', $errors->first('fecha'), ['class'=>'help-block deep-orange-text']) : '' }}
                         </div>
                     </div>
                 </div><!--/row-->
@@ -54,13 +55,13 @@
                     <div class="col-sm-3 col-xs-8">
                         <div class="form-group">
                             {{ Form::label('id_area', 'Área:') }}
-                            {{ Form::select('id_area',[], null, ['class'=>'js-data-example-ajax1 form-control','style'=>'100%','data-url'=>companyRoute('getAreas')]) }}
+                            {{ Form::select('id_area',[], null, ['class'=>'js-data-example-ajax1 form-control','style'=>'width:100%','data-url'=>companyRoute('getAreas')]) }}
                             {{ $errors->has('id_area') ? HTML::tag('span', $errors->first('id_area'), ['class'=>'help-block deep-orange-text']) : '' }}
                         </div>
                     </div>
                     <div class="col-sm-7 col-xs-12">
                         {{ Form::label('producto', 'Producto:') }}
-                        {{ Form::select('producto', [], null, ['id'=>'producto','class'=>'js-data-example-ajax1 form-control','style'=>'100%']) }}
+                        {{ Form::select('producto', [], null, ['id'=>'producto','class'=>'js-data-example-ajax1 form-control','style'=>'width:100%']) }}
                         {{ $errors->has('producto') ? HTML::tag('span', $errors->first('producto'), ['class'=>'help-block deep-orange-text']) : '' }}
                     </div>
                     <div class="col-sm-2 col-xs-4">
@@ -112,21 +113,21 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     {{ Form::label('id_localidad', 'Localidad:') }}
-                    {{ Form::select('id_localidad', $localidades, null, ['id'=>'id_localidad','class'=>'js-data-example-ajax1 form-control','style'=>'100%']) }}
+                    {{ Form::select('id_localidad', $localidades, null, ['id'=>'id_localidad','class'=>'js-data-example-ajax1 form-control','style'=>'width:100%']) }}
                     {{--{{ $errors->has('id_localidad') ? HTML::tag('span', $errors->first('id_localidad'), ['class'=>'help-block deep-orange-text']) : '' }}--}}
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
                     {{ Form::label('id_solicitante', 'Solicitante:') }}
-                    {{ Form::select('id_solicitante', $solicitante, null, ['id'=>'id_solicitante','class'=>'js-data-example-ajax1 form-control','style'=>'100%']) }}
+                    {{ Form::select('id_solicitante', $solicitante, null, ['id'=>'id_solicitante','class'=>'js-data-example-ajax1 form-control','style'=>'width:100%']) }}
                     {{ $errors->has('id_solicitante') ? HTML::tag('span', $errors->first('id_solicitante'), ['class'=>'help-block deep-orange-text']) : '' }}
                 </div>
             </div>
             <div class="col-sm-2 col-xs-6">
                 <div class="form-group">
                     {{ Form::label('id_estatus', 'Estatus:') }}
-                    {{ Form::select('id_estatus', $estatus, null, ['id'=>'id_estatus','class'=>'js-data-example-ajax1 form-control','style'=>'100%']) }}
+                    {{ Form::select('id_estatus', $estatus, null, ['id'=>'id_estatus','class'=>'js-data-example-ajax1 form-control','style'=>'width:100%']) }}
                     {{ $errors->has('id_estatus') ? HTML::tag('span', $errors->first('id_estatus'), ['class'=>'help-block deep-orange-text']) : '' }}
                 </div>
             </div>
@@ -186,21 +187,21 @@
             <div class="col-sm-4">
                 <div class="form-group">
                     {{ Form::label('id_localidad', 'Localidad:') }}
-                    {{ Form::select('id_localidad', $localidades, null, ['id'=>'id_localidad','class'=>'js-data-example-ajax1 form-control','style'=>'100%','disabled'=>'true']) }}
+                    {{ Form::select('id_localidad', $localidades, null, ['id'=>'id_localidad','class'=>'js-data-example-ajax1 form-control','style'=>'width:100%','disabled'=>'true']) }}
                     {{--{{ $errors->has('id_localidad') ? HTML::tag('span', $errors->first('id_localidad'), ['class'=>'help-block deep-orange-text']) : '' }}--}}
                 </div>
             </div>
             <div class="col-sm-4">
                 <div class="form-group">
                     {{ Form::label('id_solicitante', 'Solicitante:') }}
-                    {{ Form::select('id_solicitante', $solicitante, null, ['id'=>'id_solicitante','class'=>'js-data-example-ajax1 form-control','style'=>'100%','disabled'=>'true']) }}
+                    {{ Form::select('id_solicitante', $solicitante, null, ['id'=>'id_solicitante','class'=>'js-data-example-ajax1 form-control','style'=>'width:100%','disabled'=>'true']) }}
                     {{ $errors->has('id_solicitante') ? HTML::tag('span', $errors->first('id_solicitante'), ['class'=>'help-block deep-orange-text']) : '' }}
                 </div>
             </div>
             <div class="col-sm-2 col-xs-6">
                 <div class="form-group">
                     {{ Form::label('id_estatus', 'Estatus:') }}
-                    {{ Form::select('id_estatus', $estatus, null, ['id'=>'id_estatus','class'=>'js-data-example-ajax1 form-control','style'=>'100%','disabled'=>'true']) }}
+                    {{ Form::select('id_estatus', $estatus, null, ['id'=>'id_estatus','class'=>'js-data-example-ajax1 form-control','style'=>'width:100%','disabled'=>'true']) }}
                     {{ $errors->has('id_estatus') ? HTML::tag('span', $errors->first('id_estatus'), ['class'=>'help-block deep-orange-text']) : '' }}
                 </div>
             </div>
