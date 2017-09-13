@@ -7,14 +7,16 @@ $(document).ready(function () {
         var medicamento=[];
         var medicamento_agotado=[];
         var cantidad_alta = '';
+        var cantidad = 0;
         $('#detalle tbody tr').each(function (index) {
             var data = {};
-            var id = this.title;
+            var id = this.id;
             if($('#cantidad_pedida'+id).val()<$('#cantidadsurtir'+id).val()){
                 cantidad_alta += '<br>'+$('#descripcion'+id).val();
             }
-            data.clave_cliente = id;
+            data.clave_cliente = this.title;
             data.cantidadsurtir = $('#cantidadsurtir'+id).val();
+            cantidad = $('#cantidadsurtir'+id).val();
             data.localidad = $('#id_localidad').val();
             medicamento.push(data);
             $.ajax({
@@ -23,8 +25,9 @@ $(document).ready(function () {
                 data: data,
                 async: false,
                 success:function (response) {
+                    e.preventDefault();
                     var arreglo = $.parseJSON(response);
-                     var cantidad = $('#cantidadsurtir'+id).val();
+                     // var cantidad = $('#cantidadsurtir'+id).val();
                      var disponible = arreglo['disponible'];
                     if( parseInt(disponible)< parseInt(cantidad)){//Si ya no está disponible, agregar al arreglo de medicamentos agotados
                         medicamento_agotado.push(arreglo);
@@ -75,6 +78,5 @@ $(document).ready(function () {
             $('#medicamento_modal').append('<br>');
             $('#modal').modal('show');
         }
-
     });
 });
