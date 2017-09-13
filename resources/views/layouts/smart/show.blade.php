@@ -10,12 +10,12 @@
 
 @section('form-actions')
 <div class="text-right">
-    {{ link_to(companyRoute('index'), 'Cerrar', ['class'=>'btn btn-default']) }}
+    {{ link_to(companyRoute('index'), 'Cerrar', ['id'=>'cerrar','class'=>'btn btn-default']) }}
     @can('update', currentEntity())
-    {{ link_to(companyRoute('edit'), 'Editar', ['class'=>'btn btn-default']) }}
+    {{ link_to(companyRoute('edit'), 'Editar', ['id'=>'editar','class'=>'btn btn-default']) }}
     @endcan
     @can('create', currentEntity())
-    {{ link_to(companyRoute('create'), 'Nuevo', ['class'=>'btn btn-danger']) }}
+    {{ link_to(companyRoute('create'), 'Nuevo', ['id'=>'nuevo','class'=>'btn btn-danger']) }}
     @endcan
 </div>
 @endsection
