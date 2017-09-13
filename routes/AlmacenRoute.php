@@ -19,6 +19,7 @@ Route::prefix('{company}')->group(function () {
     Route::group(['prefix' => 'almacen', 'as' => 'almacen.'], function() {
         Route::group(['prefix' => 'entradas', 'as' => 'entradas.', 'middleware' => ['share', 'auth.session'] ], function() {
             Route::get('pedidos','Almacen\EntradasController@pedidos')->name('pedidos');
+            Route::post('pedidos-endpoint','Almacen\EntradasController@endpoint')->name('pedidos-endpoint');
         });
     });
 });
