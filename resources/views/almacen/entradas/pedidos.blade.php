@@ -175,12 +175,24 @@
 					}, function(response){
 						console.log(response)
 						if (response.success) {
-							e.target.disabled = true;
+							// e.target.disabled = true;
 							alert('Datos guardados correctamente')
 							window.open(response.data)
+
+							app.set('resurtidos', [])
+							app.set('almacenes', [])
+							app.set('items', [])
+							app.set('clone', [])
+
+							$('#pedido').select2('val', 0);
+
+							$('#resurtido').empty();
+							$('#resurtido').multiselect('rebuild');
+
+
 						}
 					})
-					this.set('toRefresh', true)
+					// this.set('toRefresh', true)
 				}
 			},
 			toRefreshPage: function() {
