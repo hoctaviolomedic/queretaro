@@ -468,7 +468,7 @@ class ControllerBase extends Controller
 		}
 	}
 
-	public function redirect($type,$id)
+	public function redirect($type)
 	{
 		switch ($type) {
 			case 'store':
@@ -495,9 +495,6 @@ class ControllerBase extends Controller
 				$message = ['type'=> 'toast_error', 'text' => 'No fue posible eliminar registro (s).'];
 				break;
 
-            case 'imprimir':
-                return redirect(companyRoute('imprimirReceta',['id'=>$id['id']]));
-                break;
 			default:
 				break;
 		}

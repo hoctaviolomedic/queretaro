@@ -28,7 +28,10 @@ class RecetasController extends ControllerBase
     public function __construct(Recetas $entity)
     {
         $this->entity = $entity;
-        $this->localidades = Localidades::where('tipo',0)->where('id_cliente',Auth::id())->where('estatus',1)->get();
+        $this->localidades = Localidades::where('tipo',0)->where('id_cliente',135)->where('estatus',1)->get();
+
+//        dd($this->localidades);
+
         $this->medicos = Medicos::all();
         $this->programas = Programas::all();
         $this->areas = Areas::all();
@@ -127,9 +130,7 @@ class RecetasController extends ControllerBase
             # Eliminamos cache
                 Cache::tags(getCacheTag('index'))->flush();
 //            $this->log('store', $isSuccess->id_receta);
-                return $this->redirect('imprimir',[
-                    'id' => $isSuccess->id_receta,
-                ]);
+                return $this->redirect('store');
             }
         else {
 //            $this->log('error_store');
