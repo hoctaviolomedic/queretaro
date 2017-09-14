@@ -334,7 +334,6 @@ $(document).ready(function () {
 
     //ValidaciÃ³n de medicamentos
     $('#guardar').on('click',function (e) {
-        e.preventDefault();
         $('#medicamento_modal').text('');
         var medicamento = [];
         var medicamento_agotado = [];
@@ -367,6 +366,7 @@ $(document).ready(function () {
                 }
             });
         });
+
         if(medicamento_agotado.length>0){
             e.preventDefault();//Evita que se envÃ­e el formulario si se agotÃ³ un medicamento
             for(var i = 0;i<medicamento_agotado.length;i++){
@@ -375,8 +375,33 @@ $(document).ready(function () {
             $('#medicamento_modal').append('¿Aún así deseas agregarlos a la receta?');
             $('#modal').modal('show');
         }else{//Si no se agotÃ³ ningÃºn medicamento
-            $('form').submit();
+            var campos = '';
+            if($('#id_dependiente').select2('data').length ==0  && ($('#nombre_paciente_no_afiliado').val() == '' || $('#nombre_paciente_no_afiliado').val() == null)){
+                campos += '<br><br>Afiliacion/Dependiente: ¿Seleccionaste un paciente?';
+            }
+            if($('#id_diagnostico').select2('data').length == 0)
+                campos += '<br><br>Necesito que muestres el <b>diagnostico</b> del paciente';
+            if(campos!=''){
+                e.preventDefault();
+                e.stopImmediatePropagation();
+                $.toaster({
+                    priority : 'danger',
+                    title : 'Verifica los siguientes campos',
+                    message : campos,
+                    settings:{
+                        'timeout':10000,
+                        'toaster':{
+                            'css':{
+                                'top':'5em'
+                            }
+                        }
+                    }
+                });
+            }else{
+                $('form').submit();
+            }
         }
+
     });
 
     $('#aceptar').on('click',function () {//En caso de que un medicamento se agotara y aÃºn asÃ­ se desee surtir

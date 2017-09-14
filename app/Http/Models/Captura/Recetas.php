@@ -38,7 +38,8 @@ class Recetas extends ModelCompany
         'presion1' => 'between:0,999.99',
         'presion2' => 'between:0,999.99',
         'id_diagnostico' => 'required|numeric',
-        'id_afiliacion' => 'required_without:nombre_paciente_no_afiliado'
+        'id_afiliacion' => 'required_without:nombre_paciente_no_afiliado',
+        'nombre_paciente_no_afiliado' => 'required_without:id_afiliacion'
     ];
 
     /**
@@ -81,6 +82,7 @@ class Recetas extends ModelCompany
     }
 
     public function getEstatusFormatedAttribute(){//Estatus Receta
+
         return $this->estatus->estatus_receta;
     }
 
