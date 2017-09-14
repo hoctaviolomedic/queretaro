@@ -423,7 +423,7 @@ function initPaciente() {
 
 function formatMedicine(medicine) {
     if(!medicine.id){return medicine.text;}
-    return $('<span>'+medicine.text+'</span><br>PresentaciÃ³n: <b>'+medicine.familia+'</b> Cantidad en la presentaciÃ³n: <b>'+medicine.cantidad_presentacion+'</b>' +
+    return $('<span>'+medicine.text+'</span><br>Presentación: <b>'+medicine.familia+'</b> Cantidad en la presentación: <b>'+medicine.cantidad_presentacion+'</b>' +
         '<br>Disponibilidad: <b>'+medicine.disponible+'</b> MÃ¡ximo para recetar: <b>'+medicine.tope_receta+'</b>');
 }
 
