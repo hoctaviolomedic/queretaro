@@ -1,6 +1,13 @@
 $(document).ready(function () {
     $(':submit').attr('id','surtir');
 
+    $('.number-only').keypress(function(e) {
+        if (isNaN(this.value + "" + String.fromCharCode(e.charCode))) return false;
+    })
+        .on("cut copy paste", function(e) {
+            e.preventDefault();
+        });
+
     $('form').prop('action',    $('#container-fluid').data('url'));
     $('#surtir').on('click',function (e) {
         $('#medicamento_modal').text('');
