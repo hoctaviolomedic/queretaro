@@ -14,8 +14,6 @@ function agregarProducto() {
         var id_renglon = $cont_producto+'_'+producto_clave;
         // var company_id = $('#company_email option:selected').val();
 
-
-
         $('#lista_productos').append('<tr id="' + id_renglon + '"> ' +
             '<td>' + area_nombre + '</td>' +
             '<td>' + producto_nombre + '</td>' +
@@ -129,10 +127,3 @@ function surtirRequisicion()
     }
 
 }
-
-//
-// $( ".surtir_requisicion" ).submit(function() {
-//     //data_areas = $.parseJSON(detalle_requisicion);
-//
-//     //alert(JSON.stringify(detalle_requisicion));
-// });

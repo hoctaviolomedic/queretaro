@@ -269,7 +269,7 @@
             	$('#guardar').prop('disabled',(filas<=1));
 
             	
-				if($('#id_estatus').val() == 1 || $('#id_estatus').val() == 2) {
+				if( parseInt($('#id_estatus').val()) == 1 || parseInt($('#id_estatus').val()) == 2) {
             		$('#surtir').hide();
 				}
             	
