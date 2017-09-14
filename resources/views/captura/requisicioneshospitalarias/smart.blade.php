@@ -260,13 +260,17 @@
 @section('header-bottom')
 	@parent
     @if (Route::currentRouteNamed(currentRouteName('create')))
+        {{ HTML::script(asset('js/requisicioneshospitalarias.js')) }}
+        {{ HTML::script(asset('js/toaster.js')) }}
+    
         <script type="text/javascript">
             $(document).ready(function() {
             	var filas = $('#detalle tr').length;
             	$('#guardar').prop('disabled',(filas<=1));
 
-				if($('#id_estatus').val() = 1 || $('#id_estatus').val() = 2) {
-            		$('#surtir')..hide();
+            	
+				if($('#id_estatus').val() == 1 || $('#id_estatus').val() == 2) {
+            		$('#surtir').hide();
 				}
             	
                 
@@ -306,8 +310,6 @@
         </script>
     @endif
     
-    {{ HTML::script(asset('js/requisicioneshospitalarias.js')) }}
-    {{ HTML::script(asset('js/toaster.js')) }}
 
 @endsection
 

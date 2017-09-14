@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Captura;
 
 use App\Http\Controllers\ControllerBase;
 use App\Http\Models\Captura\Pedidos;
+use App\Http\Models\Captura\Localidades;
+use DB;
 
 class PedidosController extends ControllerBase
 {
@@ -47,8 +49,16 @@ class PedidosController extends ControllerBase
 	 */
 	public function create($company, $attributes = [])
 	{
+	    $localidades = Localidades::where('id_cliente','=',135)->where('estatus',1)->orderBy('localidad')->pluck('localidad','id_localidad');
+	    $proveedores =  DB::table('cat_proveedor')->where('estatus',1)->orderBy('nombre')->get()->pluck('nombre','id_proveedor');
+	    $estatus = collect([null=>null,0=>'Nuevo',1=>'Parcialmente Surtido',2=>'Completo',3=>'Cerrado',4=>'Cancelado']);
+	    
 		return parent::create($company, [
-			'dataview' => $this->getDataView()
+			'dataview' => $this->getDataView()+[
+    		    'localidades' => $localidades,
+    			'proveedores' => $proveedores,
+			    'estatus' => $estatus,
+			]
 		]);
 	}
 
