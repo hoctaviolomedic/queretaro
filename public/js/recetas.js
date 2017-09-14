@@ -14,7 +14,7 @@ $(document).ready(function () {
     initPaciente();
 
     $(".diagnostico").select2({
-        placeholder: 'Escriba el diagnÃ³stico del paciente',
+        placeholder: 'Escriba el diagnóstico del paciente',
         ajax: {
             type: 'POST',
             url: $(".diagnostico").data('url'),
@@ -83,6 +83,7 @@ $(document).ready(function () {
     });
 
     $('#agregar').click(function () {
+
         var medicamento = $('.medicamento').select2('data');
         var campos = '';
         if($('#medicamento').select2('data').length ==0){
@@ -104,7 +105,7 @@ $(document).ready(function () {
                     'timeout':10000,
                     'toaster':{
                         'css':{
-                            'top':'3em'
+                            'top':'5em'
                         }
                     }
                 }
@@ -137,12 +138,12 @@ $(document).ready(function () {
                     $.toaster({
                         priority: 'danger',
                         title: 'Medicamento',
-                        message: 'AsegÃºrate que la cantidad entregable no sea mayor al tope de entrega',
+                        message: 'Asegúrate que la cantidad entregable no sea mayor al tope de entrega',
                         settings: {
                             'timeout':10000,
                             'toaster':{
                                 'css':{
-                                    'top':'3em'
+                                    'top':'5em'
                                 }
                             }
                         }
@@ -153,15 +154,15 @@ $(document).ready(function () {
                 $.toaster({
                     priority: 'danger',
                     css:{
-                        'top': '3em'
+                        'top': '5em'
                     },
                     title: 'Medicamento',
-                    message: 'Este medicamento no cuenta con la informaciÃ³n necesaria. Te recomendamos seleccionar otro.',
+                    message: 'Este medicamento no cuenta con la información necesaria. Te recomendamos seleccionar otro.',
                     settings: {
                         'timeout':10000,
                         'toaster':{
                             'css':{
-                                'top':'3em'
+                                'top':'5em'
                             }
                         }
                     }
@@ -178,12 +179,12 @@ $(document).ready(function () {
                 $.toaster({
                     priority: 'danger',
                     title: 'Medicamento',
-                    message: 'Verifica el tiempo de recurrencia y el de la duraciÃ³n del tratamiento',
+                    message: 'Verifica el tiempo de recurrencia y el de la duración del tratamiento',
                     settings: {
                         'timeout':10000,
                         'toaster':{
                             'css':{
-                                'top':'3em'
+                                'top':'5em'
                             }
                         }
                     }
@@ -203,15 +204,15 @@ $(document).ready(function () {
                     $.toaster({
                         priority: 'danger',
                         css:{
-                          'top': '3em'
+                          'top': '5em'
                         },
                         title: 'Medicamento',
-                        message: 'AsegÃºrate que la cantidad entregable no sea mayor al tope de entrega',
+                        message: 'Asegúrate que la cantidad entregable no sea mayor al tope de entrega',
                         settings: {
                             'timeout':10000,
                             'toaster':{
                                 'css':{
-                                    'top':'3em'
+                                    'top':'5em'
                                 }
                             }
                         }
@@ -222,7 +223,7 @@ $(document).ready(function () {
                 $.toaster({
                     priority: 'danger',
                     css:{
-                        'top': '3em'
+                        'top': '5em'
                     },
                     title: 'Medicamento',
                     message: 'Este medicamento no cuenta con la informaciÃ³n necesaria. Te recomendamos seleccionar otro.',
@@ -230,7 +231,7 @@ $(document).ready(function () {
                         'timeout':10000,
                         'toaster':{
                             'css':{
-                                'top':'3em'
+                                'top':'5em'
                             }
                         }
                     }
@@ -253,39 +254,65 @@ $(document).ready(function () {
         var duracion_hidden = $('#por').val()+' '+ $('#_por option:selected').text();
 
         var nota_medicamento = $('#nota_medicamento').val();
-        $('.medicine_detail').append('' +
-            '<tr id="'+medicamento[0].id+'">' +
-                '<th scope="row">'+medicamento[0].id+'</th>' +
+
+        var agregar = true;
+        if($('#detalle tbody tr').length >0){
+            $('#detalle tbody tr').each(function (index) {
+                if(this.id == medicamento[0].id){
+                    agregar = false;
+                    $.toaster({
+                        priority : 'danger',
+                        css:{
+                            'top': '3em'
+                        },
+                        title : '¡Error!',
+                        message : '<br>Medicamento agregado anteriormente',
+                        settings:{
+                            'toaster':{
+                                'css':{
+                                    'top':'3em'
+                                }
+                            }
+                        }
+                    });
+                }
+            })
+        }
+
+        if(agregar) {
+            $('.medicine_detail').append('' +
+                '<tr id="' + medicamento[0].id + '">' +
+                '<th scope="row">' + medicamento[0].id + '</th>' +
                 '<td>' +
-                    '<p><input id="_detalle['+medicamento[0].id+'][clave_cliente]" name="_detalle['+medicamento[0].id+'][clave_cliente]" type="hidden" value="'+medicamento[0].id+'"/>'+medicamento[0].text+'</p>' +
-                    '<p><input id="_detalle['+medicamento[0].id+'][dosis]" name="_detalle['+medicamento[0].id+'][dosis]" type="hidden" value="'+dosis_hidden+' cada '+tiempo_hidden+' por '+duracion_hidden+'" />'+dosis_text+' cada '+tiempo_text+' por '+duracion_text+'</p>' +
-                    '<p><input id="_detalle['+medicamento[0].id+'][cantidad_pedida]" name="_detalle['+medicamento[0].id+'][cantidad_pedida]" type="hidden" value="'+cantidad_final+'" />Recoger hoy: '+cantidad_final+'</p>' +
-                    '<p><input id="_detalle['+medicamento[0].id+'][en_caso_presentar]" name="_detalle['+medicamento[0].id+'][en_caso_presentar]" type="hidden" value="'+nota_medicamento+'" />'+nota_medicamento+'</p>' +
-                    '<p><input id="_detalle['+medicamento[0].id+'][por]" name="_detalle['+medicamento[0].id+'][por]" type="hidden" value="'+$('#por').val()*$('#_por option:selected').val()+'"/><input id="_detalle['+medicamento[0].id+'][recurrente]" name="_detalle['+medicamento[0].id+'][recurrente]" type="hidden" value="'+recurrencia_hidden+'"/>'+recurrencia_text+'</p>' +
-                    '<input id="_detalle['+medicamento[0].id+'][id_cuadro]" name="_detalle['+medicamento[0].id+'][id_cuadro]" type="hidden" value="'+medicamento[0].id_cuadro+'"/>'+
-                    '<input id="_detalle['+medicamento[0].id+'][veces_surtir]" name="_detalle['+medicamento[0].id+'][veces_surtir]" type="hidden" value="'+Math.ceil(veces_surtir)+'"/>'+
+                '<p><input id="_detalle[' + medicamento[0].id + '][clave_cliente]" name="_detalle[' + medicamento[0].id + '][clave_cliente]" type="hidden" value="' + medicamento[0].id + '"/>' + medicamento[0].text + '</p>' +
+                '<p><input id="_detalle[' + medicamento[0].id + '][dosis" name="_detalle[' + medicamento[0].id + '][dosis]" type="hidden" value="' + dosis_hidden + ' cada ' + tiempo_hidden + ' por ' + duracion_hidden + '" />' + dosis_text + ' cada ' + tiempo_text + ' por ' + duracion_text + '</p>' +
+                '<p><input id="_detalle[' + medicamento[0].id + '][cantidad_pedida]" name="_detalle[' + medicamento[0].id + '][cantidad_pedida]" type="hidden" value="' + cantidad_final + '" />Recoger hoy: ' + cantidad_final + '</p>' +
+                '<p><input id="_detalle[' + medicamento[0].id + '][en_caso_presentar]" name="_detalle[' + medicamento[0].id + '][en_caso_presentar]" type="hidden" value="' + nota_medicamento + '" />' + nota_medicamento + '</p>' +
+                '<p><input id="_detalle[' + medicamento[0].id + '][por]" name="_detalle[' + medicamento[0].id + '][por]" type="hidden" value="' + $('#por').val() * $('#_por option:selected').val() + '"/><input id="_detalle[' + medicamento[0].id + '][recurrente]" name="_detalle[' + medicamento[0].id + '][recurrente]" type="hidden" value="' + recurrencia_hidden + '"/>' + recurrencia_text + '</p>' +
+                '<input id="_detalle[' + medicamento[0].id + '][id_cuadro]" name="_detalle[' + medicamento[0].id + '][id_cuadro]" type="hidden" value="' + medicamento[0].id_cuadro + '"/>' +
+                '<input id="_detalle[' + medicamento[0].id + '][veces_surtir]" name="_detalle[' + medicamento[0].id + '][veces_surtir]" type="hidden" value="' + Math.ceil(veces_surtir) + '"/>' +
                 '</td>' +
                 '<td>' +
-                    '<a onclick="eliminarFila(this)" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger" id="'+filas+'"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a> ' +
-                '</td>'+
-            '</tr>');
-        $('#guardar').prop('disabled',filas=0);
-        $.toaster({
-            priority : 'success',
-            css:{
-                'top': '3em'
-            },
-            title : 'Â¡Ã‰xito!',
-            message : '<br>Medicamento agregado exitosamente',
-            settings:{
-                'toaster':{
-                    'css':{
-                        'top':'3em'
+                '<a onclick="eliminarFila(this)" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger" id="' + filas + '"><span class="glyphicon glyphicon-trash" aria-hidden="true"></span></a> ' +
+                '</td>' +
+                '</tr>');
+            $('#guardar').prop('disabled', filas = 0);
+            limpiarCampos();
+            $.toaster({
+                priority: 'success',
+                title: 'Éxito!',
+                message: '<br>Medicamento agregado exitosamente',
+                settings: {
+                    'toaster': {
+                        'css': {
+                            'top': '5em'
+                        }
                     }
                 }
-            }
             });
+        }
     });
+
 
     $('#medicamento').on('change',function () {
         var medicamento = $('#medicamento').select2('data');
@@ -301,6 +328,7 @@ $(document).ready(function () {
 
     //ValidaciÃ³n de medicamentos
     $('#guardar').on('click',function (e) {
+        e.preventDefault();
         $('#medicamento_modal').text('');
         var medicamento = [];
         var medicamento_agotado = [];
@@ -338,7 +366,7 @@ $(document).ready(function () {
             for(var i = 0;i<medicamento_agotado.length;i++){
                 $('#medicamento_modal').append(medicamento_agotado[i].descripcion+'<br>');
             }
-            $('#medicamento_modal').append('Â¿AÃºn asÃ­ deseas agregarlos a la receta?');
+            $('#medicamento_modal').append('¿Aún así deseas agregarlos a la receta?');
             $('#modal').modal('show');
         }else{//Si no se agotÃ³ ningÃºn medicamento
             $('form').submit();
@@ -350,18 +378,18 @@ $(document).ready(function () {
     });
 
     $('#id_dependiente').on('change',function () {
-        $('#id_afiliacion').val($('#id_dependiente').select2('data')[0].afiliacion);
+        $('#id_afiliacion').val($( '#id_dependiente').select2('data')[0].afiliacion);
     })
 
     if($('#surtir')){
         $('.btn').prop('disabled',false);
     }
-    $('#guardar').prop('disabled',true);
+    $('#guardar.btn-danger').prop('disabled',true);
 });
 
 function initPaciente() {
     $(".paciente").select2({
-        placeholder: 'Escriba el nÃºmero de afiliaciÃ³n o el nombre del paciente',
+        placeholder: 'Escriba el número de afiliación o el nombre del paciente',
         ajax: {
             type: 'POST',
             url: $(".paciente").data('url'),
@@ -439,4 +467,15 @@ function medicamento() {
         },
         templateResult: formatMedicine,
     });
+}
+
+function limpiarCampos() {
+    $('#dosis').val('');
+    $('#cada').val('');
+    $('#por').val('');
+    $('#surtido_numero').val('');
+    $('#nota_medicamento').val('');
+    $('.medicamento').select2('destroy');
+    $('.medicamento').empty();
+    medicamento();
 }

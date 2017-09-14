@@ -15,6 +15,14 @@
         {{ Form::setModel($receta) }}
         <div class="container-fluid" id="container-fluid"  data-url="{{companyRoute('surtir',['id'=>$receta->id_receta])}}">
             <div class="panel-body">
+                <div class="row text-center">
+                    <div class="form-group">
+                        <label for="folio">Receta:</label>
+                        <label>{{$receta->id_receta}}</label>
+                        <label for="folio">Folio:</label>
+                        <label>{{$receta->folio}}</label>
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col-sm-3">
                         <div class="form-group">
@@ -26,8 +34,8 @@
                     <div class="col-sm-3">
                         <div class="form-group">
                             <label for="solicitante">Paciente:</label>
-                            <br><label>{{!empty($receta->id_afiliacion)?
-                            $receta->afiliacion->where('id_dependiente',$receta->id_dependiente)->first()->getFullNameAttribute():
+                            <br><label>{{!empty($receta->id_dependiente) && !empty($receta->id_afiliacion)?
+                            $receta->afiliacion->where('id_dependiente',$receta->id_dependiente)->where('id_afiliacion',$receta->id_afiliacion)->first()->getFullNameAttribute():
                             $receta->nombre_paciente_no_afiliado}}</label>
                         </div>
                     </div>
@@ -77,14 +85,14 @@
                                         <input type="hidden" name="detalle[{{$detalle->id_receta_detalle}}][id_receta_detalle]" value="{{$detalle->id_receta_detalle}}">
                                         <input type="hidden" name="detalle[{{$detalle->id_receta_detalle}}][clave_cliente]" value="{{$detalle->clave_cliente}}">
                                     </td>
-                                    <td>{{$detalle->producto->descripcion}}<input type="hidden" id="descripcion{{$detalle->clave_cliente}}" value="{{$detalle->producto->descripcion}}"></td>
+                                    <td>{{$detalle->producto->descripcion}}<input type="hidden" id="descripcion{{$detalle->id_receta_detalle}}" value="{{$detalle->producto->descripcion}}"></td>
                                     <td>{{empty($detalle->fecha_surtido)?'Nunca':$detalle->fecha_surtido}}</td>
                                     <td>{{empty($detalle->fecha_surtido)?DB::select("select date 'now()' + integer '" . $detalle->recurrente . "' as diferencia")[0]->diferencia:DB::select("select date '" . $detalle->fecha_surtido . "' + integer '" . $detalle->recurrente . "' as diferencia")[0]->diferencia}}</td>
                                     <td>{{$detalle->cantidad_pedida}}<input type="hidden" id="cantidad_pedida{{$detalle->id_receta_detalle}}" value="{{$detalle->cantidad_pedida}}"></td>
                                     <td>{{$detalle->cantidad_surtida}}</td>
                                     <td>
                                         @if($detalle->veces_surtir>$detalle->veces_surtidas)
-                                            <input type="number" class="form-control" placeholder="Ej: 6" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]">
+                                            <input type="number" class="form-control" min="1" placeholder="Ej: 6" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]">
                                         @else
                                             <label>Producto entregado en su totalidad</label>
                                         @endif

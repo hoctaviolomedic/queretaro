@@ -1,6 +1,9 @@
 @section('content-width', 's12 m7 xl8 offset-xl2')
 @section('form-content')
     {{ Form::setModel($data) }}
+    @if(isset($data->folio))
+        {{Form::label('Folio','Folio: '.$data->folio)}}
+    @endif
     <div class="container-fluid">
     <div class="panel-body">
     <div class="row">
@@ -8,7 +11,7 @@
             <div class="form-group">
                 {{Form::label('id_localidad','Unidad')}}
                 @if(!Route::currentRouteNamed(currentRouteName('index')))
-                    {{Form::select('id_localidad',isset($localidades)?$localidades:[],isset($data->id_localidad)?$data->id_localidad:null,['id'=>'id_localidad','class' => 'unidad form-control',])}}
+                    {{Form::select('id_localidad',isset($localidades)?$localidades:[],isset($data->id_localidad)?$data->id_localidad:null,['id'=>'id_localidad','class' => 'unidad form-control','style'=>'width:100%'])}}
                 @endif
             </div>
         </div>
@@ -16,7 +19,7 @@
             <div class="form-group">
                 {{Form::label('id_medico','*Médico')}}
                 @if(!Route::currentRouteNamed(currentRouteName('index')))
-                    {{Form::select('id_medico',isset($medicos)?$medicos:[],isset($data->id_medico)?$data->id_medico:null,['id'=>'id_medico','class' => 'medico form-control'])}}
+                    {{Form::select('id_medico',isset($medicos)?$medicos:[],isset($data->id_medico)?$data->id_medico:null,['id'=>'id_medico','class' => 'medico form-control','style'=>'width:100%'])}}
                 @endif
             </div>
         </div>
@@ -24,16 +27,16 @@
             <div class="form-group">
                 {{Form::label('id_programa','*Programa')}}
                 @if(!Route::currentRouteNamed(currentRouteName('index')))
-                    {{Form::select('id_programa',isset($programas)?$programas:[],isset($data->id_programa)?$data->id_programa:null,['id'=>'id_programa','class' => 'programa form-control'])}}
+                    {{Form::select('id_programa',isset($programas)?$programas:[],isset($data->id_programa)?$data->id_programa:null,['id'=>'id_programa','class' => 'programa form-control','style'=>'width:100%'])}}
                 @endif
             </div>
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-2">
+        <div class="col-md-2 col-sm-12">
             <div class="form-group">
                 {{Form::label('tipo-servicio','*Tipo de servicio')}}
-                <div class="input-group-btn form-group" role="group" aria-label="tipo_servicio" data-toggle="buttons">
+                <div class="input-group-btn" role="group" aria-label="tipo_servicio" data-toggle="buttons">
                     <label class="btn btn-check btn-default active">
                         <input type="radio" name="tipo_servicio" checked="checked" autocomplete="off" value="afiliado" class="btn btn-default">Afiliado
                     </label>
@@ -46,18 +49,18 @@
         <div class="col-sm-6">
             <div class="form-group">
                 {{Form::label('id_dependiente','*Afiliación/Paciente')}}
-                {{Form::select('id_dependiente',isset($afiliaciones)?$afiliaciones:[],null,['id'=>'id_dependiente','class' => 'paciente form-control','data-url'=>companyRoute('getAfiliados')])}}
+                {{Form::select('id_dependiente',isset($afiliaciones)?$afiliaciones:[],null,['id'=>'id_dependiente','class' => 'paciente form-control','data-url'=>companyRoute('getAfiliados'),'style'=>'width:100%'])}}
                 {{Form::hidden('id_afiliacion',null,['id'=>'id_afiliacion'])}}
                 {{Form::text('nombre_paciente_no_afiliado',null,['id'=>'nombre_paciente_no_afiliado','class'=>'form-control','style'=>'display:none'])}}
             </div>
             {{ $errors->has('id_dependiente') ? HTML::tag('span', $errors->first('id_dependiente'), ['class'=>'help-block text-danger']) : '' }}
-            {{ $errors->has('nombre_paciente_no_afiliado') ? HTML::tag('span', $errors->first('nombre_paciente_no_afiliado'), ['class'=>'help-block text-danger']) : '' }}
+            {{ $errors->has('id_dependiente') ? HTML::tag('span', $errors->first(''), ['class'=>'help-block text-danger']) : '' }}
         </div>
         <div class="col-sm-4">
             <div class="form-group">
                 {{Form::label('id_area','*Área de la consulta')}}
                 @if(!Route::currentRouteNamed(currentRouteName('index')))
-                    {{Form::select('id_area',isset($areas)?$areas:[],isset($data->id_area)?$data->id_area:null,['id'=>'id_area','class' => 'area form-control'])}}
+                    {{Form::select('id_area',isset($areas)?$areas:[],isset($data->id_area)?$data->id_area:null,['id'=>'id_area','class' => 'area form-control','style'=>'width:100%'])}}
                 @endif
             </div>
         </div>
@@ -68,6 +71,8 @@
                 {{Form::label('id_diagnostico','*Diagnóstico')}}
                 {{Form::select('id_diagnostico',isset($diagnosticos)?$diagnosticos:[],null,['id'=>'id_diagnostico','class' => 'diagnostico form-control','data-url'=>companyRoute('getDiagnosticos')])}}
             </div>
+            {{ $errors->has('id_diagnostico') ? HTML::tag('span', $errors->first('id_diagnostico'), ['class'=>'help-block text-danger']) : '' }}
+
         </div>
         <div class="col-sm-2 col-xs-3">
             <div class="form-group">
@@ -110,7 +115,7 @@
                 <div class="col-sm-12">
                     <div class="input-group">
                         {{Form::label('medicamento','*Medicamento')}}
-                        {{Form::select('medicamento',[],null,['id'=>'medicamento','class' => 'medicamento form-control','data-url'=>companyRoute('getMedicamentos')])}}
+                        {{Form::select('medicamento',[],null,['id'=>'medicamento','class' => 'medicamento form-control','data-url'=>companyRoute('getMedicamentos'),'style'=>'width:100%'])}}
                     </div>
                 </div>
             </div>

@@ -25,7 +25,6 @@ $(document).ready(function () {
                 data: data,
                 async: false,
                 success:function (response) {
-                    e.preventDefault();
                     var arreglo = $.parseJSON(response);
                      // var cantidad = $('#cantidadsurtir'+id).val();
                      var disponible = arreglo['disponible'];
@@ -46,7 +45,7 @@ $(document).ready(function () {
                     'donotdismiss':['danger'],
                     'toaster':{
                         'css':{
-                            'top':'3em'
+                            'top':'5em'
                         }
                     }
                 }
@@ -62,7 +61,7 @@ $(document).ready(function () {
                     'donotdismiss':['danger'],
                     'toaster':{
                         'css':{
-                            'top':'3em'
+                            'top':'5em'
                         }
                     }
                 }

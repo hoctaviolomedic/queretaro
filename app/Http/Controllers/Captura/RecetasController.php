@@ -28,7 +28,7 @@ class RecetasController extends ControllerBase
     public function __construct(Recetas $entity)
     {
         $this->entity = $entity;
-        $this->localidades = Localidades::where('tipo',0)->where('id_cliente',135)->get();
+        $this->localidades = Localidades::where('tipo',0)->where('id_cliente',Auth::id())->where('estatus',1)->get();
         $this->medicos = Medicos::all();
         $this->programas = Programas::all();
         $this->areas = Areas::all();
@@ -127,7 +127,9 @@ class RecetasController extends ControllerBase
             # Eliminamos cache
                 Cache::tags(getCacheTag('index'))->flush();
 //            $this->log('store', $isSuccess->id_receta);
-                return $this->redirect('store');
+                return $this->redirect('imprimir',[
+                    'id' => $isSuccess->id_receta,
+                ]);
             }
         else {
 //            $this->log('error_store');
@@ -238,7 +240,7 @@ class RecetasController extends ControllerBase
     {
         $json = [];
         $term = strtoupper($request->diagnostico);
-        $diagnosticos = Diagnosticos::where('diagnostico','LIKE','%'.$term.'%')->where('estatus','1')->get();
+        $diagnosticos = Diagnosticos::where('diagnostico','LIKE','%'.$term.'%')->orWhere('clave_diagnostico','LIKE',$term.'%')->where('estatus','1')->get();
         foreach ($diagnosticos as $diagnostico){
             $json[] = ['id'=>$diagnostico->id_diagnostico,
                 'text' => '('.$diagnostico->clave_diagnostico.') '.$diagnostico->diagnostico];
@@ -403,7 +405,7 @@ class RecetasController extends ControllerBase
         $dom_pdf = $pdf->getDomPDF();
         $canvas = $dom_pdf->get_canvas();
         $canvas->page_text(38,580,"Página {PAGE_NUM} de {PAGE_COUNT}",null,8,array(0,0,0));
-        $canvas->text(665,580,'RECETA',null,8);
+        $canvas->text(665,580,'RECETA MÉDICA',null,8);
 //        $canvas->image('data:image/png;charset=binary;base64,'.$barcode,355,580,100,16);
 
         return $pdf->stream('solicitud')->header('Content-Type',"application/pdf");
