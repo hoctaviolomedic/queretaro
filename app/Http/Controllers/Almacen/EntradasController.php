@@ -12,7 +12,7 @@ class EntradasController extends Controller
 	public function pedidos() {
 
 		$localidades = DB::select('SELECT l.id_localidad AS key, l.localidad AS localidad FROM cat_localidad l, adm_usuario_localidad ul
-			WHERE l.id_localidad = ul.id_localidad AND ul.id_usuario = :id_usuario AND l.estatus=1
+			WHERE l.id_localidad = ul.id_localidad AND ul.id_usuario = :id_usuario AND l.estatus=1 AND l.id_localidad NOT IN (2)
 			AND EXISTS (SELECT i.* FROM inv_inventario i, inv_almacen a WHERE i.id_almacen=a.id_almacen AND a.id_localidad=l.id_localidad AND i.estatus=1) ORDER BY localidad', ['id_usuario'=> Auth::id()]);
 
 		// dump( $localidades );
