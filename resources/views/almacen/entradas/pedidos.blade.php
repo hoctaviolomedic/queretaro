@@ -189,6 +189,7 @@
 							$('#resurtido').empty();
 							$('#resurtido').multiselect('rebuild');
 
+							$('#codebar-input').val('')
 
 						}
 					})
@@ -210,8 +211,8 @@
 					}
 					console.log(e.target.value)
 					this.set('clone', this.get('clone'))
-					document.querySelector('#codebar-input').value = '';
 				}
+				document.querySelector('#codebar-input').value = '';
 			},
 			someMethodTwo: function() {
 				if (app.$data.resurtidos.length) {
