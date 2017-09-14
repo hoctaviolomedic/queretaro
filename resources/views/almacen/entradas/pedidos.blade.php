@@ -1,6 +1,6 @@
 @extends('layouts.dashboard')
 
-@section('title', '@Agregar')
+@section('title', 'Entradas de Pedidos')
 
 @section('header-top')
 <link rel="stylesheet" href="{{asset('css/bootstrap-multiselect.css')}}">
@@ -386,12 +386,10 @@
 
 		<div class="text-right" m-literal:hidden="toRefresh">
 			<button id="enviar-datos" type="button" class="btn btn-danger" m-on:click="enviarDatos"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
-			<button type="button" class="btn btn-default">Cancelar y regresar</button>
 		</div>
 
 		<div class="text-right" m-literal:hidden="!toRefresh">
 			<button type="button" class="btn btn-danger" m-on:click="toRefreshPage"> Recargar</button>
-			<button type="button" class="btn btn-default">Cancelar y regresar</button>
 		</div>
 
 

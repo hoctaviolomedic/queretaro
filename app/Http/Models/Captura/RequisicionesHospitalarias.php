@@ -44,7 +44,7 @@ class RequisicionesHospitalarias extends ModelCompany
         'fecha_requerido' => 'required',
         'id_solicitante' => 'required',
     ];
-    
+
     protected $eagerLoaders = ['localidad','estatus'];
 
     /**
@@ -59,39 +59,39 @@ class RequisicionesHospitalarias extends ModelCompany
         'fecha_requerido' => 'Fecha requerimiento',
         'iestatus' => 'Estatus',
     ];
-    
+
     public function estatus()
     {
         return $this->hasOne(Estatus::class,'id_estatus','id_estatus');
     }
-    
+
     public function localidad()
     {
         return $this->hasOne(Localidades::class,'id_localidad','id_localidad');
     }
-    
+
     public function solicitantes()
     {
         return $this->hasOne(Usuarios::class,'id_usuario','id_solicitante');
     }
-    
+
     public function getSolicitanteAttribute()
     {
         $paterno = !empty($this->solicitantes->paterno) ? $this->solicitantes->paterno : '';
         $materno = !empty($this->solicitantes->materno) ? $this->solicitantes->materno : '';
         $nombre  = !empty($this->solicitantes->nombre) ? $this->solicitantes->nombre : '';
-        
+
         return "$paterno $materno $nombre";
     }
-    
+
     public function getIlocalidadAttribute()
     {
         return !empty($this->localidad->localidad) ? $this->localidad->localidad : '';
     }
-    
+
     public function getIestatusAttribute()
     {
         return !empty($this->estatus->estatus) ? $this->estatus->estatus : '';
     }
-    
+
 }

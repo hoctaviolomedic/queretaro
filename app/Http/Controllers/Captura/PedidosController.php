@@ -49,17 +49,18 @@ class PedidosController extends ControllerBase
 	 */
 	public function create($company, $attributes = [])
 	{
-	    $localidades = Localidades::where('id_cliente','=',135)->where('estatus',1)->orderBy('localidad')->pluck('localidad','id_localidad');
-	    $proveedores =  DB::table('cat_proveedor')->where('estatus',1)->orderBy('nombre')->get()->pluck('nombre','id_proveedor');
-	    $estatus = collect([null=>null,0=>'Nuevo',1=>'Parcialmente Surtido',2=>'Completo',3=>'Cerrado',4=>'Cancelado']);
-	    
-		return parent::create($company, [
-			'dataview' => $this->getDataView()+[
-    		    'localidades' => $localidades,
-    			'proveedores' => $proveedores,
-			    'estatus' => $estatus,
-			]
-		]);
+		return redirect('/loader.php?url=pedido/crear_pedido/crear_pedido.php&js=js/pedido/crear_pedido.js&opc=36');
+		// $localidades = Localidades::where('id_cliente','=',135)->where('estatus',1)->orderBy('localidad')->pluck('localidad','id_localidad');
+		// $proveedores =  DB::table('cat_proveedor')->where('estatus',1)->orderBy('nombre')->get()->pluck('nombre','id_proveedor');
+		// $estatus = collect([null=>null,0=>'Nuevo',1=>'Parcialmente Surtido',2=>'Completo',3=>'Cerrado',4=>'Cancelado']);
+
+		// return parent::create($company, [
+		// 	'dataview' => $this->getDataView()+[
+		// 		'localidades' => $localidades,
+		// 		'proveedores' => $proveedores,
+		// 		'estatus' => $estatus,
+		// 	]
+		// ]);
 	}
 
 	/**
@@ -70,9 +71,9 @@ class PedidosController extends ControllerBase
 	 */
 	public function show($company, $id, $attributes = [])
 	{
-		return parent::show($company, $id, [
-			'dataview' => $this->getDataView()
-		]);
+		// return parent::show($company, $id, [
+		// 	'dataview' => $this->getDataView()
+		// ]);
 	}
 
 	/**
@@ -83,9 +84,9 @@ class PedidosController extends ControllerBase
 	 */
 	public function edit($company, $id, $attributes = [])
 	{
-		return parent::edit($company, $id, [
-			'dataview' => $this->getDataView()
-		]);
+		// return parent::edit($company, $id, [
+		// 	'dataview' => $this->getDataView()
+		// ]);
 	}
 
 	/**

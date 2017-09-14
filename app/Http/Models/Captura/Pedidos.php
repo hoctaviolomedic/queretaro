@@ -119,6 +119,8 @@ class Pedidos extends ModelBase
 		foreach ($collections->cursor() as $item) {
 			foreach ($item->detalle as $key => $detalle) {
 
+				// dump( $item );
+
 				$po_lines = [
 					'LINE_NUM' => ($key+1), # Número de Línea: Número de línea de la Orden de compra.
 					'LINE_TYPE' => 'Mercaderías', # Tipo: Siempre va a ser -Mercaderías-
