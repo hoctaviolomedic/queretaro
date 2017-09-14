@@ -100,7 +100,7 @@
                 <div class="input-group">
                     {{Form::number('presion1',isset($presion1)?$presion1:null,['id'=>'presion1','min'=>1,'class' =>'form-control number-only', 'placeholder' => 'Ej: 120','aria-describedby'=>'presion-addon'])}}
                     <span class="input-group-addon" id="presion-addon">/</span>
-                    {{Form::number('presion2',isset($presion2)?$presion2:null,['id'=>'presion2','min,=>1','class' =>'form-control number-only', 'placeholder' => 'Ej: 80','aria-describedby'=>'presion-addon'])}}
+                    {{Form::number('presion2',isset($presion2)?$presion2:null,['id'=>'presion2','min'=>'1','class' =>'form-control number-only', 'placeholder' => 'Ej: 80','aria-describedby'=>'presion-addon'])}}
                 </div>
                 {{ $errors->has('presion1') ? HTML::tag('span', $errors->first('presion1'), ['class'=>'help-block text-danger']) : '' }}
                 {{ $errors->has('presion2') ? HTML::tag('span', $errors->first('presion2'), ['class'=>'help-block text-danger']) : '' }}
