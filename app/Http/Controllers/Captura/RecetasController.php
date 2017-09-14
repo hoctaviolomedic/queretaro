@@ -129,7 +129,7 @@ class RecetasController extends ControllerBase
             }
 
             # Eliminamos cache
-                Cache::tags(getCacheTag('index'))->flush();
+//                Cache::tags(getCacheTag('index'))->flush();
 //            $this->log('store', $isSuccess->id_receta);
                 // return $this->redirect('store');
 
