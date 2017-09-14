@@ -113,7 +113,7 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="input-group">
+                    <div class="">
                         {{Form::label('medicamento','*Medicamento')}}
                         {{Form::select('medicamento',[],null,['id'=>'medicamento','class' => 'medicamento form-control','data-url'=>companyRoute('getMedicamentos'),'style'=>'width:100%'])}}
                     </div>
