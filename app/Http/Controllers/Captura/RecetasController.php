@@ -88,6 +88,7 @@ class RecetasController extends ControllerBase
         $request->request->set('id_usuario_creacion', Auth::Id());
         $isSuccess = $this->entity->create($request->all());
         if ($isSuccess) {
+            $id_receta = $isSuccess->id_receta;
             foreach ($request->_detalle as $detalle) {
                 //Apartar
                 $disponibles = DB::select("SELECT ie.codigo_barras,ie.quedan,ie.apartadas,ie.no_lote
@@ -130,9 +131,12 @@ class RecetasController extends ControllerBase
             # Eliminamos cache
                 Cache::tags(getCacheTag('index'))->flush();
 //            $this->log('store', $isSuccess->id_receta);
-                return $this->redirect('store');
-            }
-        else {
+                // return $this->redirect('store');
+
+           request()->session()->flash('printpdf', $id_receta );
+            return redirect(companyRoute('index'))->with('printpdf', $id_receta);
+
+        } else {
 //            $this->log('error_store');
                 return $this->redirect('error_store');
             }
@@ -255,7 +259,7 @@ class RecetasController extends ControllerBase
         $term = strtoupper($request->medicamento);
         $medicamentos = DB::select("SELECT cp.clave_cliente, cp.descripcion, cf.descripcion as familia, coalesce(cp.cantidad_presentacion,0) cantidad_presentacion, coalesce(SUM(ie.quedan - ie.apartadas),0) disponible,
                 tp.id_cuadro_tipo_medicamento as tipo_medicamento, c.id_cuadro, coalesce(cp.tope_receta,0) tope_receta
-            
+
            FROM cat_cuadro c
             LEFT JOIN cat_cuadro_producto cp ON cp.id_cuadro = c.id_cuadro AND c.id_cliente = 135 AND cp.estatus = '1' AND cp.descripcion LIKE '%".$term."%'
             LEFT JOIN cat_cuadro_tipo_producto tp ON tp.id_cuadro_tipo_medicamento = cp.id_cuadro_tipo_medicamento AND tp.id_cuadro_tipo_medicamento <> 57 AND tp.estatus = '1'
@@ -263,9 +267,9 @@ class RecetasController extends ControllerBase
             INNER JOIN cat_familia cf ON cf.id_familia = cp.id_familia
             LEFT JOIN inv_existencia ie ON ie.id_localidad = lp.id_localidad AND (ie.quedan - ie.apartadas > 0) AND ie.caducidad > now()
             LEFT JOIN cat_producto_cliente pc ON pc.codigo_barras = ie.codigo_barras AND pc.id_cuadro = c.id_cuadro AND pc.clave_cliente = cp.clave_cliente AND pc.estatus = '1'
-            
+
            WHERE c.estatus = '1' AND c.id_tipo_cuadro = '1'
-            
+
            GROUP BY cp.clave_cliente,cp.descripcion,cf.descripcion,cp.cantidad_presentacion,tp.id_cuadro_tipo_medicamento,c.id_cuadro,cp.tope_receta
             ORDER BY disponible DESC, cp.descripcion;");
         foreach ($medicamentos as $medicamento){
@@ -282,7 +286,7 @@ class RecetasController extends ControllerBase
 
     public function verifyStock($company,Request $data){
         $query = DB::select("SELECT cp.clave_cliente, cp.descripcion, cf.descripcion as familia, coalesce(cp.cantidad_presentacion,0) cantidad_presentacion, coalesce(SUM(ie.quedan - ie.apartadas),0) disponible,
-                tp.id_cuadro_tipo_medicamento as tipo_medicamento, c.id_cuadro, coalesce(lp.tope_receta,0) tope_receta            
+                tp.id_cuadro_tipo_medicamento as tipo_medicamento, c.id_cuadro, coalesce(lp.tope_receta,0) tope_receta
                 FROM cat_cuadro c
                 LEFT JOIN cat_cuadro_producto cp ON cp.id_cuadro = c.id_cuadro AND c.id_cliente = 135 AND cp.estatus = '1' AND cp.clave_cliente = '".$data->clave_cliente."'
                 LEFT JOIN cat_cuadro_tipo_producto tp ON tp.id_cuadro_tipo_medicamento = cp.id_cuadro_tipo_medicamento AND tp.id_cuadro_tipo_medicamento <> 57 AND tp.estatus = '1'
@@ -299,7 +303,7 @@ class RecetasController extends ControllerBase
 
     public function verifyStockSurtir($company,Request $data){
         $query = DB::select("SELECT cp.clave_cliente, cp.descripcion, cf.descripcion as familia, coalesce(cp.cantidad_presentacion,0) cantidad_presentacion, coalesce(SUM(ie.quedan - ie.apartadas),0) disponible,
-                tp.id_cuadro_tipo_medicamento as tipo_medicamento, c.id_cuadro, coalesce(lp.tope_receta,0) tope_receta            
+                tp.id_cuadro_tipo_medicamento as tipo_medicamento, c.id_cuadro, coalesce(lp.tope_receta,0) tope_receta
                 FROM cat_cuadro c
                 LEFT JOIN cat_cuadro_producto cp ON cp.id_cuadro = c.id_cuadro AND c.id_cliente = 135 AND cp.estatus = '1' AND cp.clave_cliente = '".$data->clave_cliente."'
                 LEFT JOIN cat_cuadro_tipo_producto tp ON tp.id_cuadro_tipo_medicamento = cp.id_cuadro_tipo_medicamento AND tp.id_cuadro_tipo_medicamento <> 57 AND tp.estatus = '1'

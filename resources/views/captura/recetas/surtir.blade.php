@@ -92,7 +92,7 @@
                                     <td>{{$detalle->cantidad_surtida}}</td>
                                     <td>
                                         @if($detalle->veces_surtir>$detalle->veces_surtidas)
-                                            <input type="number" class="form-control" min="1" placeholder="Ej: 6" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]">
+                                            <input type="number" class="form-control number-only" min="1" placeholder="Ej: 6" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]">
                                         @else
                                             <label>Producto entregado en su totalidad</label>
                                         @endif

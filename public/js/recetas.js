@@ -5,6 +5,12 @@ $(document).ready(function () {
     $(':submit').attr('id','guardar');
     $(':submit').attr('type','button');
 
+    $('.number-only').keypress(function(e) {
+        if (isNaN(this.value + "" + String.fromCharCode(e.charCode))) return false;
+    })
+        .on("cut copy paste", function(e) {
+            e.preventDefault();
+        });
 
     $(".unidad").select2();
     $('.medico').select2();

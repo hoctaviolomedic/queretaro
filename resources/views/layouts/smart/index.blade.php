@@ -13,7 +13,7 @@
     <script src="{{ asset('js/smartindex.js') }}"></script>
     @if (session('message'))
     <script type="text/javascript">
-    	Materialize.toast('<span><i class="material-icons">priority_high</i>{{session('message.text')}}</span>', 4000, '{{session('message.type')}}' );
+    	// Materialize.toast('<span><i class="material-icons">priority_high</i>{{session('message.text')}}</span>', 4000, '{{session('message.type')}}' );
     </script>
     @endif
 @endsection

@@ -242,41 +242,90 @@
     </div><!-- /.modal -->
 
 @endsection
-@section('header-bottom')
-    @parent
-    <script type="text/javascript" src="{{asset('js/recetas.js')}}"></script>
-    <script type="text/javascript" src="{{asset('js/toaster.js')}}"></script>
 
-    @if (Route::currentRouteNamed(currentRouteName('show')))
-        <script type="text/javascript">
-            $(document).ready(function () {
-                $('#id_localidad').select2('destroy');
-                $('#id_medico').select2('destroy');
-                $('#id_programa').select2('destroy');
-                $('#id_dependiente').select2('destroy');
-                $('#id_area').select2('destroy');
-                $('#id_diagnostico').select2('destroy');
-                $('#medicamento').select2('destroy');
-            });
-
-        </script>
-    @endif
-@endsection
 
 {{-- DONT DELETE --}}
 @if (Route::currentRouteNamed(currentRouteName('index')))
+    @section('header-bottom')
+        @parent
+        @if (session('printpdf'))
+        <script type="text/javascript">
+            window.open('{{companyRoute('imprimirReceta', ['id'=> session('printpdf') ])}}')
+        </script>
+        @endif
+    @endsection
     @include('layouts.smart.index')
 @endif
 
 @if (Route::currentRouteNamed(currentRouteName('create')))
+    @section('header-bottom')
+        @parent
+        <script type="text/javascript" src="{{asset('js/recetas.js')}}"></script>
+        <script type="text/javascript" src="{{asset('js/toaster.js')}}"></script>
+
+        @if (Route::currentRouteNamed(currentRouteName('show')))
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#id_localidad').select2('destroy');
+                    $('#id_medico').select2('destroy');
+                    $('#id_programa').select2('destroy');
+                    $('#id_dependiente').select2('destroy');
+                    $('#id_area').select2('destroy');
+                    $('#id_diagnostico').select2('destroy');
+                    $('#medicamento').select2('destroy');
+                });
+
+            </script>
+        @endif
+    @endsection
     @include('layouts.smart.create')
 @endif
 
 @if (Route::currentRouteNamed(currentRouteName('edit')))
+    @section('header-bottom')
+        @parent
+        <script type="text/javascript" src="{{asset('js/recetas.js')}}"></script>
+        <script type="text/javascript" src="{{asset('js/toaster.js')}}"></script>
+
+        @if (Route::currentRouteNamed(currentRouteName('show')))
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#id_localidad').select2('destroy');
+                    $('#id_medico').select2('destroy');
+                    $('#id_programa').select2('destroy');
+                    $('#id_dependiente').select2('destroy');
+                    $('#id_area').select2('destroy');
+                    $('#id_diagnostico').select2('destroy');
+                    $('#medicamento').select2('destroy');
+                });
+
+            </script>
+        @endif
+    @endsection
     @include('layouts.smart.edit')
 @endif
 
 @if (Route::currentRouteNamed(currentRouteName('show')))
+    @section('header-bottom')
+        @parent
+        <script type="text/javascript" src="{{asset('js/recetas.js')}}"></script>
+        <script type="text/javascript" src="{{asset('js/toaster.js')}}"></script>
+
+        @if (Route::currentRouteNamed(currentRouteName('show')))
+            <script type="text/javascript">
+                $(document).ready(function () {
+                    $('#id_localidad').select2('destroy');
+                    $('#id_medico').select2('destroy');
+                    $('#id_programa').select2('destroy');
+                    $('#id_dependiente').select2('destroy');
+                    $('#id_area').select2('destroy');
+                    $('#id_diagnostico').select2('destroy');
+                    $('#medicamento').select2('destroy');
+                });
+
+            </script>
+        @endif
+    @endsection
     @include('layouts.smart.show')
 @endif
 
