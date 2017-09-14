@@ -53,8 +53,7 @@
                 {{Form::hidden('id_afiliacion',null,['id'=>'id_afiliacion'])}}
                 {{Form::text('nombre_paciente_no_afiliado',null,['id'=>'nombre_paciente_no_afiliado','class'=>'form-control','style'=>'display:none'])}}
             </div>
-            {{ $errors->has('id_dependiente') ? HTML::tag('span', $errors->first('id_dependiente'), ['class'=>'help-block text-danger']) : '' }}
-            {{ $errors->has('id_dependiente') ? HTML::tag('span', $errors->first(''), ['class'=>'help-block text-danger']) : '' }}
+            {{ $errors->has('id_afiliacion') ? HTML::tag('span', $errors->first('id_afiliacion'), ['class'=>'help-block text-danger']) : '' }}
         </div>
         <div class="col-sm-4">
             <div class="form-group">

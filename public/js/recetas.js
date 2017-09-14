@@ -98,9 +98,9 @@ $(document).ready(function () {
         if(!parseInt($('#dosis').val())>0)
             campos += '<br><br>Necesito que me indiques la <b>dosis</b> del medicamento';
         if(!parseInt($('#cada').val())>0)
-            campos += '<br><br>Necesito que me indiques <b>cada</b> cuando tomarÃ¡ el medicamento';
+            campos += '<br><br>Necesito que me indiques <b>cada</b> cuando tomar el medicamento';
         if(!parseInt($('#por').val())>0 )
-            campos += '<br><br>Necesito que me indiques <b>la duraciÃ³n</b> del medicamento';
+            campos += '<br><br>Necesito que me indiques <b>la duracion</b> del medicamento';
 
         if(campos!=''){
             $.toaster({

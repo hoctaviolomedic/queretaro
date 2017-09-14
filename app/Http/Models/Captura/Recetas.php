@@ -38,8 +38,7 @@ class Recetas extends ModelCompany
         'presion1' => 'between:0,999.99',
         'presion2' => 'between:0,999.99',
         'id_diagnostico' => 'required|numeric',
-        'id_dependiente' => 'required_if:nombre_paciente_no_afiliado,size:0',
-        'id_afiliacion' => 'required_if:nombre_paciente_no_afiliado,size:0'
+        'id_afiliacion' => 'required_without:nombre_paciente_no_afiliado'
     ];
 
     /**
@@ -48,9 +47,9 @@ class Recetas extends ModelCompany
      */
     protected $fields = [
         'fecha_formated' => 'Fecha Captura',
-        'nombre_completo_medico' => 'Médico',
+        'nombre_completo_medico' => 'Medico',
         'nombre_completo_paciente' => 'Paciente',
-        'id_afiliacion' => 'N° de afiliación',
+        'id_afiliacion' => 'N. de afiliacion',
         'tipo_servicio' => 'Tipo de servicio',
         'estatus_formated' => 'Estatus de la receta'
     ];
