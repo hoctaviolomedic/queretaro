@@ -260,7 +260,6 @@
     @section('header-bottom')
         @parent
         <script type="text/javascript" src="{{asset('js/recetas.js')}}"></script>
-        <script type="text/javascript" src="{{asset('js/toaster.js')}}"></script>
 
         @if (Route::currentRouteNamed(currentRouteName('show')))
             <script type="text/javascript">
@@ -284,7 +283,6 @@
     @section('header-bottom')
         @parent
         <script type="text/javascript" src="{{asset('js/recetas.js')}}"></script>
-        <script type="text/javascript" src="{{asset('js/toaster.js')}}"></script>
 
         @if (Route::currentRouteNamed(currentRouteName('show')))
             <script type="text/javascript">
@@ -308,7 +306,6 @@
     @section('header-bottom')
         @parent
         <script type="text/javascript" src="{{asset('js/recetas.js')}}"></script>
-        <script type="text/javascript" src="{{asset('js/toaster.js')}}"></script>
 
         @if (Route::currentRouteNamed(currentRouteName('show')))
             <script type="text/javascript">
