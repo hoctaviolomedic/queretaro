@@ -385,15 +385,15 @@ $(document).ready(function () {
                 e.preventDefault();
                 e.stopImmediatePropagation();
                 $.toaster({
-                    priority : 'danger',
-                    title : 'Verifica los siguientes campos',
-                    message : campos,
+                    priority : 'danger',//'success' cuando es un mensaje de éxito
+                    title : 'Verifica los siguientes campos',//El título del Toaster
+                    message : campos,//String con el mensaje
                     settings:{
-                        'timeout':10000,
-                        'toaster':{
-                            'css':{
-                                'top':'5em'
-                            }
+                        'timeout':10000,//Para que dure 10 segundos
+                        'toaster':{//Especificaciones de diseño
+                                'css':{
+                                    'top':'5em'//Para que se baje 5 em y funcione bien en el Stand alone
+                                }
                         }
                     }
                 });
