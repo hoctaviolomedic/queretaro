@@ -96,33 +96,35 @@
 						</div>
 					</div>
 					<div class="col-sm-12">
-						<table class="smart-table table table-striped responsive-table table-hover">
-							<thead>
-								<tr>
-									<th class="width-auto"><input type="checkbox" id="check-all" rv-on-click="actions.checkAll" rv-checked="status.isAllChecked"><label for="check-all"></label></th>
-									@foreach ($fields as $label)
-									<th> {{ $label }} </th>
+						<div class="table-responsive">
+							<table class="smart-table table table-striped responsive-table table-hover">
+								<thead>
+									<tr>
+										<th class="width-auto"><input type="checkbox" id="check-all" rv-on-click="actions.checkAll" rv-checked="status.isAllChecked"><label for="check-all"></label></th>
+										@foreach ($fields as $label)
+										<th> {{ $label }} </th>
+										@endforeach
+										<th></th>
+									</tr>
+								</thead>
+								<tbody>
+									@foreach ($data as $row)
+									<tr>
+										<td class="width-auto">
+											<input type="checkbox" id="check-{{$row->getKey()}}" class="single-check" data-item-id="{{$row->getKey()}}" rv-on-click="actions.itemsSync" rv-get-datarow  name="check-{{$row->getKey()}}">
+											<label for="check-{{$row->getKey()}}"></label>
+										</td>
+										@foreach ($fields as $field => $label)
+										<td>{{ object_get($row, $field) }}</td>
+										@endforeach
+										<td class="width-auto">
+											<span rv-get-item-id data-item-id="{{$row->getKey()}}"></span>
+										</td>
+									</tr>
 									@endforeach
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach ($data as $row)
-								<tr>
-									<td class="width-auto">
-										<input type="checkbox" id="check-{{$row->getKey()}}" class="single-check" data-item-id="{{$row->getKey()}}" rv-on-click="actions.itemsSync" rv-get-datarow  name="check-{{$row->getKey()}}">
-										<label for="check-{{$row->getKey()}}"></label>
-									</td>
-									@foreach ($fields as $field => $label)
-									<td>{{ object_get($row, $field) }}</td>
-									@endforeach
-									<td class="width-auto">
-										<span rv-get-item-id data-item-id="{{$row->getKey()}}"></span>
-									</td>
-								</tr>
-								@endforeach
-							</tbody>
-						</table>
+								</tbody>
+							</table>
+						</div>
 					</div>
 					<!-- Modal Structure -->
 					<div id="modal-delete" class="modal">
