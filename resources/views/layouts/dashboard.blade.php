@@ -36,7 +36,6 @@
 {{ HTML::script(asset('js/bootstrap-datetimepicker.min.js')) }}
 {{ HTML::script(asset('js/toaster.js')) }}
 
-
 @yield('header-bottom')
 
 </body>
