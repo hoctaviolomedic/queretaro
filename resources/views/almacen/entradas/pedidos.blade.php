@@ -176,7 +176,22 @@
 						console.log(response)
 						if (response.success) {
 							// e.target.disabled = true;
-							alert('Datos guardados correctamente')
+
+							$.toaster({
+								priority : 'success',//'success' cuando es un mensaje de éxito
+								title : 'Datos guardados correctamente',//El título del Toaster
+								message : '',//String con el mensaje
+								settings: {
+									'timeout':10000,//Para que dure 10 segundos
+									'toaster':{//Especificaciones de diseño
+										'css':{
+											'top':'5em'//Para que se baje 5 em y funcione bien en el Stand alone
+										}
+									}
+								}
+							});
+
+							// alert('Datos guardados correctamente')
 							window.open(response.data)
 
 							app.set('resurtidos', [])
