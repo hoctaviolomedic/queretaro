@@ -341,6 +341,7 @@
 
 		<div class="row">
 			<div class="col-md-12">
+				<div class="table-responsive">
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -380,6 +381,7 @@
 						</tr>
 					</tbody>
 				</table>
+				</div>
 				<div class="form-inline form-group">
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1">Código de barras</span>
