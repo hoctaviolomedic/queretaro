@@ -73,7 +73,7 @@
             {{ $errors->has('id_diagnostico') ? HTML::tag('span', $errors->first('id_diagnostico'), ['class'=>'help-block text-danger']) : '' }}
 
         </div>
-        <div class="col-sm-2 col-xs-3">
+        <div class="col-sm-4 col-xs-12">
             <div class="form-group">
                 <label for="peso">Peso:</label>
                 <div class="input-group">
@@ -83,7 +83,7 @@
                 {{ $errors->has('peso') ? HTML::tag('span', $errors->first('peso'), ['class'=>'help-block text-danger']) : '' }}
             </div>
         </div>
-        <div class="col-sm-2 col-xs-4">
+        <div class="col-sm-4 col-xs-12">
             <div class="form-group">
                 <label for="altura">Altura:</label>
                 <div class="input-group">
@@ -93,7 +93,7 @@
                 {{ $errors->has('altura') ? HTML::tag('span', $errors->first('altura'), ['class'=>'help-block text-danger']) : '' }}
             </div>
         </div>
-        <div class="col-sm-24 col-xs-4">
+        <div class="col-sm-4 col-xs-12">
             <div class="form-group">
                 <label for="presion">Presión:</label>
                 <div class="input-group">
