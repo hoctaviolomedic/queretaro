@@ -176,7 +176,22 @@
 						console.log(response)
 						if (response.success) {
 							// e.target.disabled = true;
-							alert('Datos guardados correctamente')
+
+							$.toaster({
+								priority : 'success',//'success' cuando es un mensaje de éxito
+								title : 'Datos guardados correctamente',//El título del Toaster
+								message : '',//String con el mensaje
+								settings: {
+									'timeout':10000,//Para que dure 10 segundos
+									'toaster':{//Especificaciones de diseño
+										'css':{
+											'top':'5em'//Para que se baje 5 em y funcione bien en el Stand alone
+										}
+									}
+								}
+							});
+
+							// alert('Datos guardados correctamente')
 							window.open(response.data)
 
 							app.set('resurtidos', [])
@@ -199,6 +214,11 @@
 			toRefreshPage: function() {
 				parent.window.location.reload()
 			},
+			codebarKeyDown: function(e) {
+				if (!new RegExp('^[a-zA-Z0-9]+$').test(e.key) || e.ctrlKey) {
+					e.preventDefault();
+				}
+			},
 			someMethod: function(e) {
 				if (app.$data.resurtidos.length) {
 					var codes = app.$data.items.reduce(function(acc, item, index) {
@@ -207,7 +227,10 @@
 					}, {});
 					var pos = Object.keys(codes).indexOf(e.target.value);
 					if ( pos >= 0) {
-						this.$data.clone[pos]['cantidad_entrada']++
+						var pendiente = (this.$data.items[pos].cantidad - this.$data.items[pos].cantidad_entrada)
+						if (this.$data.clone[pos]['cantidad_entrada'] < pendiente) {
+							this.$data.clone[pos]['cantidad_entrada']++
+						}
 					}
 					console.log(e.target.value)
 					this.set('clone', this.get('clone'))
@@ -222,7 +245,10 @@
 					}, {});
 					var pos = Object.keys(codes).indexOf(document.querySelector('#codebar-input').value);
 					if ( pos >= 0) {
-						this.$data.clone[pos]['cantidad_entrada']++
+						var pendiente = (this.$data.items[pos].cantidad - this.$data.items[pos].cantidad_entrada)
+						if (this.$data.clone[pos]['cantidad_entrada'] < pendiente) {
+							this.$data.clone[pos]['cantidad_entrada']++
+						}
 					}
 					this.set('clone', this.get('clone'))
 					document.querySelector('#codebar-input').value = '';
@@ -329,7 +355,7 @@
 					<div class="form-group">
 						<label for="codebar-input">Código de barras</label>
 						<div class="input-group">
-							<input id="codebar-input" type="number" class="form-control" placeholder="Buscar..." m-on:keyup.enter="someMethod">
+							<input id="codebar-input" type="text" class="form-control" placeholder="Buscar..." m-on:keydown="codebarKeyDown" m-on:keyup.enter="someMethod">
 							<span class="input-group-btn">
 								<button class="btn btn-default btn-check" type="button" m-on:click="someMethodTwo"><span class="glyphicon glyphicon-plus"></span> Aceptar</button>
 							</span>
@@ -341,6 +367,7 @@
 
 		<div class="row">
 			<div class="col-md-12">
+				<div class="table-responsive">
 				<table class="table table-hover">
 					<thead>
 						<tr>
@@ -380,6 +407,7 @@
 						</tr>
 					</tbody>
 				</table>
+				</div>
 				<div class="form-inline form-group">
 					<div class="input-group">
 						<span class="input-group-addon" id="basic-addon1">Código de barras</span>
