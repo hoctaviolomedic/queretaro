@@ -131,5 +131,3 @@ function surtirRequisicion()
 $('#cantidad').change(function() {
     alert($('#cantidad').length());
 });
-
-alert();
