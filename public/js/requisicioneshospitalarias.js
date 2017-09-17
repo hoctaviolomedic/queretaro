@@ -129,5 +129,12 @@ function surtirRequisicion()
 }
 
 $('#cantidad').change(function() {
-    alert($('#cantidad').attr('maxlength'));
+    var length_max = $('#cantidad').attr('maxlength');
+    var length_cantidad = $('#cantidad').length;
+
+    if(length_cantidad > length_max)
+    {
+        alert('se esta excediendo en la cantidad maxima permitida.');
+    }
+
 });
