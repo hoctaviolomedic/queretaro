@@ -3,29 +3,55 @@
  */
 $cont_producto = 0;
 function agregarProducto() {
+    var length_max = $('#cantidad').attr('maxlength');
+    var length_cantidad = $('#cantidad').val().length;
+
 
     if( parseInt($('#id_area').val()) > 0 && parseInt($('#producto').val()) > 0 && parseInt($('#cantidad').val()) > 0 )
     {
-        var id_area =  $('#id_area').val();
-        var area_nombre =  $('#id_area option:selected').text();
-        var producto_clave = $('#producto').val();
-        var producto_nombre = $('#producto option:selected').text();
-        var cantidad = $('#cantidad').val();
-        var id_renglon = $cont_producto+'_'+producto_clave;
-        // var company_id = $('#company_email option:selected').val();
+        if(length_cantidad > length_max)
+        {
+            $.toaster({
+                priority : 'danger',
+                css:{
+                    'top': '3em'
+                },
+                title : 'Error!',
+                message : '<br>Se esta excediendo en la cantidad maxima de producto permitida.',
+                settings:{
+                    'timeout':8000,
+                    'toaster':{
+                        'css':{
+                            'top':'3em'
+                        }
+                    }
+                }
+            });
 
-        $('#lista_productos').append('<tr id="' + id_renglon + '"> ' +
-            '<td>' + area_nombre + '</td>' +
-            '<td>' + producto_nombre + '</td>' +
-            '<td>'+ cantidad +'</td> ' +
-            '<td>' + '<a href="#" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"  onclick="eliminarFila(\'' + id_renglon + '\')"></span> </a></td>  ' +
-            '</tr>' +
-            '<input type="hidden" value="'+id_area+'" name="producto_requisicion['+$cont_producto+'][id_area]">' +
-            '<input type="hidden" value="'+producto_clave+'" name="producto_requisicion['+$cont_producto+'][producto_clave]">' +
-            '<input type="hidden" value="'+cantidad+'" name="producto_requisicion['+$cont_producto+'][cantidad]">'
-        );
+        }
+        else
+        {
+            var id_area =  $('#id_area').val();
+            var area_nombre =  $('#id_area option:selected').text();
+            var producto_clave = $('#producto').val();
+            var producto_nombre = $('#producto option:selected').text();
+            var cantidad = $('#cantidad').val();
+            var id_renglon = $cont_producto+'_'+producto_clave;
+            // var company_id = $('#company_email option:selected').val();
 
-        $cont_producto++;
+            $('#lista_productos').append('<tr id="' + id_renglon + '"> ' +
+                '<td>' + area_nombre + '</td>' +
+                '<td>' + producto_nombre + '</td>' +
+                '<td>'+ cantidad +'</td> ' +
+                '<td>' + '<a href="#" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"  onclick="eliminarFila(\'' + id_renglon + '\')"></span> </a></td>  ' +
+                '</tr>' +
+                '<input type="hidden" value="'+id_area+'" name="producto_requisicion['+$cont_producto+'][id_area]">' +
+                '<input type="hidden" value="'+producto_clave+'" name="producto_requisicion['+$cont_producto+'][producto_clave]">' +
+                '<input type="hidden" value="'+cantidad+'" name="producto_requisicion['+$cont_producto+'][cantidad]">'
+            );
+
+            $cont_producto++;
+        }
     }
     else
     {
@@ -128,13 +154,7 @@ function surtirRequisicion()
 
 }
 
-$('#cantidad').change(function() {
-    var length_max = $('#cantidad').attr('maxlength');
-    var length_cantidad = $('#cantidad').val().length;
-
-    if(length_cantidad > length_max)
-    {
-        alert('se esta excediendo en la cantidad maxima permitida.');
-    }
-
-});
+// $('#cantidad').change(function() {
+//
+//
+// });
