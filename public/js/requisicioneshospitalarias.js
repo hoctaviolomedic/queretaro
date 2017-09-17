@@ -130,7 +130,7 @@ function surtirRequisicion()
 
 $('#cantidad').change(function() {
     var length_max = $('#cantidad').attr('maxlength');
-    var length_cantidad = $('#cantidad').length;
+    var length_cantidad = $('#cantidad').val().length;
 
     if(length_cantidad > length_max)
     {
