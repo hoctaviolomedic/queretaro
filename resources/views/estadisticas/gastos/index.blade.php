@@ -250,7 +250,7 @@
     		<div class="divider"></div>
     
             <div class="row">
-            	<div class="col-md-6 col-sm-12">
+            	<div class="col-lg-6 col-md-12">
                     <h4>Consumo general por productos:</h4>
             		@if(!empty($productos))
             		<div class="row">
@@ -286,7 +286,7 @@
                 	</table>
                 	@endif
                 </div>
-                <div class="col-md-6 col-sm-12 border-right">
+                <div class="col-lg-6 col-md-12 border-right">
                     <h4>Productos por Receta:</h4>
                 	@if(!empty($recetas))
                 	<div class="row">
@@ -336,7 +336,7 @@
             <div class="tab-content">
         		<div role="tabpanel" class="tab-pane fade in active" id="paciente">
               		<div class="row">
-                    	<div class="col-md-6 col-sm-12">
+                    	<div class="col-lg-6 col-md-12">
                         	<h4>Productos por paciente:</h4>
                         	@if(!empty($pacientes))
                     		<div class="row">
@@ -346,7 +346,7 @@
                             </div>
                             @endif
                         </div>
-                        <div class="col-md-6 col-sm-12">
+                        <div class="col-lg-6 col-md-12">
                         	@if(!empty($pacientes))
                         	<table class="table table-striped table-hover row">
                         		@if(isset($pacientes[0]))
@@ -378,7 +378,7 @@
                 </div>
         		<div role="tabpanel" class="tab-pane fade in" id="medico">
                 	<div class="row">
-                    	<div class="col-md-6 col-sm-12">
+                    	<div class="col-lg-6 col-md-12">
                         	<h4>Productos por médico:</h4>
                         	@if(!empty($medicos))
                     		<div class="row">
@@ -390,7 +390,7 @@
                             </div>
                           	@endif
                         </div>
-                        <div class="col-md-6 col-sm-12">
+                        <div class="col-lg-6 col-md-12">
                         	@if(!empty($medicos))
                         	<table class="table table-striped table-hover row">
                         		@if(isset($medicos[0]))
