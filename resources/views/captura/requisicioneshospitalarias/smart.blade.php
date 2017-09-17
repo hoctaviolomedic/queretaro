@@ -327,8 +327,7 @@
     <script>
         var detalle_requisicion = {!!json_encode($detalle_requisicion)!!};
     </script>
-    {{ HTML::script(asset('js/requisicioneshospitalarias.js')) }}
-    {{ HTML::script(asset('js/toaster.js')) }}
+
 
 @endif
 
@@ -342,4 +341,5 @@
     @include('layouts.smart.export')
 @endif
 
-
+{{ HTML::script(asset('js/requisicioneshospitalarias.js')) }}
+{{ HTML::script(asset('js/toaster.js')) }}
