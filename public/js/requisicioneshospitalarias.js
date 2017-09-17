@@ -124,6 +124,7 @@ $('select[name="id_localidad"]').on('change', function() {
         $('#id_area option[value="0"]');
         $('#producto option[value="0"]');
         $('#cantidad option[value="0"]');
+
     }else{
         $('select[name="id_area"]').empty();
         $('select[name="id_usuario_surtido"]').empty();
