@@ -55,6 +55,7 @@ function agregarProducto() {
             $('#id_area option[value="0"]');
             $('#producto option[value="0"]');
             $('#cantidad option[value="0"]');
+
         }
     }
     else
