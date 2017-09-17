@@ -47,11 +47,12 @@ class Recetas extends ModelCompany
      * @var array
      */
     protected $fields = [
-        'fecha_formated' => 'Fecha Captura',
-        'nombre_completo_medico' => 'Medico',
-        'nombre_completo_paciente' => 'Paciente',
-        'id_afiliacion' => 'N. de afiliacion',
+        'folio' => 'Folio',
+        'unidad_medica'=>'Unidad medica',
         'tipo_servicio' => 'Tipo de servicio',
+        'id_afiliacion' => 'N. de afiliacion',
+        'nombre_completo_paciente' => 'Paciente',
+        'fecha_formated' => 'Fecha Captura',
         'estatus_formated' => 'Estatus de la receta'
     ];
 
@@ -75,6 +76,10 @@ class Recetas extends ModelCompany
         }else{
             return 'Externo';
         }
+    }
+
+    public function getUnidadMedicaAttribute(){
+        return $this->localidad->localidad;
     }
 
     public function getFechaFormatedAttribute(){

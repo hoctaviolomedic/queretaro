@@ -65,7 +65,7 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-sm-4">
+        <div class="col-sm-4 col-xs-12">
             <div class="form-group">
                 {{Form::label('id_diagnostico','*Diagnóstico')}}
                 {{Form::select('id_diagnostico',isset($diagnosticos)?$diagnosticos:[],null,['id'=>'id_diagnostico','class' => 'diagnostico form-control','data-url'=>companyRoute('getDiagnosticos')])}}
@@ -73,7 +73,7 @@
             {{ $errors->has('id_diagnostico') ? HTML::tag('span', $errors->first('id_diagnostico'), ['class'=>'help-block text-danger']) : '' }}
 
         </div>
-        <div class="col-sm-4 col-xs-12">
+        <div class="col-sm-2 col-xs-12">
             <div class="form-group">
                 <label for="peso">Peso:</label>
                 <div class="input-group">
@@ -83,7 +83,7 @@
                 {{ $errors->has('peso') ? HTML::tag('span', $errors->first('peso'), ['class'=>'help-block text-danger']) : '' }}
             </div>
         </div>
-        <div class="col-sm-4 col-xs-12">
+        <div class="col-sm-2 col-xs-12">
             <div class="form-group">
                 <label for="altura">Altura:</label>
                 <div class="input-group">
@@ -97,9 +97,9 @@
             <div class="form-group">
                 <label for="presion">Presión:</label>
                 <div class="input-group">
-                    {{Form::number('presion1',isset($presion1)?$presion1:null,['id'=>'presion1','min'=>1,'class' =>'form-control number-only', 'placeholder' => 'Ej: 120','aria-describedby'=>'presion-addon'])}}
+                    {{Form::number('presion1',isset($presion1)?$presion1:null,['id'=>'presion1','min'=>1,'class' =>'form-control integer', 'placeholder' => 'Ej: 120','aria-describedby'=>'presion-addon'])}}
                     <span class="input-group-addon" id="presion-addon">/</span>
-                    {{Form::number('presion2',isset($presion2)?$presion2:null,['id'=>'presion2','min'=>'1','class' =>'form-control number-only', 'placeholder' => 'Ej: 80','aria-describedby'=>'presion-addon'])}}
+                    {{Form::number('presion2',isset($presion2)?$presion2:null,['id'=>'presion2','min'=>'1','class' =>'form-control integer', 'placeholder' => 'Ej: 80','aria-describedby'=>'presion-addon'])}}
                 </div>
                 {{ $errors->has('presion1') ? HTML::tag('span', $errors->first('presion1'), ['class'=>'help-block text-danger']) : '' }}
                 {{ $errors->has('presion2') ? HTML::tag('span', $errors->first('presion2'), ['class'=>'help-block text-danger']) : '' }}
@@ -131,21 +131,21 @@
                             <input type="checkbox" name="dosis12" id="dosis12" autocomplete="off"  class="btn btn-default dosis_checkbox">1/2
                         </label>
                     </div>
-                    {{Form::number('dosis',null,['id'=>'dosis','min'=>1,'class'=>'form-control number-only','placeholder'=>'Ej. 6','min'=>'1'])}}
+                    {{Form::number('dosis',null,['id'=>'dosis','min'=>1,'class'=>'form-control integer','placeholder'=>'Ej. 6','min'=>'1'])}}
                     {{Form::text('_dosis',null,['id'=>'_dosis','class' => '_dosis form-control','disabled'])}}
                 </div>
             </div>
             <div class="col-sm-4 border-right">
                 <h4>*Cada:</h4>
                 <div class="input-group my-group">
-                    {{Form::number('cada',null,['id'=>'cada','min'=>1,'class'=>'form-control number-only','placeholder'=>'Ej. 6','min'=>'1'])}}
+                    {{Form::number('cada',null,['id'=>'cada','min'=>1,'class'=>'form-control integer','placeholder'=>'Ej. 6','min'=>'1'])}}
                     {{Form::select('_cada',['1'=>'Hora(s)','24'=>'Día(s)','168'=>'Semana(s)','720'=>'Mes(es)'],null,['id'=>'_cada','class' => '_cada form-control'])}}
                 </div>
             </div>
             <div class="col-sm-4">
                 <h4>*Por:</h4>
                 <div class="input-group my-group">
-                    {{Form::number('por',null,['id'=>'por','min'=>1,'class'=>'number-only form-control','placeholder'=>'Ej. 6','min'=>'1'])}}
+                    {{Form::number('por',null,['id'=>'por','min'=>1,'class'=>'number-only form-control integer','placeholder'=>'Ej. 6','min'=>'1'])}}
                     {{Form::select('_por',['24'=>'Día(s)','168'=>'Semana(s)','720'=>'Mes(es)'],null,['id'=>'_por','class' => '_por form-control'])}}
                 </div>
             </div>

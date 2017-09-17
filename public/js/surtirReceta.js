@@ -10,6 +10,7 @@ $(document).ready(function () {
 
     $('form').prop('action',    $('#container-fluid').data('url'));
     $('#surtir').on('click',function (e) {
+        e.preventDefault();
         $('#medicamento_modal').text('');
         var medicamento=[];
         var medicamento_agotado=[];
@@ -18,12 +19,12 @@ $(document).ready(function () {
         $('#detalle tbody tr').each(function (index) {
             var data = {};
             var id = this.id;
-            if($('#cantidad_pedida'+id).val()<$('#cantidadsurtir'+id).val()){
+            cantidad = $('#cantidadsurtir'+id).val();
+            if($('#cantidad_pedida'+id).val()<$('#cantidadsurtir'+id).val() || !(cantidad>0)){
                 cantidad_alta += '<br>'+$('#descripcion'+id).val();
             }
             data.clave_cliente = this.title;
             data.cantidadsurtir = $('#cantidadsurtir'+id).val();
-            cantidad = $('#cantidadsurtir'+id).val();
             data.localidad = $('#id_localidad').val();
             medicamento.push(data);
             $.ajax({
