@@ -123,15 +123,10 @@ class RecetasController extends ControllerBase
                 }
 
                 //Guardar detalle
-//                dd($detalle);
-                    $detalle['cantidad_surtida'] = 0;
-                    $isSuccess->detalles()->save(new RecetasDetalle($detalle));
+                $detalle['cantidad_surtida'] = 0;
+                $isSuccess->detalles()->save(new RecetasDetalle($detalle));
             }
 
-            # Eliminamos cache
-//                Cache::tags(getCacheTag('index'))->flush();
-//            $this->log('store', $isSuccess->id_receta);
-                // return $this->redirect('store');
 
            request()->session()->flash('printpdf', $id_receta );
             return redirect(companyRoute('index'))->with('printpdf', $id_receta);
