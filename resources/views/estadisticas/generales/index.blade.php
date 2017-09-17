@@ -150,7 +150,7 @@
     		<div class="divider"></div>
 			
             <div class="row">
-            	<div class="col-md-6 col-sm-12">
+            	<div class="col-lg-6 col-md-12">
                 	<h4>Padecimientos:</h4>
                   	<div class="form-group">
                     	<div class="charts">
@@ -158,7 +158,7 @@
                     	</div>
                   	</div>
                 </div>
-                <div class="col-md-6 col-sm-12 border-right">
+                <div class="col-lg-6 col-md-12 border-right">
                 	<table class="table table-striped table-hover">
                 		@if(isset($padecimientos[0]))
                         <thead>
@@ -187,7 +187,7 @@
             <div class="divider"></div>
             
             <div class="row">
-                <div class="col-md-6 col-sm-12 border-right">
+                <div class="col-lg-6 col-md-12 border-right">
                 	<h4>Pacientes:</h4>
                 	<table class="table table-striped table-hover">
                 		@if(isset($pacientes[0]))
@@ -210,7 +210,7 @@
                         @endif
                 	</table>
                 </div>
-                <div class="col-md-6 col-sm-12">
+                <div class="col-lg-6 col-md-12">
                   	<div class="charts">
                     	<div class="charts">
                     		<div id="piepacientes" class="chart"></div>
@@ -224,7 +224,7 @@
           	<div class="divider"></div>
     		
             <div class="row">
-            	<div class="col-md-6 col-sm-12">
+            	<div class="col-lg-6 col-md-12">
                 	<h4>Medicos:</h4>
                   	<div class="form-group">
                     	<div class="charts">
@@ -232,7 +232,7 @@
                     	</div>
                   	</div>
                 </div>
-                <div class="col-md-6 col-sm-12 border-right">
+                <div class="col-lg-6 col-md-12 border-right">
                 	<table class="table table-striped table-hover">
                 		@if(isset($medicos[0]))
                         <thead>

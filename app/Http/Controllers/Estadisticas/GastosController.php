@@ -18,7 +18,7 @@ class GastosController extends ControllerBase
 	public function index($company, $attributes = ['where'=>[]])
 	{
 	    return view('estadisticas.gastos.index',[
-	        'localidades' => Localidades::where('id_cliente','=',135)->where('tipo',0)->get()->pluck('localidad','id_localidad')->prepend('TODAS LAS LOCALIDADES','-999'),
+	        'localidades' => Localidades::where('tipo',0)->where('id_cliente',135)->where('estatus',1)->get()->pluck('localidad','id_localidad')->prepend('TODAS LAS LOCALIDADES','-999'),
 	        'productos' => [],
 	        'recetas' => [],
 	        'medicos' => [],
