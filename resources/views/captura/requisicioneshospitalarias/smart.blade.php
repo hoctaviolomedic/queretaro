@@ -257,8 +257,8 @@
 @endsection
 
 
-@section('header-bottom')
-	@parent
+{{--@section('header-bottom')--}}
+	{{--@parent--}}
     @if (Route::currentRouteNamed(currentRouteName('create')))
         {{ HTML::script(asset('js/requisicioneshospitalarias.js')) }}
         {{ HTML::script(asset('js/toaster.js')) }}
@@ -311,7 +311,7 @@
     @endif
     
 
-@endsection
+{{--@endsection--}}
 
 {{-- DONT DELETE --}}
 @if (Route::currentRouteNamed(currentRouteName('create')))
