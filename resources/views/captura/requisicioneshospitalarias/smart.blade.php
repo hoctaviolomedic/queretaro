@@ -308,7 +308,7 @@
         {{--});--}}
         {{--});--}}
         {{--</script>--}}
-    @endif
+    {{--@endif--}}
     
 
 {{--@endsection--}}
@@ -329,6 +329,7 @@
     </script>
     {{ HTML::script(asset('js/requisicioneshospitalarias.js')) }}
     {{ HTML::script(asset('js/toaster.js')) }}
+
 @endif
 
 @if (Route::currentRouteNamed(currentRouteName('show')))
