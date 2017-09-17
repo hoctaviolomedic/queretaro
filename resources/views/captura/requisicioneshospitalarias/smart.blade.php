@@ -62,7 +62,7 @@
                     <div class="col-sm-2 col-xs-12">
                         <div class="form-group">
                         	{{ Form::label('cantidad', '*Cantidad:') }}
-                        	{{Form::number('cantidad',null,['id'=>'cantidad','class'=>'form-control','placeholder'=>'Ej. 6','min'=>'1'])}}
+                        	{{Form::number('cantidad',null,['id'=>'cantidad','class'=>'form-control','placeholder'=>'Ej. 6','min'=>'1','maxlength'=>'4'])}}
                         </div>
                     </div>
                     <div class="col-sm-12 col-xs-12 text-center">
