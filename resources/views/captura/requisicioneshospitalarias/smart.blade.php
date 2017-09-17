@@ -257,61 +257,61 @@
 @endsection
 
 
-{{--@section('header-bottom')--}}
+@section('header-bottom')
 	{{--@parent--}}
-    {{--@if (Route::currentRouteNamed(currentRouteName('create')))--}}
-        {{--{{ HTML::script(asset('js/requisicioneshospitalarias.js')) }}--}}
-        {{--{{ HTML::script(asset('js/toaster.js')) }}--}}
-    {{----}}
-        {{--<script type="text/javascript">--}}
-            {{--$(document).ready(function() {--}}
-            	{{--var filas = $('#detalle tr').length;--}}
-            	{{--$('#guardar').prop('disabled',(filas<=1));--}}
+    @if (Route::currentRouteNamed(currentRouteName('create')))
+        {{ HTML::script(asset('js/requisicioneshospitalarias.js')) }}
+        {{ HTML::script(asset('js/toaster.js')) }}
 
-            	{{----}}
-        {{--if( parseInt($('#id_estatus').val()) == 1 || parseInt($('#id_estatus').val()) == 2) {--}}
-        {{--$('#surtir').hide();--}}
-        {{--}--}}
+        <script type="text/javascript">
+            $(document).ready(function() {
+            	var filas = $('#detalle tr').length;
+            	$('#guardar').prop('disabled',(filas<=1));
 
 
-        {{--$('a[data-toggle="tooltip"]').tooltip({--}}
-        {{--animated: 'fade',--}}
-        {{--placement: 'bottom',--}}
-        {{--html: true--}}
-        {{--});--}}
-        {{--$(".js-example-basic-single").select2({--}}
-        {{--"language": { //para cambiar el idioma a español--}}
-        {{--"noResults": function(){--}}
-        {{--return "No se encontraron resultados";--}}
-        {{--}--}}
-        {{--},--}}
-        {{--escapeMarkup: function (markup) {--}}
-        {{--return markup;--}}
-        {{--}--}}
-        {{--});--}}
-        {{--$('[data-toggle="tooltip"]').tooltip();--}}
-        {{--$(".js-data-example-ajax1").select2({--}}
+				if( parseInt($('#id_estatus').val()) == 1 || parseInt($('#id_estatus').val()) == 2) {
+            		$('#surtir').hide();
+				}
 
-        {{--escapeMarkup: function (markup) { return markup; }, // let our custom formatter work--}}
-        {{--//minimumInputLength: 1,--}}
-        {{--language: {--}}
-        {{--"noResults": function(){--}}
-        {{--return "No se encontraron resultados";--}}
-        {{--}--}}
-        {{--},--}}
-        {{--escapeMarkup: function (markup) {--}}
-        {{--return markup;--}}
-        {{--}--}}
-        {{--});--}}
-        {{--$('#datetimepicker3').datetimepicker({--}}
-        {{--pickTime: false,--}}
-        {{--});--}}
-        {{--});--}}
-        {{--</script>--}}
-    {{--@endif--}}
+
+                $('a[data-toggle="tooltip"]').tooltip({
+                    animated: 'fade',
+                    placement: 'bottom',
+                    html: true
+                });
+                $(".js-example-basic-single").select2({
+                    "language": { //para cambiar el idioma a español
+                        "noResults": function(){
+                            return "No se encontraron resultados";
+                        }
+                    },
+                    escapeMarkup: function (markup) {
+                        return markup;
+                    }
+                });
+                $('[data-toggle="tooltip"]').tooltip();
+                $(".js-data-example-ajax1").select2({
+
+                    escapeMarkup: function (markup) { return markup; }, // let our custom formatter work
+                    //minimumInputLength: 1,
+                    language: {
+                        "noResults": function(){
+                            return "No se encontraron resultados";
+                        }
+                    },
+                    escapeMarkup: function (markup) {
+                        return markup;
+                    }
+                });
+                $('#datetimepicker3').datetimepicker({
+                    pickTime: false,
+                });
+            });
+        </script>
+    @endif
     
 
-{{--@endsection--}}
+@endsection
 
 {{-- DONT DELETE --}}
 @if (Route::currentRouteNamed(currentRouteName('create')))
@@ -327,8 +327,6 @@
     <script>
         var detalle_requisicion = {!!json_encode($detalle_requisicion)!!};
     </script>
-
-
 @endif
 
 @if (Route::currentRouteNamed(currentRouteName('show')))
@@ -341,5 +339,4 @@
     @include('layouts.smart.export')
 @endif
 
-{{ HTML::script(asset('js/requisicioneshospitalarias.js')) }}
-{{ HTML::script(asset('js/toaster.js')) }}
+
