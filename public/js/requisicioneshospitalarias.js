@@ -12,22 +12,8 @@ function agregarProducto() {
     {
         if(length_cantidad > length_max)
         {
-            $.toaster({
-                priority : 'danger',
-                css:{
-                    'top': '3em'
-                },
-                title : 'Error!',
-                message : '<br>Se esta excediendo en la cantidad maxima de producto permitida.',
-                settings:{
-                    'timeout':8000,
-                    'toaster':{
-                        'css':{
-                            'top':'3em'
-                        }
-                    }
-                }
-            });
+
+            mensajes_alert('Se esta excediendo en la cantidad maxima de producto permitida.');
 
         }
         else
@@ -35,22 +21,7 @@ function agregarProducto() {
             // alert($('#id_area').val()+'_'+$('#producto').val());
             if( $( '#'+$('#id_area').val()+'_'+$('#producto').val()).length )
             {
-                $.toaster({
-                    priority : 'danger',
-                    css:{
-                        'top': '3em'
-                    },
-                    title : 'Error!',
-                    message : '<br>Esa area ya tiene asiganada ese producto.',
-                    settings:{
-                        'timeout':8000,
-                        'toaster':{
-                            'css':{
-                                'top':'3em'
-                            }
-                        }
-                    }
-                });
+                mensajes_alert('Esa area ya tiene asiganada ese producto.');
             }
             else
             {
@@ -87,22 +58,7 @@ function agregarProducto() {
     }
     else
     {
-    	$.toaster({
-            priority : 'danger',
-            css:{
-                'top': '3em'
-            },
-            title : 'Error!',
-            message : '<br>Uno o varios de los campos de Area, producto o cantidad estan vacios.',
-            settings:{
-            	'timeout':8000,
-            	'toaster':{
-                    'css':{
-                        'top':'3em'
-                    }
-                }
-            }
-        });
+        mensajes_alert('Uno o varios de los campos de Area, producto o cantidad estan vacios.');
     }
     var filas = $('#detalle tr').length;
     $('#guardar').prop('disabled',(filas<=1));
@@ -168,26 +124,38 @@ $('input').change(function(event) {
 
     if( length_cantidad > length_max)
     {
-        $.toaster({
-            priority : 'danger',
-            css:{
-                'top': '3em'
-            },
-            title : 'Error!',
-            message : '<br>Se está excediendo en la cantidad de producto permitida a surtir.',
-            settings:{
-                'timeout':8000,
-                'toaster':{
-                    'css':{
-                        'top':'3em'
-                    }
-                }
-            }
-        });
+
+        mensajes_alert('Se está excediendo en la cantidad de producto permitida a surtir.');
         $('#'+event.target.id).val('0');
     }
 
 });
+
+
+function guardarRequisicion()
+{
+    var fecha_requerido = $('#fecha_requerido').val();
+    var id_solicitante = $('#id_solicitante option:selected').val();
+
+    if(id_solicitante != 0)
+    {
+        if(fecha_requerido != '')
+        {
+            return true;
+        }
+        else
+        {
+            mensajes_alert('Favor de ingresar una fecha.');
+            return false;
+        }
+    }
+    else
+    {
+        mensajes_alert('Favor de ingresar un solicitante.');
+        return false;
+    }
+
+}
 
 function surtirRequisicion()
 {
@@ -208,13 +176,28 @@ function surtirRequisicion()
     }
     else
     {
-        alert('Se esta excediendo la cantdad de producto solicitada.');
+        mensajes_alert('Se esta excediendo la cantdad de producto solicitada.');
         return false;
     }
 
 }
 
-// $('#cantidad').change(function() {
-//
-//
-// });
+function mensajes_alert(mensaje)
+{
+    $.toaster({
+        priority : 'danger',
+        css:{
+            'top': '3em'
+        },
+        title : 'Error!',
+        message : '<br>'+mensaje,
+        settings:{
+            'timeout':8000,
+            'toaster':{
+                'css':{
+                    'top':'3em'
+                }
+            }
+        }
+    });
+}

@@ -5,6 +5,14 @@
 
 @if (Route::currentRouteNamed(currentRouteName('create')))
 @section('form-title', 'Crear Requisiciones Hospitalaria')
+@section('form-actions')
+
+    <div class="text-right ">
+
+        <button type="submit" id="guardar_requisicion" onclick="return guardarRequisicion()" class="btn btn-danger"><span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Guardar</button>
+   <a class="btn btn-default" href="{{ companyRoute('index') }}"> Cerrar</a>
+    </div>
+@endsection
 
             <div class="panel-body">
 
@@ -34,7 +42,7 @@
                         <div class="form-group">
                             <label for="fecha_requerido">*Fecha:</label>
                             <div id="datetimepicker3" class="input-group">
-                                <input type="text" class="form-control" name="fecha_requerido" data-format="yyyy-MM-dd">
+                                <input type="text" class="form-control" name="fecha_requerido" id="fecha_requerido" data-format="yyyy-MM-dd">
                                 <span class="input-group-btn add-on">
                                 <button data-date-icon="icon-calendar" class="btn btn-check" type="button"><span class="glyphicon glyphicon-calendar"></span></button>
                               </span>
@@ -62,7 +70,7 @@
                     <div class="col-sm-2 col-xs-12">
                         <div class="form-group">
                         	{{ Form::label('cantidad', '*Cantidad:') }}
-                        	{{Form::number('cantidad',null,['id'=>'cantidad','class'=>'form-control','placeholder'=>'Ej. 6','min'=>'1','maxlength'=>'4'])}}
+                        	{{Form::number('cantidad',null,['id'=>'cantidad','class'=>'form-control','placeholder'=>'Ej. 6','maxlength'=>'4'])}}
                         </div>
                     </div>
                     <div class="col-sm-12 col-xs-12 text-center">
