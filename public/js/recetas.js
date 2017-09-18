@@ -5,23 +5,26 @@ $(document).ready(function () {
     $(':submit').attr('id','guardar');
     $(':submit').attr('type','button');
 
-    $('.altura').keyup(function(e) {
-        var valid = /^([0-9]{1})?(\.?[0-9]{1,2})$/g.test(this.value),
-            val = this.value;
+    $('.altura').keypress(function(e) {
+        var a = this.value;
+        var valid = /^([0-9]{0,1})?(\.)?([0-9]{0,2})$/gm.test(this.value + e.key);
         if(!valid){
-            this.value = val.substring(0, val.length - 1);
+            if(e.keyCode == 8 || e.keyCode == 127 || (e.keyCode > 36 && e.keyCode < 41)){
+                return true;
+            }
             return false;
         }
     }).on("cut copy paste", function(e) {
             e.preventDefault();
         });
-    $('.peso').keyup(function(e) {
-        var valid = /^([0-9]{1,3})?(\.?[0-9]{1,2})$/g.test(this.value),
-            val = this.value;
-        if(!valid){
-            this.value = val.substring(0, val.length - 1);
-            return false;
-        }
+    $('.peso').keypress(function(e) {
+            var valid = /^([0-9]{0,3})?(\.)?([0-9]{0,2})$/gm.test(this.value + e.key);
+            if(!valid){
+                if(e.keyCode == 8 || e.keyCode == 127 || (e.keyCode > 36 && e.keyCode < 41)){
+                    return true;
+                }
+                return false;
+            }
     }).on("cut copy paste", function(e) {
             e.preventDefault();
         });

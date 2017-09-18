@@ -77,7 +77,7 @@
             <div class="form-group">
                 <label for="peso">Peso:</label>
                 <div class="input-group">
-                    {{Form::number('peso',null,['id'=>'peso','min'=>1,'class' =>'form-control peso', 'placeholder' => 'Ej:70','aria-describedby'=>'peso-addon'])}}
+                    {{Form::text('peso',null,['id'=>'peso','class' =>'form-control peso', 'placeholder' => 'Ej:70','aria-describedby'=>'peso-addon'])}}
                     <span class="input-group-addon" id="peso-addon">Kg</span>
                 </div>
                 {{ $errors->has('peso') ? HTML::tag('span', $errors->first('peso'), ['class'=>'help-block text-danger']) : '' }}
@@ -87,7 +87,7 @@
             <div class="form-group">
                 <label for="altura">Altura:</label>
                 <div class="input-group">
-                    {{Form::number('altura',null,['id'=>'altura','min'=>1,'class' =>'form-control altura', 'placeholder' => 'Ej: 1.70','aria-describedby'=>'altura-addon'])}}
+                    {{Form::text('altura',null,['id'=>'altura','class' =>'form-control altura', 'placeholder' => 'Ej: 1.70','aria-describedby'=>'altura-addon'])}}
                     <span class="input-group-addon" id="altura-addon">Mts</span>
                 </div>
                 {{ $errors->has('altura') ? HTML::tag('span', $errors->first('altura'), ['class'=>'help-block text-danger']) : '' }}
