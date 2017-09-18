@@ -65,7 +65,8 @@
                     "fillAlphas": 0.8,
                     "lineAlpha": 0.2,
                     "type": "column",
-                    "valueField": "cantidad"
+                    "valueField": "cantidad",
+                    "labelText": "[[value]]",
                   } ],
                   "chartCursor": {
                     "categoryBalloonEnabled": false,
@@ -103,7 +104,8 @@
                     "fillAlphas": 0.8,
                     "lineAlpha": 0.2,
                     "type": "column",
-                    "valueField": "cantidad"
+                    "valueField": "cantidad",
+                    "labelText": "[[value]]",
                   } ],
                   "chartCursor": {
                     "categoryBalloonEnabled": false,
@@ -143,7 +145,8 @@
                     "fillAlphas": 0.8,
                     "lineAlpha": 0.2,
                     "type": "column",
-                    "valueField": "cantidad"
+                    "valueField": "cantidad",
+                    "labelText": "[[value]]",
                   } ],
                   "chartCursor": {
                     "categoryBalloonEnabled": false,
@@ -182,7 +185,8 @@
                     "fillAlphas": 0.8,
                     "lineAlpha": 0.2,
                     "type": "column",
-                    "valueField": "cantidad"
+                    "valueField": "cantidad",
+                    "labelText": "[[value]]",
                   } ],
                   "chartCursor": {
                     "categoryBalloonEnabled": false,

@@ -47,11 +47,11 @@
                     </div>
                     <div class="col-sm-1 col-xs-6">
                         <label>*Estatus:</label>
-                        @if($receta->detalles()->whereRaw('(recurrente > 0 OR cantidad_surtida < cantidad_pedida)')->get() == null)
+                        {{--@if($receta->detalles()->whereRaw('(recurrente > 0 OR cantidad_surtida < cantidad_pedida)')->get() == null)--}}
                             <br><label>{{$receta->estatus->estatus_receta}}</label>
-                        @else
-                            <br><label>Surtido</label>
-                        @endif
+                        {{--@else--}}
+                            {{--<br><label>Surtido</label>--}}
+                        {{--@endif--}}
                     </div>
                     <div class="col-sm-2 col-xs-6">
                         <div class="form-group">
@@ -93,7 +93,10 @@
                                     <td>{{empty($detalle->fecha_surtido)?'Nunca':$detalle->fecha_surtido}}</td>
                                     <td>{{empty($detalle->fecha_surtido)?DB::select("select date 'now()' + integer '" . $detalle->recurrente . "' as diferencia")[0]->diferencia:DB::select("select date '" . $detalle->fecha_surtido . "' + integer '" . $detalle->recurrente . "' as diferencia")[0]->diferencia}}</td>
                                     <td>{{$detalle->cantidad_pedida}}<input type="hidden" id="cantidad_pedida{{$detalle->id_receta_detalle}}" value="{{$detalle->cantidad_pedida}}"></td>
-                                    <td>{{$detalle->cantidad_surtida}}</td>
+                                    <td>
+                                        {{$detalle->cantidad_surtida}}
+                                        <input type="hidden" id="cantidad_surtida{{$detalle->id_receta_detalle}}" value="{{$detalle->cantidad_surtida}}">
+                                    </td>
                                     <td>
                                         @if($detalle->veces_surtir>$detalle->veces_surtidas)
                                             <input type="number" class="form-control number-only" min="1" placeholder="Ej: 6" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]">
@@ -101,7 +104,10 @@
                                             <label>Producto entregado en su totalidad</label>
                                         @endif
                                     </td>
-                                    <td>{{$detalle->veces_surtir}}</td>
+                                    <td>
+                                        {{$detalle->veces_surtir}}
+                                        <input type="hidden" id="veces_surtir{{$detalle->id_receta_detalle}}" value="{{$detalle->veces_surtir}}">
+                                    </td>
                                     <td>{{empty($detalle->veces_surtidas)?0:$detalle->veces_surtidas}}</td>
                                 </tr>
                             @endforeach

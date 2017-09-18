@@ -5,17 +5,31 @@ $(document).ready(function () {
     $(':submit').attr('id','guardar');
     $(':submit').attr('type','button');
 
-    $('.number-only').keypress(function(e) {
-        if (isNaN(this.value + "" + String.fromCharCode(e.charCode)) && e.charCode != 0){
-            return false
+    $('.altura').keypress(function(e) {
+        var a = this.value;
+        var valid = /^([0-9]{0,1})?(\.)?([0-9]{0,2})$/gm.test(this.value + e.key);
+        if(!valid){
+            if(e.keyCode == 8 || e.keyCode == 127 || (e.keyCode > 36 && e.keyCode < 41)){
+                return true;
+            }
+            return false;
         }
-    })
-        .on("cut copy paste", function(e) {
+    }).on("cut copy paste", function(e) {
+            e.preventDefault();
+        });
+    $('.peso').keypress(function(e) {
+            var valid = /^([0-9]{0,3})?(\.)?([0-9]{0,2})$/gm.test(this.value + e.key);
+            if(!valid){
+                if(e.keyCode == 8 || e.keyCode == 127 || (e.keyCode > 36 && e.keyCode < 41)){
+                    return true;
+                }
+                return false;
+            }
+    }).on("cut copy paste", function(e) {
             e.preventDefault();
         });
 
     $('.integer').keypress(function (e) {
-        var reg = new RegExp('^[0-9]+$');
         if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)){
             e.preventDefault();
             return false;
@@ -396,6 +410,8 @@ $(document).ready(function () {
             }
             if($('#id_diagnostico').select2('data').length == 0)
                 campos += '<br><br>Necesito que muestres el <b>diagnostico</b> del paciente';
+            if(($('#presion1').val()>1 && !($('#presion2').val()>1)) || ($('#presion2').val()>1 && !($('#presion1').val()>1)))
+                campos += '<br><br>Verifica los campos de <b>presión</b>';
             if(campos!=''){
                 e.preventDefault();
                 e.stopImmediatePropagation();
@@ -425,7 +441,17 @@ $(document).ready(function () {
             campos += '<br><br>Afiliacion/Dependiente: ¿Seleccionaste un paciente?';
         }
         if($('#id_diagnostico').select2('data').length == 0)
-            campos += '<br><br>Necesito que muestres el <b>diagnostico</b> del paciente';
+            campos += '<br><br>Necesito que muestres el <b>diagnóstico</b> del paciente';
+
+        var presion1 = 0;
+        if(!isNaN($('#presion1').val()) && $('#presion1').val() != '')
+            presion1 = parseInt($('#presion1').val());
+        var presion2 = 0;
+        if(!isNaN($('#presion2').val()) && $('#presion2').val() != '')
+            presion2 = parseInt($('#presion2').val());
+
+        if((presion1 > 0 && !(presion2 > 0)) || (presion2 > 0 && !(presion1 > 0)))
+            campos += '<br><br>Necesito que los capos de <b>presión</b> estén completos';
         if(campos!=''){
             $.toaster({
                 priority : 'danger',//'success' cuando es un mensaje de éxito
