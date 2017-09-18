@@ -72,7 +72,7 @@
                                 <th>Descripción</th>
                                 <th>Última vez surtido</th>
                                 <th>Próxima vez surtido</th>
-                                <th>Cantidad por surtir</th>
+                                <th>Cantidad por surtir cada visita</th>
                                 <th>Cantidad surtida</th>
                                 <th>Cantidad a surtir</th>
                                 <th>Veces por surtir</th>
@@ -82,7 +82,7 @@
                             <tbody>
 {{--                            {{ dump($receta->detalles()->whereRaw('(recurrente > 0 OR cantidad_surtida < cantidad_pedida)')->toSql()) }}--}}
                             {{--//Por cada receta que sea recurrente--}}
-                            @foreach($receta->detalles()->whereRaw('(recurrente > 0 OR cantidad_surtida < cantidad_pedida)')->get() as $detalle)
+                            @foreach($receta->detalles as $detalle)
                                 <tr id="{{$detalle->id_receta_detalle}}" title="{{$detalle->clave_cliente}}">
                                     <td>
                                         {{$detalle->clave_cliente}}

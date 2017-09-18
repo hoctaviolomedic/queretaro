@@ -16,6 +16,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Milon\Barcode\DNS2D;
+use Illuminate\Support\Facades\Redirect;
 use PDF;
 
 class RecetasController extends ControllerBase
@@ -398,9 +399,10 @@ class RecetasController extends ControllerBase
             }
         }
         $receta = Recetas::all()->find($id);
-        return view('captura.recetas.surtirReceta',[
-            'receta' => $receta,
-        ]);
+        return Redirect::back();
+//        return view('captura.recetas.surtir',[
+//            'receta' => $receta,
+//        ]);
     }
 
     public function imprimirReceta($company,$id){
