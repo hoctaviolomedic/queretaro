@@ -21,7 +21,7 @@ $(document).ready(function () {
             var id = this.id;
             cantidad = parseInt($('#cantidadsurtir'+id).val());
             cantidadsurtida = parseInt($('#cantidad_surtida'+id).val());
-            if($('#cantidad_pedida'+id).val()<cantidad || cantidad < 0 || cantidad == '' || cantidadsurtida+cantidad > $('#cantidad_pedida'+id).val() || isNaN(cantidad)){
+            if($('#cantidad_pedida'+id).val()<cantidad || cantidad < 0 || cantidadsurtida+cantidad > $('#cantidad_pedida'+id).val() || isNaN(cantidad)){
                 cantidad_alta += '<br>'+$('#descripcion'+id).val()+'<br>';
             }
             data.clave_cliente = this.title;

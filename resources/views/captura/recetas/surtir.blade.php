@@ -98,9 +98,10 @@
                                         <input type="hidden" id="cantidad_surtida{{$detalle->id_receta_detalle}}" value="{{$detalle->cantidad_surtida}}">
                                     </td>
                                     <td>
-                                        @if($detalle->veces_surtir>$detalle->veces_surtidas)
-                                            <input type="number" class="form-control number-only" min="1" placeholder="Ej: 6" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]">
+                                        @if($detalle->veces_surtir > $detalle->veces_surtidas)
+                                            <input type="number" class="form-control number-only" min="0" placeholder="Ej: 6" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]">
                                         @else
+                                            <input type="hidden" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]" value="0">
                                             <label>Producto entregado en su totalidad</label>
                                         @endif
                                     </td>
