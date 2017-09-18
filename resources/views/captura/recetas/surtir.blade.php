@@ -47,11 +47,11 @@
                     </div>
                     <div class="col-sm-1 col-xs-6">
                         <label>*Estatus:</label>
-                        @if($receta->detalles()->whereRaw('(recurrente > 0 OR cantidad_surtida < cantidad_pedida)')->get() == null)
+                        {{--@if($receta->detalles()->whereRaw('(recurrente > 0 OR cantidad_surtida < cantidad_pedida)')->get() == null)--}}
                             <br><label>{{$receta->estatus->estatus_receta}}</label>
-                        @else
-                            <br><label>Surtido</label>
-                        @endif
+                        {{--@else--}}
+                            {{--<br><label>Surtido</label>--}}
+                        {{--@endif--}}
                     </div>
                     <div class="col-sm-2 col-xs-6">
                         <div class="form-group">

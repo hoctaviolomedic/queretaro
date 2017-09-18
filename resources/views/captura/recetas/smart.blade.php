@@ -26,8 +26,14 @@
         <div class="col-sm-4">
             <div class="form-group">
                 {{Form::label('id_programa','*Programa')}}
-                @if(!Route::currentRouteNamed(currentRouteName('index')))
+                @if(!Route::currentRouteNamed(currentRouteName('index')) && !Route::currentRouteNamed(currentRouteName('show')))
                     {{Form::select('id_programa',isset($programas)?$programas:[],isset($data->id_programa)?$data->id_programa:null,['id'=>'id_programa','class' => 'programa form-control','style'=>'width:100%'])}}
+                @elseif(Route::currentRouteNamed(currentRouteName('show')))
+                    @if(isset($data->id_programa))
+                        {{Form::select('id_programa',isset($programas)?$programas:[],isset($data->id_programa)?$data->id_programa:null,['id'=>'id_programa','class' => 'programa form-control','style'=>'width:100%'])}}
+                    @else
+                        {{Form::text('id_programa','Sin programa',['id'=>'programa','class' =>'form-control peso'])}}
+                    @endif
                 @endif
             </div>
         </div>

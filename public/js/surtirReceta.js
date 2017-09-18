@@ -10,7 +10,6 @@ $(document).ready(function () {
 
     $('form').prop('action',    $('#container-fluid').data('url'));
     $('#surtir').on('click',function (e) {
-        e.preventDefault();
         $('#medicamento_modal').text('');
         var medicamento=[];
         var medicamento_agotado=[];
