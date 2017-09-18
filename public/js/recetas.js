@@ -5,15 +5,24 @@ $(document).ready(function () {
     $(':submit').attr('id','guardar');
     $(':submit').attr('type','button');
 
-    $('.number-only').keyup(function(e) {
+    $('.altura').keyup(function(e) {
+        var valid = /^([0-9]{1})?(\.?[0-9]{1,2})$/g.test(this.value),
+            val = this.value;
+        if(!valid){
+            this.value = val.substring(0, val.length - 1);
+            return false;
+        }
+    }).on("cut copy paste", function(e) {
+            e.preventDefault();
+        });
+    $('.peso').keyup(function(e) {
         var valid = /^([0-9]{1,3})?(\.?[0-9]{1,2})$/g.test(this.value),
             val = this.value;
         if(!valid){
             this.value = val.substring(0, val.length - 1);
             return false;
         }
-    })
-        .on("cut copy paste", function(e) {
+    }).on("cut copy paste", function(e) {
             e.preventDefault();
         });
 

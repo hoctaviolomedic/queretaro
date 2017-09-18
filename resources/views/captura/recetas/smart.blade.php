@@ -77,7 +77,7 @@
             <div class="form-group">
                 <label for="peso">Peso:</label>
                 <div class="input-group">
-                    {{Form::number('peso',null,['id'=>'peso','min'=>1,'class' =>'form-control number-only', 'placeholder' => 'Ej:70','aria-describedby'=>'peso-addon'])}}
+                    {{Form::number('peso',null,['id'=>'peso','min'=>1,'class' =>'form-control peso', 'placeholder' => 'Ej:70','aria-describedby'=>'peso-addon'])}}
                     <span class="input-group-addon" id="peso-addon">Kg</span>
                 </div>
                 {{ $errors->has('peso') ? HTML::tag('span', $errors->first('peso'), ['class'=>'help-block text-danger']) : '' }}
@@ -87,7 +87,7 @@
             <div class="form-group">
                 <label for="altura">Altura:</label>
                 <div class="input-group">
-                    {{Form::number('altura',null,['id'=>'altura','min'=>1,'class' =>'form-control number-only', 'placeholder' => 'Ej: 1.70','aria-describedby'=>'altura-addon'])}}
+                    {{Form::number('altura',null,['id'=>'altura','min'=>1,'class' =>'form-control altura', 'placeholder' => 'Ej: 1.70','aria-describedby'=>'altura-addon'])}}
                     <span class="input-group-addon" id="altura-addon">Mts</span>
                 </div>
                 {{ $errors->has('altura') ? HTML::tag('span', $errors->first('altura'), ['class'=>'help-block text-danger']) : '' }}
@@ -214,7 +214,7 @@
         <div class="row">
             <div class="col-sm-12 text-center">
 {{--                {{ Form::button('<span class="glyphicon glyphicon-flash"></span> Surtir', ['type' =>'button', 'class'=>'btn btn-danger','id'=>'surtir','enabled']) }}--}}
-                <a href="{{companyAction('surtirReceta',['id'=>$data->id_receta])}}" role="button" class="btn btn-danger gotUndisable"><span class="glyphicon glyphicon-gift"></span> Surtir receta</a>
+                <a href="{{companyAction('surtirReceta',['id'=>$data->id_receta])}}" role="button" class="btn btn-danger gotUndisable"><span class="glyphicon glyphicon-arrow-up"></span> Surtir receta</a>
                 <a href="{{companyAction('imprimirReceta',['id'=>$data->id_receta])}}" role="button" class="btn btn-default gotUndisable"><span class="glyphicon glyphicon-print"></span> Imprimir receta</a>
             </div>
         </div><!--/row-->
