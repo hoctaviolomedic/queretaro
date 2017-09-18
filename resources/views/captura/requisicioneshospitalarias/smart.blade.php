@@ -259,7 +259,7 @@
 
 
 @section('header-bottom')
-	{{--@parent--}}
+	@parent
     @if (Route::currentRouteNamed(currentRouteName('create')))
         {{ HTML::script(asset('js/requisicioneshospitalarias.js')) }}
         {{ HTML::script(asset('js/toaster.js')) }}
@@ -319,7 +319,7 @@
         @include('layouts.smart.create')
 @endif
 @if (Route::currentRouteNamed(currentRouteName('index')))
-    {{--@section('title', 'Requisiciones Hospitalarias')--}}
+    @section('title', 'Requisiciones Hospitalarias')
     @include('layouts.smart.index')
 @endif
 
