@@ -51,10 +51,12 @@ function agregarProducto() {
             );
 
             $cont_producto++;
-
-            $('#id_area option[value="0"]');
-            $('#producto option[value="0"]');
-            $('#cantidad option[value="0"]');
+            $('#id_area').val('0').trigger('change');
+            $('#producto').val('0').trigger('change');
+            $('#cantidad').val('0').trigger('change');
+            // $('#id_area option[value="0"]');
+            // $('#producto option[value="0"]');
+            // $('#cantidad option[value="0"]');
 
         }
     }
