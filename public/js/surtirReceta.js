@@ -2,7 +2,7 @@ $(document).ready(function () {
     $(':submit').attr('id','surtir');
 
     $('.number-only').keypress(function(e) {
-        if (isNaN(this.value + "" + String.fromCharCode(e.charCode))) return false;
+        if (isNaN(this.value + "" + String.fromCharCode(e.charCode)) && e.charCode != 0) return false;
     })
         .on("cut copy paste", function(e) {
             e.preventDefault();
@@ -15,15 +15,17 @@ $(document).ready(function () {
         var medicamento_agotado=[];
         var cantidad_alta = '';
         var cantidad = 0;
+        var cantidadsurtida = 0;
         $('#detalle tbody tr').each(function (index) {
             var data = {};
             var id = this.id;
-            cantidad = $('#cantidadsurtir'+id).val();
-            if($('#cantidad_pedida'+id).val()<$('#cantidadsurtir'+id).val() || !(cantidad>0)){
+            cantidad = parseInt($('#cantidadsurtir'+id).val());
+            cantidadsurtida = parseInt($('#cantidad_surtida'+id).val());
+            if($('#cantidad_pedida'+id).val()<cantidad || cantidad < 0 || cantidad == '' || cantidadsurtida+cantidad > $('#cantidad_pedida'+id).val()){
                 cantidad_alta += '<br>'+$('#descripcion'+id).val();
             }
             data.clave_cliente = this.title;
-            data.cantidadsurtir = $('#cantidadsurtir'+id).val();
+            data.cantidadsurtir = cantidad;
             data.localidad = $('#id_localidad').val();
             medicamento.push(data);
             $.ajax({
@@ -86,3 +88,7 @@ $(document).ready(function () {
         }
     });
 });
+
+function escaparID(myid){
+    return "#" + myid.replace( /(:|\.|\[|\]|,|=|@)/g, "\\$1" );
+}

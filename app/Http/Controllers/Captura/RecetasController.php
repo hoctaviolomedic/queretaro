@@ -329,26 +329,39 @@ class RecetasController extends ControllerBase
             $detalle = Recetas::all()->find($id)->detalles()->find($detalle_actual['id_receta_detalle']);
             $now = DB::select("select now()")[0]->now;
             if(empty($detalle->fecha_surtido)) {//Si es la primer vez que se surte
-                $cantidad_nueva = $detalle->cantidad_pedida + $detalle->cantidad_surtida;
-                $veces_surtidas = $detalle->veces_surtidas + 1;
+                $cantidad_nueva = $detalle->cantidad_surtida + $detalle_actual['cantidadsurtir'];
+                $veces_surtidas = $detalle->veces_surtidas;
+                if($detalle->cantidad_pedida == $detalle_actual['cantidadsurtir'] || ($detalle->cantidad_pedida*$detalle->veces_surtir)%$detalle_actual['cantidadsurtir'] == 0){
+                    $veces_surtidas = $detalle->veces_surtidas + 1;
+                }
                 $detalle->update(['cantidad_surtida' => $cantidad_nueva,
                     'fecha_surtido'=>DB::select("select now()::TIMESTAMP(0) as fecha")[0]->fecha,
                     'veces_surtidas' => $veces_surtidas]);
-            }elseif(!empty($detalle->fecha_surtido) && $detalle->recurrente>0 && $detalle->veces_surtidas < $detalle->veces_surtir){//Si no se ha llegado al límite
+            }elseif(!empty($detalle->fecha_surtido) && $detalle->recurrente>0 && $detalle->veces_surtidas < $detalle->veces_surtir){//Si no se ha llegado al límite y es recurrente
                 $fecha_surtido = $detalle->fecha_surtido;
                 if (DB::select("select date '" . $now . "' - date '" . $fecha_surtido . "' as diferencia")[0]->diferencia >= $detalle->recurrente) {
-                    $cantidad_nueva = $detalle->cantidad_pedida + $detalle->cantidad_surtida;
-                    $veces_surtidas = $detalle->veces_surtidas + 1;
-                    dd($veces_surtidas);
+                    $cantidad_nueva = $detalle->cantidad_surtida + $detalle_actual['cantidadsurtir'];
+                    $veces_surtidas = $detalle->veces_surtidas;
+                    if($detalle->cantidad_pedida == $detalle_actual['cantidadsurtir'] || ($detalle->cantidad_pedida*$detalle->veces_surtir)%$detalle_actual['cantidadsurtir'] == 0){
+                        $veces_surtidas = $detalle->veces_surtidas + 1;
+                    }
                     $detalle->update(['cantidad_surtida' => $cantidad_nueva,
                         'fecha_surtido'=>DB::select("select now()::TIMESTAMP(0) as fecha")[0]->fecha,
                         'veces_surtidas'=>$veces_surtidas]);
                 }else{
-
                     $flag=false;
                 }
+            }elseif(!empty($detalle->fecha_surtido) && $detalle->recurrente == 0 && $detalle->cantidad_surtida < $detalle->cantidad_pedida){
+                $cantidad_nueva = $detalle->cantidad_surtida + $detalle_actual['cantidadsurtir'];
+                $veces_surtidas = $detalle->veces_surtidas;
+                if($detalle->cantidad_pedida == $detalle_actual['cantidadsurtir'] || ($detalle->cantidad_pedida*$detalle->veces_surtir)%$detalle_actual['cantidadsurtir'] == 0){
+                    $veces_surtidas = $detalle->veces_surtidas + 1;
+                }
+                $detalle->update(['cantidad_surtida' => $cantidad_nueva,
+                    'fecha_surtido'=>DB::select("select now()::TIMESTAMP(0) as fecha")[0]->fecha,
+                    'veces_surtidas'=>$veces_surtidas]);
             }else{
-                $flag=false;
+                $flag = false;
             }
             if($flag){
                 $disponibles = DB::select("SELECT ie.codigo_barras,ie.quedan,ie.apartadas,ie.no_lote
@@ -383,7 +396,7 @@ class RecetasController extends ControllerBase
             }
         }
         $receta = Recetas::all()->find($id);
-        return view('captura.recetas.surtir',[
+        return view('captura.recetas.surtirReceta',[
             'receta' => $receta,
         ]);
     }
