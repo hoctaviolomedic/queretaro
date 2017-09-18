@@ -234,14 +234,14 @@ class RequisicionesHospitalariasController extends ControllerBase
 //        }
     }
 
-    public function destroy(Request $request, $company, $idOrIds)
-    {
-        # ¿Usuario tiene permiso para eliminar?
-
-        dd($idOrIds);
-
-
-    }
+//    public function destroy(Request $request, $company, $idOrIds)
+//    {
+//        # ¿Usuario tiene permiso para eliminar?
+//
+//        dd($idOrIds);
+//
+//
+//    }
 
 
     public function getAreas()
