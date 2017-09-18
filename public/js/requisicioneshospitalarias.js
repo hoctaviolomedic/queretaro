@@ -47,7 +47,9 @@ function agregarProducto() {
                 '</tr>' +
                 '<input type="hidden" value="'+id_area+'" name="producto_requisicion['+$cont_producto+'][id_area]">' +
                 '<input type="hidden" value="'+producto_clave+'" name="producto_requisicion['+$cont_producto+'][producto_clave]">' +
-                '<input type="hidden" value="'+cantidad+'" name="producto_requisicion['+$cont_producto+'][cantidad]">'
+                '<input type="hidden" value="'+cantidad+'" name="producto_requisicion['+$cont_producto+'][cantidad]">' +
+                '<input type="hidden" id="'+id_area+'_'+producto_clave+'" >'
+
             );
 
             $cont_producto++;
