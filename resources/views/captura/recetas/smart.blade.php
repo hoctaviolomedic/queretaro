@@ -179,7 +179,7 @@
                             <input type="checkbox" name="surtido_recurrente" id="surtido_recurrente" autocomplete="off" class="btn btn-default checkbox_surtido">Recurrente
                         </label>
                     </div>
-                    {{Form::number('surtido_numero',null,['id'=>'surtido_numero','min'=>1,'placeholder'=>'Ej: 6','class'=>'number-only form-control','disabled'])}}
+                    {{Form::number('surtido_numero',null,['id'=>'surtido_numero','min'=>1,'placeholder'=>'Ej: 6','class'=>'integer form-control','disabled'])}}
                     {{Form::select('surtido_tiempo',['24'=>'Día(s)','168'=>'Semana(s)','720'=>'Mes(es)'],null,['id'=>'surtido_tiempo','class'=>'form-control','disabled'])}}
                 </div>
             </div>
