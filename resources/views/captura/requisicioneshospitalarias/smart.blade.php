@@ -89,6 +89,7 @@
 
 @endif
 
+
 @if (Route::currentRouteNamed(currentRouteName('show')))
 @section('form-actions')
     <div class="text-right ">
@@ -318,7 +319,7 @@
         @include('layouts.smart.create')
 @endif
 @if (Route::currentRouteNamed(currentRouteName('index')))
-    @section('title', 'Requisiciones Hospitalarias')
+    {{--@section('title', 'Requisiciones Hospitalarias')--}}
     @include('layouts.smart.index')
 @endif
 
