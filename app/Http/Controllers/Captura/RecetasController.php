@@ -106,9 +106,10 @@ class RecetasController extends ControllerBase
                 GROUP BY cp.clave_cliente,cp.descripcion,cf.descripcion,cp.cantidad_presentacion,tp.id_cuadro_tipo_medicamento,C.id_cuadro,lp.tope_receta,ie.codigo_barras,ie.caducidad,ie.quedan,ie.apartadas,ie.no_lote
                 ORDER BY ie.caducidad ASC;");
 
-                if ($disponibles[0]->quedan > 0) {
+                if ($disponibles[0]->quedan > $detalle['cantidad_pedida']) {
                     $index = 0;
                     while (true) {
+
                         $quedan = $disponibles[$index]->quedan;
                         $apartadas = $disponibles[$index]->apartadas;
                         $disponible = $quedan - ($apartadas + $detalle['cantidad_pedida']);

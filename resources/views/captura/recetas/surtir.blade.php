@@ -91,7 +91,7 @@
                                     </td>
                                     <td>{{$detalle->producto->descripcion}}<input type="hidden" id="descripcion{{$detalle->id_receta_detalle}}" value="{{$detalle->producto->descripcion}}"></td>
                                     <td>{{empty($detalle->fecha_surtido)?'Nunca':$detalle->fecha_surtido}}</td>
-                                    <td>{{empty($detalle->fecha_surtido)?DB::select("select date 'now()' + integer '" . $detalle->recurrente . "' as diferencia")[0]->diferencia:DB::select("select date '" . $detalle->fecha_surtido . "' + integer '" . $detalle->recurrente . "' as diferencia")[0]->diferencia}}</td>
+                                    <td>{{empty($detalle->fecha_surtido)?'Disponible hoy':DB::select("select date '" . $detalle->fecha_surtido . "' + integer '" . $detalle->recurrente . "' as diferencia")[0]->diferencia}}</td>
                                     <td>{{$detalle->cantidad_pedida}}<input type="hidden" id="cantidad_pedida{{$detalle->id_receta_detalle}}" value="{{$detalle->cantidad_pedida}}"></td>
                                     <td>
                                         {{$detalle->cantidad_surtida}}
