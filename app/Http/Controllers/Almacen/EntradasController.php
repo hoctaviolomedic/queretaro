@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Almacen;
 
 use App\Http\Controllers\Controller;
 use App\Http\Models\Captura\Localidades;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use PDF;
 
 class EntradasController extends Controller
 {
@@ -165,7 +167,11 @@ class EntradasController extends Controller
 
 				}
 
-				$response['data'] = "/almacen/entradas/pedido/pdf_entrada_pedido.php?localidad={$localidad}&folio={$folio}&pedido={$pedido}";
+				$response['data'] = companyAction('pdf', [
+					'localidad' => $localidad,
+					'folio' => $folio,
+					'pedido' => $pedido
+				]);
 				$response['success'] = 1;
 
 				return response()->json()->setJson(json_encode($response));
@@ -175,9 +181,79 @@ class EntradasController extends Controller
 			default:
 				break;
 		}
-
-
-
 	}
+
+	public function pdf() {
+
+		extract( request()->only('localidad', 'folio', 'pedido') );
+
+		$query_localidad = DB::select("SELECT l.localidad, e.no_documento, e.fecha_captura, p.id_localidad_proveedor, e.id_usuario_captura
+			FROM inv_entrada AS e INNER JOIN inv_pedido AS p ON p.id_pedido = e.id_pedido INNER JOIN cat_localidad AS l ON l.id_localidad = p.id_localidad
+			WHERE e.id_localidad = {$localidad} AND e.folio_entrada = '{$folio}' AND e.id_pedido = '{$pedido}' LIMIT 1");
+
+		# Si resultado
+		if ($query_localidad) {
+
+			// dump( $query_localidad );
+
+			$query_user = DB::select("SELECT (nombre||' '||paterno||' '||materno) AS name FROM adm_usuario WHERE id_usuario = :id_usuario ", [
+				'id_usuario' => $query_localidad[0]->id_usuario_captura
+			]);
+			// dump( $query_user );
+
+			$query_prov = DB::select("SELECT localidad FROM cat_localidad WHERE id_localidad = :id_localidad", [
+				'id_localidad' => $query_localidad[0]->id_localidad_proveedor
+			]);
+			// dump( $query_prov );
+
+			$query =  DB::select("SELECT cb.codigo_barras, p.descripcion, p.presentacion, m.cantidad, ie.no_lote, ie.id_ubicacion, ie.id_almacen, m.id_movimiento, ie.caducidad, m.observaciones
+			FROM inv_entrada m, inv_existencia ie, cat_producto_codigo_barras cb, catalogo_producto p
+			WHERE folio_entrada = :folio AND m.id_pedido = :pedido AND m.codigo_barras = ie.codigo_barras AND m.no_lote = ie.no_lote
+			AND m.id_ubicacion = ie.id_ubicacion AND ie.codigo_barras = cb.codigo_barras AND cb.clave = p.clave AND ie.id_localidad = :id_localidad", [
+				'folio' => $folio,
+				'pedido' => $pedido,
+				'id_localidad' => $localidad
+			]);
+
+			foreach ($query as $key => $item) {
+
+				// dump( $item );
+
+				$query_ubicacion = DB::select("SELECT u.nomenclatura AS label FROM inv_ubicacion u WHERE u.id_ubicacion= :id_ubicacion", [
+					'id_ubicacion' => $item->id_ubicacion
+				]);
+				if ($query_ubicacion) $query[$key]->ubicacion = $query_ubicacion[0]->label;
+
+				$query_almacen = DB::select("SELECT a.almacen AS label FROM inv_almacen a WHERE a.id_almacen = :id_almacen", [
+					'id_almacen' => $item->id_almacen
+				]);
+				if ($query_almacen) $query[$key]->almacen = $query_almacen[0]->label;
+
+			}
+
+			// dump( $query );
+
+			// return view(currentRouteName(), [
+			// 	'pdf_folio' => $folio,
+			// 	'pdf_localidad' => $query_localidad[0],
+			// 	'pdf_usuario' => $query_user[0]->name,
+			// 	'pdf_proveedor' => $query_prov[0]->localidad,
+			// 	'pdf_detalles' => $query
+			// ]);
+
+			$pdf = PDF::loadView(currentRouteName(),[
+				'pdf_folio' => $folio,
+				'pdf_localidad' => $query_localidad[0],
+				'pdf_usuario' => $query_user[0]->name,
+				'pdf_proveedor' => $query_prov[0]->localidad,
+				'pdf_detalles' => $query
+			]);
+			$pdf->setPaper('letter','landscape');
+			return $pdf->stream('entradas-pedidos-' . $pedido)->header('Content-Type', 'application/pdf');
+		}
+	}
+
+
+
 
 }

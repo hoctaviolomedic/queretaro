@@ -26,6 +26,8 @@
 
 		$('#resurtido').multiselect({
 			includeSelectAllOption: true,
+			nonSelectedText: 'Selecciona No. Surtido',
+			selectAllText: 'Seleccionar todo',
 			onSelectAll: function(e) {
 				this.options.onChange();
 			},
@@ -39,10 +41,6 @@
 				app.$data.getItemsPedido()
 			}
 		});
-	});
-
-	Moon.config.keyCodes({
-		m: 77
 	});
 
 	const app = new Moon({
@@ -390,9 +388,7 @@
 							<td>@{{item.cantidad}}</td>
 							<td>@{{item.cantidad - item.cantidad_entrada}}</td>
 							<td>
-								<div class="input-group">
-									<input type="number" class="form-control" placeholder="Ej: 6" min="0" max="@{{item.cantidad - item.cantidad_entrada}}" value="0" m-model="clone[key].cantidad_entrada" m-on:change="checkCantidades" data-itempos="@{{key}}" data-dummyoninput="someFunc">
-								</div>
+								<input type="number" class="form-control" placeholder="Ej: 6" min="0" max="@{{item.cantidad - item.cantidad_entrada}}" value="0" m-model="clone[key].cantidad_entrada" m-on:change="checkCantidades" data-itempos="@{{key}}" data-dummyoninput="someFunc">
 							</td>
 							<td>@{{item.no_lote}}</td>
 							<td>@{{item.caducidad}}</td>

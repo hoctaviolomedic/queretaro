@@ -72,7 +72,7 @@
                                 <th>Descripción</th>
                                 <th>Última vez surtido</th>
                                 <th>Próxima vez surtido</th>
-                                <th>Cantidad por surtir</th>
+                                <th>Cantidad por surtir cada visita</th>
                                 <th>Cantidad surtida</th>
                                 <th>Cantidad a surtir</th>
                                 <th>Veces por surtir</th>
@@ -82,7 +82,7 @@
                             <tbody>
 {{--                            {{ dump($receta->detalles()->whereRaw('(recurrente > 0 OR cantidad_surtida < cantidad_pedida)')->toSql()) }}--}}
                             {{--//Por cada receta que sea recurrente--}}
-                            @foreach($receta->detalles()->whereRaw('(recurrente > 0 OR cantidad_surtida < cantidad_pedida)')->get() as $detalle)
+                            @foreach($receta->detalles as $detalle)
                                 <tr id="{{$detalle->id_receta_detalle}}" title="{{$detalle->clave_cliente}}">
                                     <td>
                                         {{$detalle->clave_cliente}}
@@ -91,16 +91,17 @@
                                     </td>
                                     <td>{{$detalle->producto->descripcion}}<input type="hidden" id="descripcion{{$detalle->id_receta_detalle}}" value="{{$detalle->producto->descripcion}}"></td>
                                     <td>{{empty($detalle->fecha_surtido)?'Nunca':$detalle->fecha_surtido}}</td>
-                                    <td>{{empty($detalle->fecha_surtido)?DB::select("select date 'now()' + integer '" . $detalle->recurrente . "' as diferencia")[0]->diferencia:DB::select("select date '" . $detalle->fecha_surtido . "' + integer '" . $detalle->recurrente . "' as diferencia")[0]->diferencia}}</td>
+                                    <td>{{empty($detalle->fecha_surtido)?'Disponible hoy':DB::select("select date '" . $detalle->fecha_surtido . "' + integer '" . $detalle->recurrente . "' as diferencia")[0]->diferencia}}</td>
                                     <td>{{$detalle->cantidad_pedida}}<input type="hidden" id="cantidad_pedida{{$detalle->id_receta_detalle}}" value="{{$detalle->cantidad_pedida}}"></td>
                                     <td>
                                         {{$detalle->cantidad_surtida}}
                                         <input type="hidden" id="cantidad_surtida{{$detalle->id_receta_detalle}}" value="{{$detalle->cantidad_surtida}}">
                                     </td>
                                     <td>
-                                        @if($detalle->veces_surtir>$detalle->veces_surtidas)
-                                            <input type="number" class="form-control number-only" min="1" placeholder="Ej: 6" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]">
+                                        @if($detalle->veces_surtir > $detalle->veces_surtidas)
+                                            <input type="number" class="form-control number-only" min="0" placeholder="Ej: 6" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]">
                                         @else
+                                            <input type="hidden" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]" value="0">
                                             <label>Producto entregado en su totalidad</label>
                                         @endif
                                     </td>
