@@ -59,9 +59,9 @@ function agregarProducto() {
             // $('#cantidad option[value="0"]');
 
 
-            for( var i = 0 ; i<producto_requerimiento.length ; i++)
+            for( var i = 0 ; i<producto_requisicion.length ; i++)
             {
-                alert(producto_requerimiento[i].id_area)
+                alert(producto_requisicion[i].id_area)
             }
 
         }
