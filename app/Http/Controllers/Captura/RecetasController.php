@@ -357,7 +357,7 @@ class RecetasController extends ControllerBase
                 }elseif(!empty($detalle->fecha_surtido) && $detalle->recurrente == 0 && $detalle->cantidad_surtida < $detalle->cantidad_pedida){
                     $cantidad_nueva = $detalle->cantidad_surtida + $detalle_actual['cantidadsurtir'];
                     $veces_surtidas = $detalle->veces_surtidas;
-                    if($detalle->cantidad_pedida == $detalle_actual['cantidadsurtir'] || ($detalle->cantidad_pedida*$detalle->veces_surtir)%$detalle_actual['cantidadsurtir'] == 0){
+                    if($detalle->cantidad_pedida == $detalle_actual['cantidadsurtir'] || ($detalle->cantidad_pedida*$detalle->veces_surtir)/$cantidad_nueva == 1){
                         $veces_surtidas = $detalle->veces_surtidas + 1;
                     }
                     $detalle->update(['cantidad_surtida' => $cantidad_nueva,
@@ -380,6 +380,7 @@ class RecetasController extends ControllerBase
                 GROUP BY cp.clave_cliente,cp.descripcion,cf.descripcion,cp.cantidad_presentacion,tp.id_cuadro_tipo_medicamento,c.id_cuadro,lp.tope_receta,ie.codigo_barras,ie.caducidad,ie.quedan,ie.apartadas,ie.no_lote
                 ORDER BY ie.caducidad ASC;");
                 if ($disponibles[0]->quedan > 0) {
+                    dd('Hola');
                     $index = 0;
                     while (true) {
                         $quedan = $disponibles[$index]->quedan;
@@ -399,7 +400,6 @@ class RecetasController extends ControllerBase
                 }
             }
         }
-        $receta = Recetas::all()->find($id);
         return Redirect::back();
 //        return view('captura.recetas.surtir',[
 //            'receta' => $receta,
