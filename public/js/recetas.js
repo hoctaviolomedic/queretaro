@@ -6,7 +6,6 @@ $(document).ready(function () {
     $(':submit').attr('type','button');
 
     $('.altura').keypress(function(e) {
-        var a = this.value;
         var valid = /^([0-9]{0,1})?(\.)?([0-9]{0,2})$/gm.test(this.value + e.key);
         if(!valid){
             if(e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 127 || (e.keyCode > 36 && e.keyCode < 41)){
@@ -31,6 +30,9 @@ $(document).ready(function () {
 
     $('.integer').keypress(function (e) {
         if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)){
+            e.preventDefault();
+            return false;
+        }else if(this.value.length>2 && e.which != 8 && e.which != 0){
             e.preventDefault();
             return false;
         }
