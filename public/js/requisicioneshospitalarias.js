@@ -3,6 +3,7 @@
  */
 $cont_producto = 0;
 function agregarProducto() {
+
     var length_max = $('#cantidad').attr('maxlength');
     var length_cantidad = $('#cantidad').val().length;
 
@@ -31,40 +32,56 @@ function agregarProducto() {
         }
         else
         {
-            var id_area =  $('#id_area').val();
-            var area_nombre =  $('#id_area option:selected').text();
-            var producto_clave = $('#producto').val();
-            var producto_nombre = $('#producto option:selected').text();
-            var cantidad = $('#cantidad').val();
-            var id_renglon = $cont_producto+'_'+producto_clave;
-            // var company_id = $('#company_email option:selected').val();
 
-            $('#lista_productos').append('<tr id="' + id_renglon + '"> ' +
-                '<td>' + area_nombre + '</td>' +
-                '<td>' + producto_nombre + '</td>' +
-                '<td>'+ cantidad +'</td> ' +
-                '<td>' + '<a href="#" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"  onclick="eliminarFila(\'' + id_renglon + '\')"></span> </a></td>  ' +
-                '</tr>' +
-                '<input type="hidden" value="'+id_area+'" name="producto_requisicion['+$cont_producto+'][id_area]">' +
-                '<input type="hidden" value="'+producto_clave+'" name="producto_requisicion['+$cont_producto+'][producto_clave]">' +
-                '<input type="hidden" value="'+cantidad+'" name="producto_requisicion['+$cont_producto+'][cantidad]">' +
-                '<input type="hidden" id="'+id_area+'_'+producto_clave+'" >'
-
-            );
-
-            $cont_producto++;
-            $('#id_area').val('0').trigger('change');
-            $('#producto').val('0').trigger('change');
-            $('#cantidad').val('0').trigger('change');
-            // $('#id_area option[value="0"]');
-            // $('#producto option[value="0"]');
-            // $('#cantidad option[value="0"]');
-
-
-            for( var i = 0 ; i<producto_requisicion.length ; i++)
+            if( $( $('#id_area').val()+'_'+$('#producto').val() ).length > 0 )
             {
-                alert(producto_requisicion[i].id_area)
+                $.toaster({
+                    priority : 'danger',
+                    css:{
+                        'top': '3em'
+                    },
+                    title : 'Error!',
+                    message : '<br>Esa area ya tiene asiganada ese producto.',
+                    settings:{
+                        'timeout':8000,
+                        'toaster':{
+                            'css':{
+                                'top':'3em'
+                            }
+                        }
+                    }
+                });
             }
+            else
+            {
+                var id_area =  $('#id_area').val();
+                var area_nombre =  $('#id_area option:selected').text();
+                var producto_clave = $('#producto').val();
+                var producto_nombre = $('#producto option:selected').text();
+                var cantidad = $('#cantidad').val();
+                var id_renglon = $cont_producto+'_'+producto_clave;
+                // var company_id = $('#company_email option:selected').val();
+
+                $('#lista_productos').append('<tr id="' + id_renglon + '"> ' +
+                    '<td>' + area_nombre + '</td>' +
+                    '<td>' + producto_nombre + '</td>' +
+                    '<td>'+ cantidad +'</td> ' +
+                    '<td>' + '<a href="#" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"  onclick="eliminarFila(\'' + id_renglon + '\')"></span> </a></td>  ' +
+                    '</tr>' +
+                    '<input type="hidden" value="'+id_area+'" name="producto_requisicion['+$cont_producto+'][id_area]">' +
+                    '<input type="hidden" value="'+producto_clave+'" name="producto_requisicion['+$cont_producto+'][producto_clave]">' +
+                    '<input type="hidden" value="'+cantidad+'" name="producto_requisicion['+$cont_producto+'][cantidad]">' +
+                    '<input type="hidden" id="'+id_area+'_'+producto_clave+'" >'
+
+                );
+
+                $cont_producto++;
+
+                $('#id_area').val('0').trigger('change');
+                $('#producto').val('0').trigger('change');
+                $('#cantidad').val('0').trigger('change');
+            }
+
 
         }
     }
