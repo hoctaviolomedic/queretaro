@@ -32,14 +32,14 @@
                     </div>
                     <div class="col-sm-2 col-xs-6">
                         <div class="form-group">
-                            <label for="fecha">*Fecha:</label>
+                            <label for="fecha_requerido">*Fecha:</label>
                             <div id="datetimepicker3" class="input-group">
                                 <input type="text" class="form-control" name="fecha_requerido" data-format="yyyy-MM-dd">
                                 <span class="input-group-btn add-on">
                                 <button data-date-icon="icon-calendar" class="btn btn-check" type="button"><span class="glyphicon glyphicon-calendar"></span></button>
                               </span>
                             </div><!-- /input-group -->
-                            {{ $errors->has('fecha') ? HTML::tag('span', $errors->first('fecha'), ['class'=>'text-danger']) : '' }}
+                            {{ $errors->has('fecha_requerido') ? HTML::tag('span', $errors->first('fecha_requerido'), ['class'=>'text-danger']) : '' }}
                         </div>
                     </div>
                 </div><!--/row-->
@@ -93,7 +93,7 @@
 @if (Route::currentRouteNamed(currentRouteName('show')))
 @section('form-actions')
     <div class="text-right ">
-    	@if(in_array($data->id_estatus,[1,2])) 
+    	@if(in_array($data->id_estatus,[1,2]))
         <a id="surtir" class="btn btn-danger" href="{{ companyRoute('edit') }}"><span class="glyphicon glyphicon-gift"></span> Surtir</a>
         @endif
         <a class="btn btn-default" href="{{ companyRoute('index') }}"> Cerrar</a>
@@ -102,6 +102,10 @@
 
     <div class="panel-body">
 
+        <div class="row">
+            {{ Form::label('id_requisicion','Numero de quisicion:'.$data->id_requisicion) }}
+        </div>
+        <div class="divider"></div>
         <div class="row">
             <div class="col-sm-4">
                 <div class="form-group">
@@ -145,6 +149,7 @@
                     <tr>
                         <th>Área</th>
                         <th>Producto</th>
+                        <th>Cantidad surtida</th>
                         <th>cantidad</th>
                     </tr>
                     </thead>
@@ -153,6 +158,7 @@
                             <tr>
                                 <td>{{$detalle->area}}</td>
                                 <td>{{$detalle->descripcion}}</td>
+                                <td>{{$detalle->cantidad_surtida}}</td>
                                 <td>{{$detalle->cantidad_pedida}}</td>
                             </tr>
                         @endforeach
@@ -238,7 +244,7 @@
                             <td>
                                 <div class="input-group">
                                     @if( $detalle->cantidad_surtida < $detalle->cantidad_pedida )
-                                        <input type="number" class="form-control" id="renglon_{{$index}}" name="datos_requisicion[{{$index}}][cantidad]" placeholder="Ej: 6">
+                                        <input type="number" class="form-control" id="renglon_{{$index}}" name="datos_requisicion[{{$index}}][cantidad]" placeholder="Ej: 6" maxlength="4">
                                         <input type="hidden" name="datos_requisicion[{{$index}}][id]" value="{{$detalle->id_requisicion_detalle}}">
                                         <input type="hidden" name="datos_requisicion[{{$index}}][cantidad_surtida]" value="{{$detalle->cantidad_surtida}}">
                                     @else
@@ -259,8 +265,8 @@
 
 
 @section('header-bottom')
-	{{--@parent--}}
-    @if (Route::currentRouteNamed(currentRouteName('create')))
+	@parent
+    @if (Route::currentRouteNamed(currentRouteName('create'))||Route::currentRouteNamed(currentRouteName('edit')))
         {{ HTML::script(asset('js/requisicioneshospitalarias.js')) }}
         {{ HTML::script(asset('js/toaster.js')) }}
 
@@ -319,7 +325,7 @@
         @include('layouts.smart.create')
 @endif
 @if (Route::currentRouteNamed(currentRouteName('index')))
-    {{--@section('title', 'Requisiciones Hospitalarias')--}}
+    @section('title', 'Requisiciones Hospitalarias')
     @include('layouts.smart.index')
 @endif
 

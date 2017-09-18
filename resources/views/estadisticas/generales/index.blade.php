@@ -51,9 +51,10 @@
           	  	"angle": 50,
           	  	"pullOutRadius": 60,
           	  	"marginTop": 20,
-          	    "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+          	  	"labelText": "[[clave]] : [[percents]]%",
+          	    "balloonText": "<b>[[clave]] :</b> [[nombre]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
                 "balloon":{
-                	"fixedPosition":true
+                	"fixedPosition":false
                 },
                 "export": {
                 	"enabled": true
@@ -70,7 +71,8 @@
                 "depth3D": 15,
                 "innerRadius": "40%",
                 "pullOutRadius": 20,
-          	    "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+                "labelText": "[[percents]]%",
+          	    "balloonText": "[[nombre]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
                 "balloon":{
                 	"fixedPosition":true
                 },
@@ -91,7 +93,8 @@
           	    "depth3D": 20,
           	  	"angle": 50,
           	  	"pullOutRadius": 20,
-          	    "balloonText": "[[title]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
+          	  	"labelText": "[[cedula]] : [[percents]]%",
+          	    "balloonText": "<b>[[cedula]] :</b>[[nombre]]<br><span style='font-size:14px'><b>[[value]]</b> ([[percents]]%)</span>",
                 "balloon":{
                 	"fixedPosition":true,
                 },
