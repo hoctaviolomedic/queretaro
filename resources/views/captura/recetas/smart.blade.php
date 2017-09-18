@@ -55,7 +55,16 @@
         <div class="col-sm-6">
             <div class="form-group">
                 {{Form::label('id_dependiente','*Afiliación/Paciente')}}
-                {{Form::select('id_dependiente',isset($afiliaciones)?$afiliaciones:[],null,['id'=>'id_dependiente','class' => 'paciente form-control','data-url'=>companyRoute('getAfiliados'),'style'=>'width:100%'])}}
+                @if(!Route::currentRouteNamed(currentRouteName('index')) && !Route::currentRouteNamed(currentRouteName('show')))
+                    {{Form::select('id_dependiente',isset($afiliaciones)?$afiliaciones:[],null,['id'=>'id_dependiente','class' => 'paciente form-control','data-url'=>companyRoute('getAfiliados'),'style'=>'width:100%'])}}
+                @elseif(Route::currentRouteNamed(currentRouteName('show')))
+
+                    @if(isset($data->id_dependiente))
+                        {{Form::select('id_dependiente',isset($afiliaciones)?$afiliaciones:[],null,['id'=>'id_dependiente','class' => 'paciente form-control','data-url'=>companyRoute('getAfiliados'),'style'=>'width:100%'])}}
+                    @else
+                        {{Form::text('id_dependiente',$data->nombre_paciente_no_afiliado,['id'=>'programa','class' =>'form-control peso'])}}
+                    @endif
+                @endif
                 {{Form::hidden('id_afiliacion',null,['id'=>'id_afiliacion'])}}
                 {{Form::text('nombre_paciente_no_afiliado',null,['id'=>'nombre_paciente_no_afiliado','class'=>'form-control','style'=>'display:none'])}}
             </div>
