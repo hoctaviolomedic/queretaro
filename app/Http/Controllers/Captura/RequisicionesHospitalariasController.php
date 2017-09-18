@@ -58,7 +58,10 @@ class RequisicionesHospitalariasController extends ControllerBase
         // $this->authorize('create', $this->entity);
 
         $data = $this->entity->getColumnsDefaultsValues();
-        $localidades = Localidades::where('tipo',0)->where('id_cliente',135)->where('tipo',0)->pluck('localidad','id_localidad');
+        $localidades = Localidades::where('tipo',0)->where('id_cliente',135)
+                                    ->where('estatus','=',1)
+                                    ->where('tipo','=',0)
+                                    ->pluck('localidad','id_localidad');
         $estatus = Estatus::all()->pluck('estatus','id_estatus');
         $dataview = isset($attributes['dataview']) ? $attributes['dataview'] : [];
 
@@ -231,7 +234,16 @@ class RequisicionesHospitalariasController extends ControllerBase
 //        }
     }
 
-//    public function getAreas()
+    public function destroy(Request $request, $company, $idOrIds)
+    {
+        # ¿Usuario tiene permiso para eliminar?
+
+        dd($idOrIds);
+
+
+    }
+
+
     public function getAreas()
     {
         $json = [];
@@ -242,6 +254,8 @@ class RequisicionesHospitalariasController extends ControllerBase
             ->toJson();
 
         $usuarios =Usuarios::join('adm_usuario_localidad','adm_usuario.id_usuario','=','adm_usuario.id_usuario')
+            ->where('adm_usuario.estatus','=',1)
+            ->where('adm_usuario.id_tipo','=',21)
             ->where('adm_usuario_localidad.id_localidad','=',$_POST['id_localidad'])
             ->select(DB::raw("CONCAT(adm_usuario.nombre,' ',adm_usuario.paterno,' ',adm_usuario.materno) AS nombre"),'adm_usuario.id_usuario')
             ->pluck('nombre','id_usuario')

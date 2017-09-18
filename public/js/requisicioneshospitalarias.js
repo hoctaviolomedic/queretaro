@@ -161,6 +161,34 @@ $('select[name="id_localidad"]').on('change', function() {
     }
 });
 
+$('input').change(function(event) {
+
+    var length_max = $('#'+event.target.id).attr('maxlength');
+    var length_cantidad = $('#'+event.target.id).val().length;
+
+    if( length_cantidad > length_max)
+    {
+        $.toaster({
+            priority : 'danger',
+            css:{
+                'top': '3em'
+            },
+            title : 'Error!',
+            message : '<br>Se está excediendo en la cantidad de producto permitida a surtir.',
+            settings:{
+                'timeout':8000,
+                'toaster':{
+                    'css':{
+                        'top':'3em'
+                    }
+                }
+            }
+        });
+        $('#'+event.target.id).val('0');
+    }
+
+});
+
 function surtirRequisicion()
 {
 
