@@ -58,6 +58,7 @@ function agregarProducto() {
             // $('#producto option[value="0"]');
             // $('#cantidad option[value="0"]');
 
+
             for( var i = 0 ; i<producto_requerimiento.length ; i++)
             {
                 alert(producto_requerimiento[i].id_area)
