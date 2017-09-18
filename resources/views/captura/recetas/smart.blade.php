@@ -55,7 +55,16 @@
         <div class="col-sm-6">
             <div class="form-group">
                 {{Form::label('id_dependiente','*Afiliación/Paciente')}}
-                {{Form::select('id_dependiente',isset($afiliaciones)?$afiliaciones:[],null,['id'=>'id_dependiente','class' => 'paciente form-control','data-url'=>companyRoute('getAfiliados'),'style'=>'width:100%'])}}
+                @if(!Route::currentRouteNamed(currentRouteName('index')) && !Route::currentRouteNamed(currentRouteName('show')))
+                    {{Form::select('id_dependiente',isset($afiliaciones)?$afiliaciones:[],null,['id'=>'id_dependiente','class' => 'paciente form-control','data-url'=>companyRoute('getAfiliados'),'style'=>'width:100%'])}}
+                @elseif(Route::currentRouteNamed(currentRouteName('show')))
+
+                    @if(isset($data->id_dependiente))
+                        {{Form::select('id_dependiente',isset($afiliaciones)?$afiliaciones:[],null,['id'=>'id_dependiente','class' => 'paciente form-control','data-url'=>companyRoute('getAfiliados'),'style'=>'width:100%'])}}
+                    @else
+                        {{Form::text('id_dependiente',$data->nombre_paciente_no_afiliado,['id'=>'programa','class' =>'form-control peso'])}}
+                    @endif
+                @endif
                 {{Form::hidden('id_afiliacion',null,['id'=>'id_afiliacion'])}}
                 {{Form::text('nombre_paciente_no_afiliado',null,['id'=>'nombre_paciente_no_afiliado','class'=>'form-control','style'=>'display:none'])}}
             </div>
@@ -160,7 +169,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <h4>En caso de presentar:</h4>
-                {{Form::textarea('nota_medicamento',null,['class' => 'form-control','rows'=>'1','id'=>'nota_medicamento'])}}
+                {{Form::textarea('nota_medicamento',null,['class' => 'form-control','style'=>'resize:vertical','rows'=>'1','id'=>'nota_medicamento'])}}
             </div>
             <div class="col-sm-6 border-right">
                 <h4>¿Surtido recurrente?</h4>
@@ -170,7 +179,7 @@
                             <input type="checkbox" name="surtido_recurrente" id="surtido_recurrente" autocomplete="off" class="btn btn-default checkbox_surtido">Recurrente
                         </label>
                     </div>
-                    {{Form::number('surtido_numero',null,['id'=>'surtido_numero','min'=>1,'placeholder'=>'Ej: 6','class'=>'number-only form-control','disabled'])}}
+                    {{Form::number('surtido_numero',null,['id'=>'surtido_numero','min'=>1,'placeholder'=>'Ej: 6','class'=>'integer form-control','disabled'])}}
                     {{Form::select('surtido_tiempo',['24'=>'Día(s)','168'=>'Semana(s)','720'=>'Mes(es)'],null,['id'=>'surtido_tiempo','class'=>'form-control','disabled'])}}
                 </div>
             </div>
@@ -212,7 +221,7 @@
         <div class="col-sm-12">
             <div class="form-group">
                 {{Form::label('observaciones','Observaciones adicionales:')}}
-                {{Form::textarea('observaciones',isset($data->observaciones)?$data->observaciones:null,['class' => 'form-control','rows'=>'1','id'=>'observaciones'])}}
+                {{Form::textarea('observaciones',isset($data->observaciones)?$data->observaciones:null,['class' => 'form-control','style'=>'resize:vertical','rows'=>'1','id'=>'observaciones'])}}
             </div>
         </div>
     </div><!--/row-->

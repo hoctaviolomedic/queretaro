@@ -6,10 +6,9 @@ $(document).ready(function () {
     $(':submit').attr('type','button');
 
     $('.altura').keypress(function(e) {
-        var a = this.value;
         var valid = /^([0-9]{0,1})?(\.)?([0-9]{0,2})$/gm.test(this.value + e.key);
         if(!valid){
-            if(e.keyCode == 8 || e.keyCode == 127 || (e.keyCode > 36 && e.keyCode < 41)){
+            if(e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 127 || (e.keyCode > 36 && e.keyCode < 41)){
                 return true;
             }
             return false;
@@ -20,7 +19,7 @@ $(document).ready(function () {
     $('.peso').keypress(function(e) {
             var valid = /^([0-9]{0,3})?(\.)?([0-9]{0,2})$/gm.test(this.value + e.key);
             if(!valid){
-                if(e.keyCode == 8 || e.keyCode == 127 || (e.keyCode > 36 && e.keyCode < 41)){
+                if(e.keyCode == 8 || e.keyCode == 9 || e.keyCode == 127 || (e.keyCode > 36 && e.keyCode < 41)){
                     return true;
                 }
                 return false;
@@ -31,6 +30,9 @@ $(document).ready(function () {
 
     $('.integer').keypress(function (e) {
         if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)){
+            e.preventDefault();
+            return false;
+        }else if(this.value.length>2 && e.which != 8 && e.which != 0){
             e.preventDefault();
             return false;
         }
@@ -81,15 +83,23 @@ $(document).ready(function () {
 
     $('input[name=tipo_servicio]').change(function () {
         if(this.value == 'afiliado') {
+            //Esconder y borrar no afiliado
             $('#nombre_paciente_no_afiliado').val('');
             $('#nombre_paciente_no_afiliado').prop('style','display:none');
             $('#id_dependiente').prop('style','display:block');
             initPaciente();
         }else if(this.value == 'externo'){
+            //Para vaciar el Selec2
+            $('#id_dependiente').select2('destroy');
+            $('#id_dependiente').empty();
+            //Volverlo a crear
+            $('#id_dependiente').select2();
+            //Esconderlo
             $('#id_dependiente').next(".select2-container").hide();
+            //Borrar el afiliado
+            $('#id_afiliacion').val('');
+            //Mostrar el no afiliado
             $('#nombre_paciente_no_afiliado').prop('style','display:block');
-            // $('#id_dependiente').select2('destroy');
-            // $('#id_dependiente').prop('style','display:none');
         }
     });
 
@@ -389,7 +399,7 @@ $(document).ready(function () {
                 async: false,
                 success:function (response) {
                     var arreglo = $.parseJSON(response);
-                    if(arreglo['disponible']<$(escaparID('tbcantidad_pedida'+id)).val()){//Si ya no estÃ¡ disponible, agregar al arreglo de medicamentos agotados
+                    if(parseInt(arreglo['disponible'])<$(escaparID('tbcantidad_pedida'+id)).val()){//Si ya no estÃ¡ disponible, agregar al arreglo de medicamentos agotados
                         medicamento_agotado.push(arreglo);
                     }
                 }
@@ -573,6 +583,10 @@ function limpiarCampos() {
     $('.medicamento').select2('destroy');
     $('.medicamento').empty();
     medicamento();
+    $('#dosis12').prop('checked',false);
+    $('#dosis12').parent().removeClass('active');
+    $('#dosis14').prop('checked',false);
+    $('#dosis14').parent().removeClass('active');
 }
 
 function escaparID(myid){
