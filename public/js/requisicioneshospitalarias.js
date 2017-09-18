@@ -32,8 +32,8 @@ function agregarProducto() {
         }
         else
         {
-
-            if( $( $('#id_area').val()+'_'+$('#producto').val() ).length > 0 )
+            alert($('#id_area').val()+'_'+$('#producto').val());
+            if( $( $('#id_area').val()+'_'+$('#producto').val()) )
             {
                 $.toaster({
                     priority : 'danger',
