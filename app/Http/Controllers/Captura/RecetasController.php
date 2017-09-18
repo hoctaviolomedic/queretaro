@@ -83,7 +83,9 @@ class RecetasController extends ControllerBase
         # Validamos request, si falla regresamos pagina
         $this->validate($request, $this->entity->rules);
 
-        $request->request->set('presion', $request->presion1 . '/' . $request->presion2);
+        if($request->presion1>0 && $request->presion2>0) {
+            $request->request->set('presion', $request->presion1 . '/' . $request->presion2);
+        }
         $request->request->set('id_estatus_receta', 1);
         $request->request->set('id_usuario_creacion', Auth::Id());
         $isSuccess = $this->entity->create($request->all());
@@ -179,7 +181,7 @@ class RecetasController extends ControllerBase
                 'areas' => $area,
                 'diagnosticos' => $diagnostico,
                 'presion1' => $presion[0],
-                'presion2' => $presion[1]
+                'presion2' => isset($presion[1])?$presion[1]:''
             ]);
     }
 
@@ -409,6 +411,5 @@ class RecetasController extends ControllerBase
 //        $canvas->image('data:image/png;charset=binary;base64,'.$barcode,355,580,100,16);
 
         return $pdf->stream('solicitud')->header('Content-Type',"application/pdf");
-//        return view(currentRouteName('imprimir'));
     }
 }
