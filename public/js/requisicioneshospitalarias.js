@@ -33,7 +33,7 @@ function agregarProducto() {
         else
         {
             // alert($('#id_area').val()+'_'+$('#producto').val());
-            if( !$( '#'+$('#id_area').val()+'_'+$('#producto').val()) )
+            if( $( '#'+$('#id_area').val()+'_'+$('#producto').val()).length )
             {
                 $.toaster({
                     priority : 'danger',
