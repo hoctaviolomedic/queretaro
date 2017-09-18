@@ -169,7 +169,7 @@
         <div class="row">
             <div class="col-sm-6">
                 <h4>En caso de presentar:</h4>
-                {{Form::textarea('nota_medicamento',null,['class' => 'form-control','rows'=>'1','id'=>'nota_medicamento'])}}
+                {{Form::textarea('nota_medicamento',null,['class' => 'form-control','style'=>'resize:vertical','rows'=>'1','id'=>'nota_medicamento'])}}
             </div>
             <div class="col-sm-6 border-right">
                 <h4>¿Surtido recurrente?</h4>
@@ -221,7 +221,7 @@
         <div class="col-sm-12">
             <div class="form-group">
                 {{Form::label('observaciones','Observaciones adicionales:')}}
-                {{Form::textarea('observaciones',isset($data->observaciones)?$data->observaciones:null,['class' => 'form-control','rows'=>'1','id'=>'observaciones'])}}
+                {{Form::textarea('observaciones',isset($data->observaciones)?$data->observaciones:null,['class' => 'form-control','style'=>'resize:vertical','rows'=>'1','id'=>'observaciones'])}}
             </div>
         </div>
     </div><!--/row-->
