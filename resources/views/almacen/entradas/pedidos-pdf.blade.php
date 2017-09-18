@@ -125,8 +125,8 @@
 			<td>
 				{{ $detalle->codigo_barras }}
 			</td>
-			<td class="nowrap">
-				{{ $detalle->descripcion }} <br> {{ $detalle->presentacion }}
+			<td>
+				{{ $detalle->descripcion }} <br> <span class="nowrap">{{ $detalle->presentacion }}</span>
 			</td>
 			<td class="text-center">
 				{{ $detalle->no_lote }}

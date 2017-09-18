@@ -113,14 +113,7 @@ class EntradasController extends Controller
 				$folio = DB::select("SELECT max(cast(substr(folio_entrada,3) AS integer))+1 as folio FROM inv_entrada WHERE id_localidad = $localidad AND folio_entrada like 'P%'");
 				$folio = $folio[0]->folio != '' ? "p-{$folio[0]->folio}" : 'P-1';
 
-				//
-				$entradas = [];
-
 				foreach (request()->entradas as $key => $entrada) {
-
-					$localidad = $entrada['id_localidad'];
-
-					// dump( $entrada );
 
 					#Verificar si existe la relacion CB, LOTE y UBI en la tabla de inv_existencia si no existe Insertar y se existe incrementar Existencias
 
@@ -129,7 +122,7 @@ class EntradasController extends Controller
 						$result = DB::update("UPDATE inv_existencia SET quedan=quedan+{$entrada['cantidad_entrada']} WHERE codigo_barras='{$entrada['codigo_barras']}' AND no_lote='{$entrada['no_lote']}' AND id_ubicacion={$entrada['id_ubicacion']}");
 					} else {
 						$result = DB::insert("INSERT INTO inv_existencia(codigo_barras, no_lote, id_ubicacion, quedan, caducidad, costo, id_almacen, id_localidad)
-							VALUES ('{$entrada['codigo_barras']}', '{$entrada['no_lote']}', {$entrada['id_ubicacion']}, {$entrada['cantidad_entrada']}, '{$entrada['caducidad']}', 0, {$entrada['id_almacen']}, $id_localidad);");
+							VALUES ('{$entrada['codigo_barras']}', '{$entrada['no_lote']}', {$entrada['id_ubicacion']}, {$entrada['cantidad_entrada']}, '{$entrada['caducidad']}', 0, {$entrada['id_almacen']}, $localidad);");
 					}
 
 					#Se inserta el Nuevo movimiento en la tabla de inv_entrada, obtener el folio de resurtido de inv_pedido_entrada para insertarlo como documento
@@ -149,7 +142,7 @@ class EntradasController extends Controller
 						'observaciones' => strtoupper($observaciones),
 						'id_usuario_captura' => Auth::Id(),
 						'id_pedido' => $entrada['id_pedido'],
-						'id_localidad' => $entrada['id_localidad'],
+						'id_localidad' => $localidad,
 						'folio_entrada' => $folio,
 						'id_salida' => $entrada['id_salida'],
 						'codigo_barras' => $entrada['codigo_barras'],
@@ -158,9 +151,6 @@ class EntradasController extends Controller
 					];
 
 					$id_movimiento = DB::table('inv_entrada')->insertGetId($dataset, 'id_movimiento');
-
-					#
-					$entradas[] = $id_movimiento;
 
 					# Incrementar en la salida la cantidad entrada e insertar la salidad en el historial
 					$result = DB::update("UPDATE inv_salida SET cantidad_entrada=cantidad_entrada+{$entrada['cantidad_entrada']} WHERE id_salida={$entrada['id_salida']}");
@@ -209,7 +199,7 @@ class EntradasController extends Controller
 			$query =  DB::select("SELECT cb.codigo_barras, p.descripcion, p.presentacion, m.cantidad, ie.no_lote, ie.id_ubicacion, ie.id_almacen, m.id_movimiento, ie.caducidad, m.observaciones
 			FROM inv_entrada m, inv_existencia ie, cat_producto_codigo_barras cb, catalogo_producto p
 			WHERE folio_entrada = :folio AND m.id_pedido = :pedido AND m.codigo_barras = ie.codigo_barras AND m.no_lote = ie.no_lote
-			AND m.id_ubicacion = ie.id_ubicacion AND ie.codigo_barras = cb.codigo_barras AND cb.clave = p.clave AND ie.id_localidad = :id_localidad", [
+			AND m.id_ubicacion = ie.id_ubicacion AND ie.codigo_barras = cb.codigo_barras AND cb.clave = p.clave AND m.id_localidad = :id_localidad", [
 				'folio' => $folio,
 				'pedido' => $pedido,
 				'id_localidad' => $localidad
