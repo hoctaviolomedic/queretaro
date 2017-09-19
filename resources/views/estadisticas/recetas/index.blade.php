@@ -142,7 +142,7 @@
             
     		<div class="row">
             	<div class="col-lg-6 col-md-12">
-                	<h4>Productos Area:</h4>
+                	<h4>Productos Medico:</h4>
                 	@if(!empty($char02))
             		<div class="row">
                       	<div class="form-group">
