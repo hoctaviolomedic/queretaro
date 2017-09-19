@@ -12,7 +12,7 @@ class ResourceRegistrar extends OriginalRegistrar
 	 *
 	 * @var array
 	 */
-    protected $resourceDefaults = ['export', 'destroyMultiple', 'impress', 'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'];
+    protected $resourceDefaults = ['export', 'destroyMultiple', 'impress','surtir', 'index', 'create', 'store', 'show', 'edit', 'update', 'destroy'];
 
 	/**
 	 * Add the export method for a resourceful route.
@@ -31,6 +31,16 @@ class ResourceRegistrar extends OriginalRegistrar
 
 		return $this->router->match(['GET', 'POST'], $uri, $action);
 	}
+
+
+    protected function addResourceSurtir($name, $base, $controller, $options)
+    {
+        $uri = $this->getResourceUri($name).'/{'.$base.'}/surtir';
+
+        $action = $this->getResourceAction($name, $controller, 'surtir', $options);
+
+        return $this->router->match(['GET', 'POST'], $uri, $action);
+    }
 
 	/**
 	 * Add the delete multiple method for a resourceful route.

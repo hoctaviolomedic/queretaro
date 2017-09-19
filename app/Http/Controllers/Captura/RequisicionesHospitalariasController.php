@@ -157,7 +157,7 @@ class RequisicionesHospitalariasController extends ControllerBase
      * @param  integer $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($company, $id, $attributes = [])
+    public function surtir($company, $id, $attributes = [])
     {
         $datos_requisicion = RequisicionesHospitalarias::all()->where('id_requisicion','=',$id)->first();
 
@@ -197,49 +197,15 @@ class RequisicionesHospitalariasController extends ControllerBase
 
     public function update(Request $request, $company, $id)
     {
-        # ¿Usuario tiene permiso para actualizar?
-        // $this->authorize('update', $this->entity);
 
-        # Validamos request, si falla regresamos atras
-
-//        dd($request);
-
-        foreach ($request->datos_requisicion as $dato)
-        {
-            $cantidad = $dato['cantidad']+$dato['cantidad_surtida'];
-            DB::update('UPDATE ss_qro_requisicion_detalle set cantidad_surtida = '.$cantidad .' where id_requisicion_detalle = ?', [$dato['id']]);
-        }
-
-//        $this->validate($request, $this->entity->rules);
-//
-//        $entity = $this->entity->findOrFail($id);
-//
-//        $entity->fill($request->all());
-//        if ($entity->save()) {
-//
-//            if (config('app.env') != 'standalone') {
-//                # Eliminamos cache
-//                Cache::tags(getCacheTag('index'))->flush();
-//            }
-//
-//            $this->log('update', $id);
-            return $this->redirect('update');
-//        } else {
-//            $this->log('error_update', $id);
-//            return $this->redirect('error_update');
-//        }
     }
 
-//    public function destroy(Request $request, $company, $id)
-//    {
-//        # ¿Usuario tiene permiso para eliminar?
-//
-//        dump($request);
-//        return $this->redirect('index');
-////        $isSuccess = $this->entity->where($this->entity->getKeyName(), $id)->update(['id_estatus' => 4]);
-//
-//
-//    }
+    public function destroy(Request $request, $company, $idOrIds)
+    {
+        dd($request);
+
+
+    }
 
 
     public function getAreas()

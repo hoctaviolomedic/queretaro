@@ -82,7 +82,7 @@ function companyRoute($route = '', $params = [])
 	$autoparams = ['company' => request()->company];
 
 	# Injectamos Id
-	if (in_array(last($expected_action), ['show', 'edit', 'update', 'destroy'])) {
+	if (in_array(last($expected_action), ['show', 'edit', 'update', 'destroy','surtir'])) {
 		# Obtenemos parametros, omitiendo empresa
 		$_params = array_except(request()->route()->parameters, ['company']);
 		if (!empty($_params)) {
