@@ -84,7 +84,7 @@ class RecetasController extends ControllerBase
                 $q->on('c.id_cuadro','=','d.id_cuadro');
                 $q->whereRaw('c.clave_cliente = d.clave_cliente');
             })
-            ->selectRaw("m.nombre as medico, sum(d.cantidad_pedida)::numeric(10,0) as cantidad, sum(d.cantidad_pedida * c.precio)::money::numeric as monto,
+            ->selectRaw("concat(m.nombre,' ',m.paterno,' ',m.materno) as medico, sum(d.cantidad_pedida)::numeric(10,0) as cantidad, sum(d.cantidad_pedida * c.precio)::money::numeric as monto,
             concat('#',substring(md5(random()::text) from 4 for 6)) as color")
             ->where('l.id_cliente',135)
             ->where('l.tipo',0)
@@ -92,7 +92,7 @@ class RecetasController extends ControllerBase
             ->whereNotNull('d.clave_cliente')
             ->whereBetween(DB::RAW("to_char(p.fecha, 'YYYY-MM-DD')"), [$fecha_inicio, $fecha_fin])
             ->whereraw("(j.id_jurisdiccion = $jurisdiccion or $jurisdiccion = -999)")
-            ->groupBy(['m.nombre'])
+            ->groupBy(['m.nombre','m.paterno','m.materno'])
             ->orderBy('medico')->get();
                 
         $char2 = DB::table('ss_qro_receta as p')

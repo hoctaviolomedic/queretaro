@@ -20,6 +20,24 @@ $('select[name="jurisdiccion"]').on('change', function() {
     }
 });
 
+
+
+
+$('#datetimepicker1').datetimepicker({
+    pickTime: false,
+});
+
+$('#datetimepicker2').datetimepicker({
+    pickTime: false,
+});
+
+
+$("#datetimepicker1").on("dp.change", function (e) {
+	var date = new Date(e.date.valueOf());
+	$('#datetimepicker2').data("DateTimePicker").setMinDate(date);
+});
+
+
 var chart = AmCharts.makeChart("char-1", {
     "theme": "light",
     "type": "serial",
