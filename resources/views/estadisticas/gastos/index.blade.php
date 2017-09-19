@@ -5,7 +5,11 @@
         #piepacientes .amcharts-chart-div, #piepacientes .amcharts-chart-div svg,
         #piemedicos .amcharts-chart-div, #piemedicos .amcharts-chart-div svg {
             height: 90vh !important;
-        }	
+        }
+        .divider {
+            border-bottom: 2px solid #FFAA00;
+            box-shadow: 1px 1px 2px #DCB;
+        }
     </style>
 @endsection
 
@@ -254,7 +258,7 @@
     		<div class="divider"></div>
     
             <div class="row">
-            	<div class="col-lg-6 col-md-12">
+            	<div class="col-lg-6 col-md-12 table-responsive">
                     <h4>Consumo general por productos:</h4>
             		@if(!empty($productos))
             		<div class="row">
@@ -290,7 +294,7 @@
                 	</table>
                 	@endif
                 </div>
-                <div class="col-lg-6 col-md-12 border-right">
+                <div class="col-lg-6 col-md-12 border-right table-responsive">
                     <h4>Productos por Receta:</h4>
                 	@if(!empty($recetas))
                 	<div class="row">
@@ -350,7 +354,7 @@
                             </div>
                             @endif
                         </div>
-                        <div class="col-lg-6 col-md-12">
+                        <div class="col-lg-6 col-md-12 table-responsive">
                         	@if(!empty($pacientes))
                         	<table class="table table-striped table-hover row">
                         		@if(isset($pacientes[0]))
@@ -394,7 +398,7 @@
                             </div>
                           	@endif
                         </div>
-                        <div class="col-lg-6 col-md-12">
+                        <div class="col-lg-6 col-md-12 table-responsive">
                         	@if(!empty($medicos))
                         	<table class="table table-striped table-hover row">
                         		@if(isset($medicos[0]))

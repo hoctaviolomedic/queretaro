@@ -161,7 +161,7 @@
                     	</div>
                   	</div>
                 </div>
-                <div class="col-lg-6 col-md-12 border-right">
+                <div class="col-lg-6 col-md-12 border-right table-responsive">
                 	<table class="table table-striped table-hover">
                 		@if(isset($padecimientos[0]))
                         <thead>
@@ -190,7 +190,7 @@
             <div class="divider"></div>
             
             <div class="row">
-                <div class="col-lg-6 col-md-12 border-right">
+                <div class="col-lg-6 col-md-12 border-right table-responsive">
                 	<h4>Pacientes:</h4>
                 	<table class="table table-striped table-hover">
                 		@if(isset($pacientes[0]))
@@ -235,7 +235,7 @@
                     	</div>
                   	</div>
                 </div>
-                <div class="col-lg-6 col-md-12 border-right">
+                <div class="col-lg-6 col-md-12 border-right table-responsive">
                 	<table class="table table-striped table-hover">
                 		@if(isset($medicos[0]))
                         <thead>
