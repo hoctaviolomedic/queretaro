@@ -22,7 +22,6 @@ $(document).ready(function () {
         var cantidad = 0;
         var cantidadsurtida = 0;
         $('#detalle tbody tr').each(function (index) {
-            e.preventDefault();
             var data = {};
             var id = this.id;
             cantidad = parseInt($('#cantidadsurtir'+id).val());

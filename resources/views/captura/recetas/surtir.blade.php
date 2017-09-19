@@ -99,13 +99,22 @@
                                         <input type="hidden" id="cantidad_surtida{{$detalle->id_receta_detalle}}" value="{{$detalle->cantidad_surtida}}">
                                     </td>
                                     <td>
-                                        @if(DB::select("select extract(days from (timestamp 'now()' - timestamp '".$detalle->fecha_surtido."')) as diferencia")[0]->diferencia <= $detalle->recurrente)
-                                            <label>Producto surtido. Recuerda que la siguiente fecha es <b>{{DB::select("select date '" . $detalle->fecha_surtido . "' + integer '" . $detalle->recurrente . "' as diferencia")[0]->diferencia}}</b></label>
-                                        @elseif($detalle->veces_surtir > $detalle->veces_surtidas)
-                                                <input type="number" class="form-control number-only" min="0" placeholder="Ej: 6" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]">
+                                        @if(isset($detalle->fecha_surtido))
+                                            @if($detalle->recurrente > 0 && DB::select("select extract(days from (timestamp 'now()' - timestamp '".$detalle->fecha_surtido."')) as diferencia")[0]->diferencia <= $detalle->recurrente && $detalle->veces_surtidas > 0 && ($detalle->cantidad_pedida*$detalle->veces_surtidas)/$detalle->cantidad_surtida)
+                                                <label>Producto surtido. Recuerda que la siguiente fecha es <b>{{DB::select("select date '" . $detalle->fecha_surtido . "' + integer '" . $detalle->recurrente . "' as diferencia")[0]->diferencia}}</b></label>
+                                            @elseif($detalle->veces_surtir > $detalle->veces_surtidas)
+                                                    <input type="number" class="form-control number-only" min="0" placeholder="Ej: 6" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]">
+                                            @else
+                                                <input type="hidden" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]" value="0">
+                                                <label>Producto entregado en su totalidad</label>
+                                            @endif
                                         @else
-                                            <input type="hidden" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]" value="0">
-                                            <label>Producto entregado en su totalidad</label>
+                                            @if($detalle->veces_surtir > $detalle->veces_surtidas)
+                                                <input type="number" class="form-control number-only" min="0" placeholder="Ej: 6" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]">
+                                            @else
+                                                <input type="hidden" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]" value="0">
+                                                <label>Producto entregado en su totalidad</label>
+                                            @endif
                                         @endif
                                     </td>
                                     <td>
