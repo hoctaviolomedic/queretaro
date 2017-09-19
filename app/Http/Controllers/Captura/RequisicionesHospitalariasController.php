@@ -130,7 +130,7 @@ class RequisicionesHospitalariasController extends ControllerBase
 
         $estatus = Estatus::all()->pluck('estatus','id_estatus');
 
-        $detalle_requisicion = DB::select("SELECT rd.*, a.area, cp.descripcion
+        $detalle_requisicion = DB::select("SELECT rd.*, a.area, substring(cp.descripcion from 1 for 250) as descripcion
             FROM ss_qro_requisicion_detalle as rd
             LEFT JOIN cat_area as a ON a.id_area = rd.id_area
             LEFT JOIN cat_cuadro c ON C.id_cuadro = rd.id_cuadro
@@ -138,16 +138,12 @@ class RequisicionesHospitalariasController extends ControllerBase
             WHERE rd.id_requisicion = $id");
 
 
-//        dd($detalle_requisicion);
-
         $data = $this->entity->findOrFail($id);
         $dataview = isset($attributes['dataview']) ? $attributes['dataview'] : [];
 
         return view(currentRouteName('smart'), $dataview+[
             'data'=>$data,
             'localidades'=>$localidad->pluck('localidad','id_localidad'),
-//            'producto_licitacion'=>$datos_productos,
-//            'areas'=>$areas,
             'solicitante'=>$usuario,
             'datos_requisicion'=> $datos_requerimiento,
             'detalle_requisicion'=> $detalle_requisicion,
@@ -177,7 +173,7 @@ class RequisicionesHospitalariasController extends ControllerBase
 
         $estatus = Estatus::all()->pluck('estatus','id_estatus');
 
-        $detalle_requisicion = DB::select("SELECT rd.*, a.area, cp.descripcion
+        $detalle_requisicion = DB::select("SELECT rd.*, a.area, substring(cp.descripcion from 1 for 250) as descripcion
             FROM ss_qro_requisicion_detalle as rd
             LEFT JOIN cat_area as a ON a.id_area = rd.id_area
             LEFT JOIN cat_cuadro c ON C.id_cuadro = rd.id_cuadro
@@ -234,11 +230,13 @@ class RequisicionesHospitalariasController extends ControllerBase
 //        }
     }
 
-//    public function destroy(Request $request, $company, $idOrIds)
+//    public function destroy(Request $request, $company, $id)
 //    {
 //        # ¿Usuario tiene permiso para eliminar?
 //
-//        dd($idOrIds);
+//        dump($request);
+//        return $this->redirect('index');
+////        $isSuccess = $this->entity->where($this->entity->getKeyName(), $id)->update(['id_estatus' => 4]);
 //
 //
 //    }
@@ -261,7 +259,7 @@ class RequisicionesHospitalariasController extends ControllerBase
             ->pluck('nombre','id_usuario')
             ->toJson();
 
-        $productos = DB::select("SELECT cp.clave_cliente, cp.descripcion, cf.descripcion as familia, coalesce(cp.cantidad_presentacion,0) cantidad_presentacion, coalesce(SUM(ie.quedan - ie.apartadas),0) disponible,
+        $productos = DB::select("SELECT cp.clave_cliente, substring(cp.descripcion from 1 for 250) as descripcion, cf.descripcion as familia, coalesce(cp.cantidad_presentacion,0) cantidad_presentacion, coalesce(SUM(ie.quedan - ie.apartadas),0) disponible,
                 tp.id_cuadro_tipo_medicamento as tipo_medicamento, c.id_cuadro, coalesce(lp.tope_receta,0) tope_receta
             FROM cat_cuadro c
             LEFT JOIN cat_cuadro_producto cp ON cp.id_cuadro = c.id_cuadro AND c.id_cliente = 135 AND cp.estatus = '1'
