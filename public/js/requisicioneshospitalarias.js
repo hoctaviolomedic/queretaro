@@ -1,6 +1,22 @@
 /**
  * Created by ihernandezt on 05/09/2017.
  */
+$(document).ready(function () {
+
+    $('.integer').keypress(function (e) {
+        if (e.which != 8 && e.which != 0 && (e.which < 48 || e.which > 57)){
+            e.preventDefault();
+            return false;
+        }else if(this.value.length>3 && e.which != 8 && e.which != 0){
+            e.preventDefault();
+            return false;
+        }
+    }).on("cut copy paste", function(e) {
+        e.preventDefault();
+    });
+
+});
+
 $cont_producto = 0;
 function agregarProducto() {
 

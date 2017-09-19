@@ -130,7 +130,6 @@
                     </div>
                 </div>
             </div><!--/panel-body-->
-        </div>
 
         <div class="modal fade" tabindex="-1" role="dialog" id="modal">
             <div class="modal-dialog" role="document">

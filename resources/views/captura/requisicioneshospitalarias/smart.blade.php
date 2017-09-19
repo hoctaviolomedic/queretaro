@@ -70,7 +70,7 @@
                     <div class="col-sm-2 col-xs-12">
                         <div class="form-group">
                         	{{ Form::label('cantidad', '*Cantidad:') }}
-                        	{{Form::number('cantidad',null,['id'=>'cantidad','class'=>'form-control','placeholder'=>'Ej. 6','maxlength'=>'4'])}}
+                        	{{Form::number('cantidad',null,['id'=>'cantidad','class'=>'form-control integer','placeholder'=>'Ej. 6','maxlength'=>'4'])}}
                         </div>
                     </div>
                     <div class="col-sm-12 col-xs-12 text-center">
@@ -255,7 +255,7 @@
                             <td>
                                 <div class="input-group">
                                     @if( $detalle->cantidad_surtida < $detalle->cantidad_pedida )
-                                        <input type="number" class="form-control" id="renglon_{{$index}}" name="datos_requisicion[{{$index}}][cantidad]" placeholder="Ej: 6" maxlength="4">
+                                        <input type="number" class="form-control integer" id="renglon_{{$index}}" name="datos_requisicion[{{$index}}][cantidad]" placeholder="Ej: 6" maxlength="4">
                                         <input type="hidden" name="datos_requisicion[{{$index}}][id]" value="{{$detalle->id_requisicion_detalle}}">
                                         <input type="hidden" name="datos_requisicion[{{$index}}][cantidad_surtida]" value="{{$detalle->cantidad_surtida}}">
                                     @else

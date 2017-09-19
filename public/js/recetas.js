@@ -16,6 +16,7 @@ $(document).ready(function () {
     }).on("cut copy paste", function(e) {
             e.preventDefault();
         });
+
     $('.peso').keypress(function(e) {
             var valid = /^([0-9]{0,3})?(\.)?([0-9]{0,2})$/gm.test(this.value + e.key);
             if(!valid){
