@@ -134,7 +134,7 @@ var chart = AmCharts.makeChart( "char-02", {
 	  	"pullOutRadius": 60,
 	  	"marginTop": 20,
 	  	"labelText": "[[percents]]%",
-	    "balloonText": "<b>[[area]] :<b>[[value]]</b> ([[percents]]%)</span>",
+	    "balloonText": "[[area]] :<b>[[value]]</b> ([[percents]]%)</span>",
     "balloon":{
     	"fixedPosition":false
     },

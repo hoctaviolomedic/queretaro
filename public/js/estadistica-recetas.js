@@ -125,14 +125,14 @@ var chart = AmCharts.makeChart( "char-02", {
     "innerRadius": 80,
     "dataProvider": chart5,
     "valueField": "cantidad",
-    "titleField": "area",
+    "titleField": "medico",
     "outlineAlpha": 0.4,
 	    "depth3D": 15,
 	  	"angle": 50,
 	  	"pullOutRadius": 60,
 	  	"marginTop": 20,
 	  	"labelText": "[[percents]]%",
-	    "balloonText": "<b>[[medico]] :<b>[[value]]</b> ([[percents]]%)</span>",
+	    "balloonText": "[[medico]] : <b>[[value]]</b> ([[percents]]%)</span>",
     "balloon":{
     	"fixedPosition":false
     },
