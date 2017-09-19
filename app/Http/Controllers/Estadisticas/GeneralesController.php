@@ -29,7 +29,7 @@ class GeneralesController extends ControllerBase
     	    ->whereBetween(DB::RAW("to_char(r.fecha, 'YYYY-MM-DD')"), [$fecha_inicio, $fecha_fin])->whereraw("(r.id_localidad = $localidad or $localidad = -999)")
     	    ->groupBy(['r.id_diagnostico', 'd.diagnostico', 'd.clave_diagnostico'])->orderByRaw('Total desc')->limit(10)->get();
     	    
-	    $pacientes = DB::table('ss_qro_receta as r')->leftJoin('cat_afiliado_sp_df as p','p.id_afiliacion','r.id_afiliacion')
+	    $pacientes = DB::table('ss_qro_receta as r')->leftJoin('cat_afiliado_ss_qro as p','p.id_afiliacion','r.id_afiliacion')
             ->selectRaw("coalesce(p.id_afiliacion,'#N/A') as clave, coalesce(r.nombre_paciente_no_afiliado, concat(coalesce(p.nombre,''),' ',coalesce(p.paterno,''),' ',coalesce(p.materno,''))) as nombre, count(r.id_diagnostico) as total")
             ->whereBetween(DB::RAW("to_char(r.fecha, 'YYYY-MM-DD')"), [$fecha_inicio, $fecha_fin])->whereraw("(r.id_localidad = $localidad or $localidad = -999)")
             ->groupBy(['r.id_diagnostico', 'p.nombre','p.paterno','p.materno', 'p.id_afiliacion','r.nombre_paciente_no_afiliado'])->orderByRaw('Total desc')->limit(10)->get();
