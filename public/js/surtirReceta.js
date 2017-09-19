@@ -46,7 +46,7 @@ $(document).ready(function () {
                         var disponible = arreglo[0].disponible;
                         var dias_pasados = arreglo[0].dias_pasados;
                         var recurrente = arreglo[0].recurrente;
-                        if( parseInt(disponible)< parseInt(cantidad) || parseInt(dias_pasados)<parseInt(recurrente)){//Si ya no está disponible, agregar al arreglo de medicamentos agotados
+                        if( parseInt(disponible)< parseInt(cantidad) || parseInt(dias_pasados)>parseInt(recurrente)){//Si ya no está disponible, agregar al arreglo de medicamentos agotados
                             medicamento_agotado.push(arreglo);
                         }
                      }else{
