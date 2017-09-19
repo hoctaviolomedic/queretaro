@@ -19,14 +19,6 @@ class PedidosController extends ControllerBase
 		$this->entity = $entity;
 	}
 
-	public function getDataView()
-	{
-		return [
-			// 'companies' => Empresas::active()->select(['nombre_comercial','id_empresa'])->pluck('nombre_comercial','id_empresa'),
-			// 'users' => Usuarios::active()->select(['nombre_corto','id_usuario'])->pluck('nombre_corto','id_usuario')
-		];
-	}
-
 	/**
 	 * Display a listing of the resource.
 	 *
@@ -34,11 +26,20 @@ class PedidosController extends ControllerBase
 	 */
 	public function index($company, $attributes = [])
 	{
-		# 135: Queretaro
+		// # 135: Queretaro
 		return parent::index($company, ['whereHas' =>
-			['localidad' => function($query) {
-				$query->where('id_cliente', 135);
-			}]
+			[
+				'detalle.cuadro_producto' => function($q) {
+					// $q->where('cat_cuadro_producto.id_cuadro', 'inv_pedido_detalle.id_cuadro');
+					$q->where('cat_cuadro_producto.id_cuadro', '=', DB::raw('inv_pedido_detalle.id_cuadro'));
+					$q->whereNotNull('clave_cbn');
+					$q->whereRaw("clave_cbn <> ''");
+				},
+
+				'localidad' => function($query) {
+					$query->where('id_cliente', 135);
+				}
+			]
 		]);
 	}
 
@@ -50,18 +51,6 @@ class PedidosController extends ControllerBase
 	public function create($company, $attributes = [])
 	{
 		header('Location: /loader.php?url=pedido/crear_pedido/crear_pedido.php&js=js/pedido/crear_pedido.js&opc=36');
-		die();
-		// $localidades = Localidades::where('id_cliente','=',135)->where('estatus',1)->orderBy('localidad')->pluck('localidad','id_localidad');
-		// $proveedores =  DB::table('cat_proveedor')->where('estatus',1)->orderBy('nombre')->get()->pluck('nombre','id_proveedor');
-		// $estatus = collect([null=>null,0=>'Nuevo',1=>'Parcialmente Surtido',2=>'Completo',3=>'Cerrado',4=>'Cancelado']);
-
-		// return parent::create($company, [
-		// 	'dataview' => $this->getDataView()+[
-		// 		'localidades' => $localidades,
-		// 		'proveedores' => $proveedores,
-		// 		'estatus' => $estatus,
-		// 	]
-		// ]);
 	}
 
 	/**
@@ -110,6 +99,24 @@ class PedidosController extends ControllerBase
 			'excel.csv.delimiter' => '|',
 			'excel.csv.enclosure' => '',
 		]);
+	}
+
+	/**
+	 * Obtenemos archivo de exportacion para Oracle
+	 * @param  Request $request
+	 * @return void
+	 */
+	public function exportOraclexls($request) {
+		#
+		if ($request->ids) {
+			$pedidos = $this->entity->with(['detalle', 'localidad'])->whereIn('id_pedido', explode(',', $request->ids));
+		} else {
+			$pedidos = $this->entity->with(['detalle', 'localidad'])->whereHas('localidad', function($query){
+				$query->where('id_cliente', 135);
+			});
+		}
+
+		$this->exportSpreadsheet('xls', $this->entity->oracleCollections($pedidos));
 	}
 
 

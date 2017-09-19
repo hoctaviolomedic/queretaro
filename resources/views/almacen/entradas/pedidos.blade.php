@@ -176,9 +176,9 @@
 							// e.target.disabled = true;
 
 							$.toaster({
-								priority : 'success',//'success' cuando es un mensaje de éxito
-								title : 'Datos guardados correctamente',//El título del Toaster
-								message : '',//String con el mensaje
+								priority : 'success',
+								title : 'Exito',//El título del Toaste
+								message : 'Datos guardados correctamente.',//String con el mensaje
 								settings: {
 									'timeout':10000,//Para que dure 10 segundos
 									'toaster':{//Especificaciones de diseño
@@ -207,6 +207,20 @@
 						}
 					})
 					// this.set('toRefresh', true)
+				} else {
+					$.toaster({
+						priority : 'danger',
+						title : 'Error',//El título del Toaste
+						message : 'Es necesario llenar formulario.',//String con el mensaje
+						settings: {
+							'timeout':10000,//Para que dure 10 segundos
+							'toaster':{//Especificaciones de diseño
+								'css':{
+									'top':'5em'//Para que se baje 5 em y funcione bien en el Stand alone
+								}
+							}
+						}
+					});
 				}
 			},
 			toRefreshPage: function() {

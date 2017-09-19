@@ -362,6 +362,9 @@ $(document).ready(function () {
     $('#medicamento').on('change',function () {
         var medicamento = $('#medicamento').select2('data');
         $('#_dosis').val(medicamento[0].familia);
+        $('#labelmaximo').prop('style','display:block');
+        $('#labelmaximo').text('Máximo para recetar: '+medicamento[0].tope_receta);
+
     });
 
     $('.unidad').on('change',function () {

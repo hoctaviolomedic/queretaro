@@ -83,7 +83,7 @@
         <div class="col-sm-4 col-xs-12">
             <div class="form-group">
                 {{Form::label('id_diagnostico','*Diagnóstico')}}
-                {{Form::select('id_diagnostico',isset($diagnosticos)?$diagnosticos:[],null,['id'=>'id_diagnostico','class' => 'diagnostico form-control','data-url'=>companyRoute('getDiagnosticos')])}}
+                {{Form::select('id_diagnostico',isset($diagnosticos)?$diagnosticos:[],null,['id'=>'id_diagnostico','class' => 'diagnostico form-control','style'=>'width:100%','data-url'=>companyRoute('getDiagnosticos')])}}
             </div>
             {{ $errors->has('id_diagnostico') ? HTML::tag('span', $errors->first('id_diagnostico'), ['class'=>'help-block text-danger']) : '' }}
 
@@ -130,6 +130,9 @@
                     <div class="">
                         {{Form::label('medicamento','*Medicamento')}}
                         {{Form::select('medicamento',[],null,['id'=>'medicamento','class' => 'medicamento form-control','data-url'=>companyRoute('getMedicamentos'),'style'=>'width:100%'])}}
+                        @if(Route::currentRouteNamed(currentRouteName('create')))
+                            {{Form::label('maximo','',['hidden','id'=>'labelmaximo'])}}
+                        @endif
                     </div>
                 </div>
             </div>

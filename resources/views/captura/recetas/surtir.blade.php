@@ -65,7 +65,7 @@
 
                 <div class="divider"></div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-12 table-responsive">
                         <table class="table table-hover table-striped table-responsive" id="detalle" data-url="{{companyRoute('verifyStockSurtir')}}">
                             <thead>
                             <tr>
@@ -99,8 +99,10 @@
                                         <input type="hidden" id="cantidad_surtida{{$detalle->id_receta_detalle}}" value="{{$detalle->cantidad_surtida}}">
                                     </td>
                                     <td>
-                                        @if($detalle->veces_surtir > $detalle->veces_surtidas)
-                                            <input type="number" class="form-control number-only" min="0" placeholder="Ej: 6" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]">
+                                        @if(DB::select("select extract(days from (timestamp 'now()' - timestamp '".$detalle->fecha_surtido."')) as diferencia")[0]->diferencia <= $detalle->recurrente)
+                                            <label>Producto surtido. Recuerda que la siguiente fecha es <b>{{DB::select("select date '" . $detalle->fecha_surtido . "' + integer '" . $detalle->recurrente . "' as diferencia")[0]->diferencia}}</b></label>
+                                        @elseif($detalle->veces_surtir > $detalle->veces_surtidas)
+                                                <input type="number" class="form-control number-only" min="0" placeholder="Ej: 6" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]">
                                         @else
                                             <input type="hidden" id="cantidadsurtir{{$detalle->id_receta_detalle}}" name="detalle[{{$detalle->id_receta_detalle}}][cantidadsurtir]" value="0">
                                             <label>Producto entregado en su totalidad</label>
@@ -125,7 +127,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                        <h4 class="modal-title">Medicamento(s) agotado(s) o insuficiente(s)</h4>
+                        <h4 class="modal-title">Medicamento(s) agotado(s) o insuficiente(s) o no ha pasado tiempo suficiente para surtirlo</h4>
                     </div>
                     <div class="modal-body">
                         <p id="medicamento_modal"></p>
