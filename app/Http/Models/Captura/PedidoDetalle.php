@@ -31,7 +31,10 @@ class PedidoDetalle extends Model
 	 * @return relation
 	 */
 	public function cuadro_producto() {
-		return $this->hasOne(CuadroProductos::class, 'clave_cliente', 'clave_cliente')->where('id_cuadro','=', $this->id_cuadro)->where('clave_cbn','!=', '')->whereNotNull('clave_cbn')->with('unidad_medida');
+		if ($this->id_cuadro) {
+			return $this->hasOne(CuadroProductos::class, 'clave_cliente', 'clave_cliente')->where('id_cuadro','=', $this->id_cuadro)->whereNotNull('clave_cbn')->whereRaw("clave_cbn <> ''")->with('unidad_medida');
+		}
+		return $this->hasOne(CuadroProductos::class, 'clave_cliente', 'clave_cliente');
 	}
 
 }

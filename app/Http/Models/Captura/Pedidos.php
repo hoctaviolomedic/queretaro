@@ -38,6 +38,7 @@ class Pedidos extends ModelBase
 	 */
 	protected $smart_exports = [
 		'ORACLE' => 'Archivo ORACLE',
+		'ORACLEXLS' => 'Archivo ORACLE-EXCEL',
 	];
 
 	/**
