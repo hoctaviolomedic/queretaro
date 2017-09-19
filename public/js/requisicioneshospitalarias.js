@@ -54,11 +54,11 @@ function agregarProducto() {
                     '<td>' + producto_nombre + '</td>' +
                     '<td>'+ cantidad +'</td> ' +
                     '<td>' + '<a href="#" data-toggle="tooltip" data-placement="top" title="Borrar" class="text-danger"><span class="glyphicon glyphicon-trash" aria-hidden="true"  onclick="eliminarFila(\'' + id_renglon + '\')"></span> </a></td>  ' +
-                    '</tr>' +
                     '<input type="hidden" value="'+id_area+'" name="producto_requisicion['+$cont_producto+'][id_area]">' +
                     '<input type="hidden" value="'+producto_clave+'" name="producto_requisicion['+$cont_producto+'][producto_clave]">' +
                     '<input type="hidden" value="'+cantidad+'" name="producto_requisicion['+$cont_producto+'][cantidad]">' +
-                    '<input type="hidden" id="'+id_area+'_'+producto_clave+'" >'
+                    '<input type="hidden" id="'+id_area+'_'+producto_clave+'" >'+
+                    '</tr>'
 
                 );
 
@@ -141,7 +141,7 @@ $('input').change(function(event) {
     if( length_cantidad > length_max)
     {
 
-        mensajes_alert('Se está excediendo en la cantidad de producto permitida a surtir.');
+        mensajes_alert('Se estÃ¡ excediendo en la cantidad de producto permitida a surtir.');
         $('#'+event.target.id).val('0');
     }
 
