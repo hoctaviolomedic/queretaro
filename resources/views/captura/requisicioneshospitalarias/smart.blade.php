@@ -101,15 +101,18 @@
 @if (Route::currentRouteNamed(currentRouteName('show')))
 @section('form-actions')
 
-
+    {{--{{dd($data)}}--}}
     <div class="text-right ">
-        {!! Form::open(['method'=>'delete','url' => companyRoute('destroy')]) !!}
-        {{ Form::button('<span class="glyphicon glyphicon-floppy-disk" aria-hidden="true"></span> Cancelar requisicion', ['id'=>'guardar','type' =>'submit', 'class'=>'btn btn-danger']) }}
-        {!! Form::close() !!}
-        {{--<a class="btn btn-default text-left" href="{{ companyRoute('destroy') }}"> Cancelar requisicion</a>--}}
+
         @if(in_array($data->id_estatus,[1,2]))
             <a id="surtir" class="btn btn-danger" href="{{companyRoute('surtir')}}"><span class="glyphicon glyphicon-gift"></span> Surtir</a>
         @endif
+        @if(in_array($data->id_estatus,[1]))
+            {!! Form::open(['method'=>'delete','url' => companyRoute('destroy')]) !!}
+            {{ Form::button('Cancelar requisicion', ['id'=>'cancelar','type' =>'submit', 'class'=>'btn']) }}
+            {!! Form::close() !!}
+        @endif
+
         <a class="btn btn-default" href="{{ companyRoute('index') }}"> Cerrar</a>
     </div>
 @endsection

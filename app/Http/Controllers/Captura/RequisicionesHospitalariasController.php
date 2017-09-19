@@ -160,7 +160,7 @@ class RequisicionesHospitalariasController extends ControllerBase
      */
     public function surtir(Request $request, $company, $id, $attributes = [])
     {
-        # ¿Usuario tiene permiso para surtir?
+        # ï¿½Usuario tiene permiso para surtir?
         // $this->authorize('update', $this->entity);
         
         if ($request->isMethod('get')) {
@@ -214,10 +214,11 @@ class RequisicionesHospitalariasController extends ControllerBase
 
     }
 
-    public function destroy(Request $request, $company, $idOrIds)
+    public function destroy(Request $request, $company, $id)
     {
-        dd($request);
 
+        $isSuccess = $this->entity->where($this->entity->getKeyName(), $id)->update(['id_estatus' => 4]);
+        return $this->redirect('store');
 
     }
 
