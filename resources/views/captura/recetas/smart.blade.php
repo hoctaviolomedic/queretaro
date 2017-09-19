@@ -130,6 +130,9 @@
                     <div class="">
                         {{Form::label('medicamento','*Medicamento')}}
                         {{Form::select('medicamento',[],null,['id'=>'medicamento','class' => 'medicamento form-control','data-url'=>companyRoute('getMedicamentos'),'style'=>'width:100%'])}}
+                        @if(Route::currentRouteNamed(currentRouteName('create')))
+                            {{Form::label('maximo','',['hidden','id'=>'labelmaximo'])}}
+                        @endif
                     </div>
                 </div>
             </div>

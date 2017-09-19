@@ -301,8 +301,9 @@ class RecetasController extends ControllerBase
     }
 
     public function verifyStockSurtir($company,Request $data){
+
         $query = DB::select("SELECT cp.clave_cliente, cp.descripcion, cf.descripcion as familia, coalesce(cp.cantidad_presentacion,0) cantidad_presentacion, coalesce(SUM(ie.quedan - ie.apartadas),0) disponible,
-                tp.id_cuadro_tipo_medicamento as tipo_medicamento, c.id_cuadro, coalesce(lp.tope_receta,0) tope_receta
+                tp.id_cuadro_tipo_medicamento as tipo_medicamento, c.id_cuadro, coalesce(lp.tope_receta,0) tope_receta, (rd.fecha_surtido::date - CURRENT_DATE) as dias_pasados, rd.recurrente
                 FROM cat_cuadro c
                 INNER JOIN cat_cuadro_producto cp ON cp.id_cuadro = c.id_cuadro AND c.id_cliente = 135 AND cp.estatus = '1' AND cp.clave_cliente = '".$data->clave_cliente."'
                 INNER JOIN cat_cuadro_tipo_producto tp ON tp.id_cuadro_tipo_medicamento = cp.id_cuadro_tipo_medicamento AND tp.id_cuadro_tipo_medicamento <> 57 AND tp.estatus = '1'
@@ -310,10 +311,12 @@ class RecetasController extends ControllerBase
                 INNER JOIN cat_familia cf ON cf.id_familia = cp.id_familia
                 INNER JOIN inv_existencia ie ON ie.id_localidad = lp.id_localidad AND (ie.quedan - ie.apartadas > 0) AND ie.caducidad > now()
                 INNER JOIN cat_producto_cliente pc ON pc.codigo_barras = ie.codigo_barras AND pc.id_cuadro = c.id_cuadro AND pc.clave_cliente = cp.clave_cliente AND pc.estatus = '1'
+								INNER JOIN ss_qro_receta_detalle rd ON rd.id_receta_detalle = ".$data->detalle."
                 WHERE c.estatus = '1' AND c.id_tipo_cuadro = '1'
-                GROUP BY cp.clave_cliente,cp.descripcion,cf.descripcion,cp.cantidad_presentacion,tp.id_cuadro_tipo_medicamento,c.id_cuadro,lp.tope_receta
+                GROUP BY cp.clave_cliente,cp.descripcion,cf.descripcion,cp.cantidad_presentacion,tp.id_cuadro_tipo_medicamento,c.id_cuadro,lp.tope_receta,rd.fecha_surtido,rd.recurrente
                 ORDER BY disponible DESC, cp.descripcion;");
-        return json_encode($query[0]);
+
+            return json_encode($query);
     }
 
     public function surtirReceta($company,$id)
@@ -379,6 +382,7 @@ class RecetasController extends ControllerBase
                 WHERE c.estatus = '1' AND c.id_tipo_cuadro = '1'
                 GROUP BY cp.clave_cliente,cp.descripcion,cf.descripcion,cp.cantidad_presentacion,tp.id_cuadro_tipo_medicamento,c.id_cuadro,lp.tope_receta,ie.codigo_barras,ie.caducidad,ie.quedan,ie.apartadas,ie.no_lote
                 ORDER BY ie.caducidad ASC;");
+
                 if ($disponibles[0]->quedan > 0) {
                     $index = 0;
                     while (true) {

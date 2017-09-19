@@ -22,16 +22,18 @@ $(document).ready(function () {
         var cantidad = 0;
         var cantidadsurtida = 0;
         $('#detalle tbody tr').each(function (index) {
+            e.preventDefault();
             var data = {};
             var id = this.id;
             cantidad = parseInt($('#cantidadsurtir'+id).val());
             cantidadsurtida = parseInt($('#cantidad_surtida'+id).val());
-            if($('#cantidad_pedida'+id).val()<cantidad || cantidad < 0 || cantidadsurtida+cantidad > $('#cantidad_pedida'+id).val() || isNaN(cantidad)){
+            if($('#cantidad_pedida'+id).val()<cantidad || cantidad < 0 || cantidadsurtida+cantidad > $('#cantidad_pedida'+id).val() * parseInt($('#veces_surtir'+id).val()) || isNaN(cantidad)){
                 cantidad_alta += '<br>'+$('#descripcion'+id).val()+'<br>';
             }
             data.clave_cliente = this.title;
             data.cantidadsurtir = cantidad;
             data.localidad = $('#id_localidad').val();
+            data.detalle = id;
             medicamento.push(data);
             $.ajax({
                 url: $('#detalle').data('url'),
@@ -40,11 +42,21 @@ $(document).ready(function () {
                 async: false,
                 success:function (response) {
                     var arreglo = $.parseJSON(response);
-                     // var cantidad = $('#cantidadsurtir'+id).val();
-                     var disponible = arreglo['disponible'];
-                    if( parseInt(disponible)< parseInt(cantidad)){//Si ya no está disponible, agregar al arreglo de medicamentos agotados
-                        medicamento_agotado.push(arreglo);
-                    }
+                     var cantidad = $('#cantidadsurtir'+id).val();
+                    if(arreglo.length>0){
+                        var disponible = arreglo[0].disponible;
+                        var dias_pasados = arreglo[0].dias_pasados;
+                        var recurrente = arreglo[0].recurrente;
+                        if( parseInt(disponible)< parseInt(cantidad) || parseInt(dias_pasados)<parseInt(recurrente)){//Si ya no está disponible, agregar al arreglo de medicamentos agotados
+                            medicamento_agotado.push(arreglo);
+                        }
+                     }else{
+                         arreglo={};
+                         arreglo.disponible = 0;
+                         arreglo.descripcion = $('#descripcion'+id).val();
+                         medicamento_agotado.push(arreglo);
+                     }
+
                 }
             });
         });
@@ -70,7 +82,8 @@ $(document).ready(function () {
         if(medicamento_agotado.length>0){
             e.preventDefault();
             for(var i = 0;i<medicamento_agotado.length;i++){
-                $('#medicamento_modal').append(medicamento_agotado[i].descripcion+' <b>Quedan: </b>'+medicamento_agotado[i].disponible+'<br>');
+                $('#medicamento_modal').append(medicamento_agotado[i][0].descripcion+' <b>Quedan: </b>' + medicamento_agotado[i][0].disponible +
+                    '<b> Tiempo transcurrido: </b>' + medicamento_agotado[i][0].dias_pasados+'<br>');
             }
             $('#medicamento_modal').append('<br>');
             $('#modal').modal('show');
