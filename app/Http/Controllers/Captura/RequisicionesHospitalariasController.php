@@ -173,7 +173,7 @@ class RequisicionesHospitalariasController extends ControllerBase
 
         $estatus = Estatus::all()->pluck('estatus','id_estatus');
 
-        $detalle_requisicion = DB::select("SELECT rd.*, a.area, cp.descripcion
+        $detalle_requisicion = DB::select("SELECT rd.*, a.area, substring(cp.descripcion from 1 for 250) as descripcion
             FROM ss_qro_requisicion_detalle as rd
             LEFT JOIN cat_area as a ON a.id_area = rd.id_area
             LEFT JOIN cat_cuadro c ON C.id_cuadro = rd.id_cuadro
