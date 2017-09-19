@@ -20,9 +20,6 @@ $('select[name="jurisdiccion"]').on('change', function() {
     }
 });
 
-
-
-
 $('#datetimepicker1').datetimepicker({
     pickTime: false,
 });
@@ -136,7 +133,7 @@ var chart = AmCharts.makeChart( "char-02", {
 	  	"angle": 50,
 	  	"pullOutRadius": 60,
 	  	"marginTop": 20,
-	  	"labelText": "[[area]] : [[percents]]%",
+	  	"labelText": "[[percents]]%",
 	    "balloonText": "<b>[[area]] :<b>[[value]]</b> ([[percents]]%)</span>",
     "balloon":{
     	"fixedPosition":false

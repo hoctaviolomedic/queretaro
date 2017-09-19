@@ -131,8 +131,8 @@ var chart = AmCharts.makeChart( "char-02", {
 	  	"angle": 50,
 	  	"pullOutRadius": 60,
 	  	"marginTop": 20,
-	  	"labelText": "[[medico]] : [[percents]]%",
-	    "balloonText": "<b>[[area]] :<b>[[value]]</b> ([[percents]]%)</span>",
+	  	"labelText": "[[percents]]%",
+	    "balloonText": "<b>[[medico]] :<b>[[value]]</b> ([[percents]]%)</span>",
     "balloon":{
     	"fixedPosition":false
     },

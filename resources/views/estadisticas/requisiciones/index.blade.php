@@ -4,7 +4,7 @@
 	@parent
 	<style>
         .amcharts-chart-div, .amcharts-chart-div svg {
-            height: 44vh !important;
+            min-height: 44vh !important;
         }
         .divider {
             border-bottom: 3px solid #FFAA00;

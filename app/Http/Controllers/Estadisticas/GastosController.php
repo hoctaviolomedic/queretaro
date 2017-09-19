@@ -8,13 +8,6 @@ use DB;
 
 class GastosController extends ControllerBase
 {
-
-	/**
-	 * Show the application dashboard.
-	 *
-	 * @return \Illuminate\Http\Response
-	 */
-	
 	public function index($company, $attributes = ['where'=>[]])
 	{
 	    return view('estadisticas.gastos.index',[

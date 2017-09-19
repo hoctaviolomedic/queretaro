@@ -4,7 +4,7 @@
 	<style>
         #piepacientes .amcharts-chart-div, #piepacientes .amcharts-chart-div svg,
         #piemedicos .amcharts-chart-div, #piemedicos .amcharts-chart-div svg {
-            height: 90vh !important;
+            min-height: 90vh !important;
         }
         .divider {
             border-bottom: 2px solid #FFAA00;
