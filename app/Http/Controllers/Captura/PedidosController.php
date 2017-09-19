@@ -51,6 +51,7 @@ class PedidosController extends ControllerBase
 	public function create($company, $attributes = [])
 	{
 		header('Location: /loader.php?url=pedido/crear_pedido/crear_pedido.php&js=js/pedido/crear_pedido.js&opc=36');
+		die();
 	}
 
 	/**

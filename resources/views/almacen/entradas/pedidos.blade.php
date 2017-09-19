@@ -83,28 +83,30 @@
 				$(target).multiselect('rebuild');
 			},
 			changeSelectAlmacen: function(e) {
-				console.log(e.target.dataset)
+				console.log('cambia-almacen',e.target.dataset)
 				$.post(this.$el.dataset.endpoint, {
 					action: e.target.dataset.action,
 					id: e.target.value,
 					codigo_barras: e.target.dataset.codigo_barras
 				}, function(response){
+					app.$data.clone[e.target.dataset.itempos].id_almacen = e.target.value;
 					app.$data[e.target.dataset.callback](response, e.target, e.target.dataset.target);
 				})
 			},
-			changeSelectUbicacion: function() {
+			changeSelectUbicacion: function(e) {
+				this.$data.clone[e.target.dataset.itempos].id_ubicacion = e.target.value;
+				this.$data.validaSelects();
 			},
 			updateSelectUbicacion: function(response, element, target) {
-				console.log(response, element, target)
 				var almacenes = [];
 				if (response.success) {
+					almacenes.push('<option value="0" selected disabled>Ubicación ...</option>');
 					response.data.almacenes.forEach(function(item){
 						almacenes.push(new Option('#'+item.label+' - '+item.value, item.value).outerHTML)
 					})
 				};
 				$(target).empty().append(almacenes.join(''));
 				this.$data.validaSelects();
-
 			},
 			getItemsPedido: function() {
 				if (app.$data.resurtidos.length) {
@@ -162,8 +164,6 @@
 				if (!this.$data.validaSelects()) {
 					return;
 				}
-
-				console.log('enviar')
 				if (app.$data.resurtidos.length) {
 					$.post(this.$el.dataset.endpoint, {
 						action: 'insertar-entrada',
@@ -171,7 +171,6 @@
 						id_pedido: this.$data.id_pedido,
 						entradas: this.$data.clone,
 					}, function(response){
-						console.log(response)
 						if (response.success) {
 							// e.target.disabled = true;
 
@@ -197,6 +196,7 @@
 							app.set('items', [])
 							app.set('clone', [])
 
+							$("#pedido option[value='"+ this.$data.id_pedido +"']").remove();
 							$('#pedido').select2('val', 0);
 
 							$('#resurtido').empty();
@@ -205,7 +205,7 @@
 							$('#codebar-input').val('')
 
 						}
-					})
+					}.bind(this))
 					// this.set('toRefresh', true)
 				} else {
 					$.toaster({
@@ -244,7 +244,6 @@
 							this.$data.clone[pos]['cantidad_entrada']++
 						}
 					}
-					console.log(e.target.value)
 					this.set('clone', this.get('clone'))
 				}
 				document.querySelector('#codebar-input').value = '';
@@ -297,7 +296,7 @@
 			validaSelects: function() {
 				var r = true
 				document.querySelector('table').querySelectorAll('select').forEach(function(item, key){
-					console.log(item.value)
+					console.log('validaSelects',item.value)
 
 					if (item.value == 0) {
 						document.querySelector('#enviar-datos').disabled = true
@@ -409,9 +408,9 @@
 							<td>
 								<div class="input-group">
 									<span class="input-group-addon" id="a">A</span>
-									<select id="almacen-@{{key}}" class="form-control" data-action="change-almacen" data-codigo_barras="@{{item.codigo_barras}}" data-callback="updateSelectUbicacion" data-target="#ubicacion-@{{key}}" m-on:change="changeSelectAlmacen" m-html="getAlmacenOptions()"></select>
+									<select id="almacen-@{{key}}" class="form-control" data-action="change-almacen" data-codigo_barras="@{{item.codigo_barras}}" data-callback="updateSelectUbicacion" data-target="#ubicacion-@{{key}}" data-itempos="@{{key}}" m-on:change="changeSelectAlmacen" m-html="getAlmacenOptions()"></select>
 									<span class="input-group-addon" id="u">U</span>
-									<select id="ubicacion-@{{key}}" class="form-control" m-html="getUbicacionOptions()" m-on:change="changeSelectUbicacion"></select>
+									<select id="ubicacion-@{{key}}" class="form-control" m-html="getUbicacionOptions()" data-itempos="@{{key}}" m-on:change="changeSelectUbicacion"></select>
 								</div>
 							</td>
 						</tr>
