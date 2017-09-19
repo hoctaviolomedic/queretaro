@@ -49,6 +49,7 @@
                         <label>*Estatus:</label>
                         {{--@if($receta->detalles()->whereRaw('(recurrente > 0 OR cantidad_surtida < cantidad_pedida)')->get() == null)--}}
                             <br><label>{{$receta->estatus->estatus_receta}}</label>
+                        <input type="hidden" id="estatus" value="{{$receta->id_estatus_receta}}">
                         {{--@else--}}
                             {{--<br><label>Surtido</label>--}}
                         {{--@endif--}}
