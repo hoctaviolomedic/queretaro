@@ -100,7 +100,10 @@
 
 @if (Route::currentRouteNamed(currentRouteName('show')))
 @section('form-actions')
+
+
     <div class="text-right ">
+        {{--<a class="btn btn-default text-left" href="{{ companyRoute('destroy') }}"> Cancelar requisicion</a>--}}
     	@if(in_array($data->id_estatus,[1,2]))
         <a id="surtir" class="btn btn-danger" href="{{ companyRoute('edit') }}"><span class="glyphicon glyphicon-gift"></span> Surtir</a>
         @endif

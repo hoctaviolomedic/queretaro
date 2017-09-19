@@ -131,6 +131,9 @@ $('input').change(function(event) {
 
 });
 
+$('#cantidad').change(function(){
+
+});
 
 function guardarRequisicion()
 {
