@@ -184,7 +184,10 @@
 @endif
 
 @if (Route::currentRouteNamed(currentRouteName('surtir')))
-    @section('form-title', 'Surtir requisicion')
+@section('form-title', 'Surtir requisicion')
+@section('form-header')
+    {!! Form::open(['method'=>'put', 'url' => companyRoute('surtir'), 'id' => 'form-model', 'class' => 'col-sm-12']) !!}
+@endsection
 
 @section('form-actions')
 

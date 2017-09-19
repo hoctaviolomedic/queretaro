@@ -16,6 +16,7 @@ use App\Http\Models\Captura\ProductosLicitacion;
 use App\Http\Models\Administracion\Usuarios;
 use App\Http\Models\Captura\Productos;
 use App\Http\Models\Captura\Estatus;
+use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\Request;
 use DB;
 
@@ -157,34 +158,38 @@ class RequisicionesHospitalariasController extends ControllerBase
      * @param  integer $id
      * @return \Illuminate\Http\Response
      */
-    public function surtir($company, $id, $attributes = [])
+    public function surtir(Request $request, $company, $id, $attributes = [])
     {
-        $datos_requisicion = RequisicionesHospitalarias::all()->where('id_requisicion','=',$id)->first();
-
-        $localidad = RequisicionesHospitalarias::join('cat_localidad','ss_qro_requisicion.id_localidad','=','cat_localidad.id_localidad')
-            ->where('ss_qro_requisicion.id_requisicion','=',$id)
-            ->select('cat_localidad.id_localidad','cat_localidad.localidad')
-            ->get();
-
-        $usuario = RequisicionesHospitalarias::join('adm_usuario','ss_qro_requisicion.id_solicitante','=','adm_usuario.id_usuario')
-            ->select(DB::raw("CONCAT(adm_usuario.nombre,' ',adm_usuario.paterno,' ',adm_usuario.materno) AS nombre"))
-            ->where('ss_qro_requisicion.id_requisicion','=',$id)
-            ->pluck('nombre');
-
-        $estatus = Estatus::all()->pluck('estatus','id_estatus');
-
-        $detalle_requisicion = DB::select("SELECT rd.*, a.area, substring(cp.descripcion from 1 for 250) as descripcion
-            FROM ss_qro_requisicion_detalle as rd
-            LEFT JOIN cat_area as a ON a.id_area = rd.id_area
-            LEFT JOIN cat_cuadro c ON C.id_cuadro = rd.id_cuadro
-            LEFT JOIN cat_cuadro_producto cp ON cp.id_cuadro = c.id_cuadro AND c.id_cliente = 135 AND cp.estatus = '1' AND cp.clave_cliente = rd.clave_cliente
-            WHERE rd.id_requisicion = $id");
-
-
-        $data = $this->entity->findOrFail($id);
-        $dataview = isset($attributes['dataview']) ? $attributes['dataview'] : [];
-
-        return view(currentRouteName('smart'), $dataview+[
+        # ¿Usuario tiene permiso para surtir?
+        // $this->authorize('update', $this->entity);
+        
+        if ($request->isMethod('get')) {
+            $datos_requisicion = RequisicionesHospitalarias::all()->where('id_requisicion','=',$id)->first();
+    
+            $localidad = RequisicionesHospitalarias::join('cat_localidad','ss_qro_requisicion.id_localidad','=','cat_localidad.id_localidad')
+                ->where('ss_qro_requisicion.id_requisicion','=',$id)
+                ->select('cat_localidad.id_localidad','cat_localidad.localidad')
+                ->get();
+    
+            $usuario = RequisicionesHospitalarias::join('adm_usuario','ss_qro_requisicion.id_solicitante','=','adm_usuario.id_usuario')
+                ->select(DB::raw("CONCAT(adm_usuario.nombre,' ',adm_usuario.paterno,' ',adm_usuario.materno) AS nombre"))
+                ->where('ss_qro_requisicion.id_requisicion','=',$id)
+                ->pluck('nombre');
+    
+            $estatus = Estatus::all()->pluck('estatus','id_estatus');
+    
+            $detalle_requisicion = DB::select("SELECT rd.*, a.area, substring(cp.descripcion from 1 for 250) as descripcion
+                FROM ss_qro_requisicion_detalle as rd
+                LEFT JOIN cat_area as a ON a.id_area = rd.id_area
+                LEFT JOIN cat_cuadro c ON C.id_cuadro = rd.id_cuadro
+                LEFT JOIN cat_cuadro_producto cp ON cp.id_cuadro = c.id_cuadro AND c.id_cliente = 135 AND cp.estatus = '1' AND cp.clave_cliente = rd.clave_cliente
+                WHERE rd.id_requisicion = $id");
+    
+    
+            $data = $this->entity->findOrFail($id);
+            $dataview = isset($attributes['dataview']) ? $attributes['dataview'] : [];
+    
+            return view(currentRouteName('smart'), $dataview+[
                 'data'=>$data,
                 'localidades'=>$localidad->pluck('localidad','id_localidad'),
                 'solicitante'=>$usuario,
@@ -192,6 +197,15 @@ class RequisicionesHospitalariasController extends ControllerBase
                 'detalle_requisicion'=> $detalle_requisicion,
                 'estatus' => $estatus
             ]);
+        }
+        else {
+            foreach ($request->datos_requisicion as $dato)
+            {
+                $cantidad = $dato['cantidad']+$dato['cantidad_surtida'];
+                DB::update('UPDATE ss_qro_requisicion_detalle set cantidad_surtida = '.$cantidad .' where id_requisicion_detalle = ?', [$dato['id']]);
+            }
+            return Redirect::back();
+        }
     }
 
 

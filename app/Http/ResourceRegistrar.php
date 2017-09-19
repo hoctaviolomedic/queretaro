@@ -39,7 +39,7 @@ class ResourceRegistrar extends OriginalRegistrar
 
         $action = $this->getResourceAction($name, $controller, 'surtir', $options);
 
-        return $this->router->match(['GET', 'POST'], $uri, $action);
+        return $this->router->match(['GET', 'PUT'], $uri, $action);
     }
 
 	/**
