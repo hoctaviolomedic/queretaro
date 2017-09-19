@@ -1,7 +1,5 @@
 $('select[name="jurisdiccion"]').on('change', function() {
-    // alert($("#id_localidad").data('url'));
     var value = $(this).val();
-    // alert(id_localidad);
     if(value) {
         $.ajax({
             type: "POST",
@@ -17,7 +15,6 @@ $('select[name="jurisdiccion"]').on('change', function() {
                 $('select[name="localidad"]').val(-999);
             }
         });
-
     }else{
         $('select[name="localidad"]').empty();
     }
@@ -28,7 +25,6 @@ var chart = AmCharts.makeChart("char-1", {
     "type": "serial",
     "dataProvider": chart1,
     "valueAxes": [{
-        //"unit": "%",
         "position": "left",
         "title": "Pedido vs Entregado / Jurisdiccion",
     }],
@@ -71,7 +67,6 @@ var chart = AmCharts.makeChart( "char-01", {
     "type": "serial",
     "dataProvider": chart2,
     "valueAxes": [{
-        //"unit": "%",
         "position": "left",
         "title": "Pedido vs Entregado / Centro Salud",
     }],
@@ -132,47 +127,7 @@ var chart = AmCharts.makeChart( "char-02", {
     	"enabled": true
     }
 });
-/*
-var chart = AmCharts.makeChart( "char-02", {
-    "type": "serial",
-    "theme": "light",
-    "rotate": true,
-    "dataProvider": chart5,
-    "valueAxes": [ {
-        "gridColor": "#FFFFFF",
-        "gridAlpha": 0.2,
-        "dashLength": 0
-      } ],
-      "gridAboveGraphs": true,
-      "startDuration": 1,
-      "depth3D": 20,
-  	  "angle": 30,
-      "graphs": [ {
-    	"fillColorsField": "color",
-        "balloonText": "[[area]]: <b>[[cantidad_pedida]]</b>",
-        "fillAlphas": 0.8,
-        "lineAlpha": 0.2,
-        "type": "column",
-        "valueField": "cantidad_pedida",
-        "labelText": "[[value]]",
-      } ],
-      "chartCursor": {
-        "categoryBalloonEnabled": false,
-        "cursorAlpha": 0,
-        "zoomable": false
-      },
-      "categoryField": "area",
-      "categoryAxis": {
-        "gridPosition": "start",
-        "gridAlpha": 0,
-        "tickPosition": "start",
-        "tickLength": 20
-      },
-      "export": {
-    	"enabled": true
-      }
-});
-*/
+
 var chart = AmCharts.makeChart("char-2", {
     "theme": "light",
     "type": "serial",

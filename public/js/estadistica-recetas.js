@@ -1,7 +1,5 @@
 $('select[name="jurisdiccion"]').on('change', function() {
-    // alert($("#id_localidad").data('url'));
     var value = $(this).val();
-    // alert(id_localidad);
     if(value) {
         $.ajax({
             type: "POST",
@@ -17,7 +15,6 @@ $('select[name="jurisdiccion"]').on('change', function() {
                 $('select[name="localidad"]').val(-999);
             }
         });
-
     }else{
         $('select[name="localidad"]').empty();
     }
@@ -28,7 +25,6 @@ var chart = AmCharts.makeChart("char-1", {
     "type": "serial",
     "dataProvider": chart1,
     "valueAxes": [{
-        //"unit": "%",
         "position": "left",
         "title": "Pedido vs Entregado / Jurisdiccion",
     }],
@@ -71,7 +67,6 @@ var chart = AmCharts.makeChart( "char-01", {
     "type": "serial",
     "dataProvider": chart2,
     "valueAxes": [{
-        //"unit": "%",
         "position": "left",
         "title": "Pedido vs Entregado / Centro Salud",
     }],

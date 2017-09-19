@@ -1,7 +1,5 @@
 $('select[name="jurisdiccion"]').on('change', function() {
-    // alert($("#id_localidad").data('url'));
     var value = $(this).val();
-    // alert(id_localidad);
     if(value) {
         $.ajax({
             type: "POST",
@@ -29,7 +27,6 @@ var chart = AmCharts.makeChart("char-1", {
     "type": "serial",
     "dataProvider": chart1,
     "valueAxes": [{
-        //"unit": "%",
         "position": "left",
         "title": "Pedido vs Entregado / Jurisdiccion",
     }],
@@ -61,6 +58,121 @@ var chart = AmCharts.makeChart("char-1", {
     "categoryAxis": {
         "gridPosition": "start",
         "labelRotation": 45,
+    },
+    "export": {
+    	"enabled": true
+     }
+});
+
+var chart = AmCharts.makeChart( "char-01", {
+	"theme": "light",
+    "type": "serial",
+    "dataProvider": chart2,
+    "valueAxes": [{
+        "position": "left",
+        "title": "Pedido vs Entregado / Centro Salud",
+    }],
+    "startDuration": 1,
+    "graphs": [{
+        "balloonText": "Pedido para [[category]]: <b>[[value]] - $[[monto_pedido]]</b>",
+        "fillAlphas": 0.9,
+        "lineAlpha": 0.2,
+        "title": "Pedido",
+        "type": "column",
+        "valueField": "cantidad_pedida",
+        "labelText": "[[value]]",
+        "fillColors": "#EFD216",
+    }, {
+        "balloonText": "Entregado para [[category]]: <b>[[value]] - $[[monto_entregado]]</b>",
+        "fillAlphas": 0.9,
+        "lineAlpha": 0.2,
+        "title": "Entregado",
+        "type": "column",
+        "clustered":false,
+        "columnWidth":0.5,
+        "valueField": "cantidad_entregada",
+        "labelText": "<br>[[value]]",
+        "fillColors": "#76BEDF",
+    }],
+    "legend": {
+        "useGraphSettings": true
+      },
+    "plotAreaFillAlphas": 0.1,
+    "categoryField": "centro_salud",
+    "categoryAxis": {
+        "gridPosition": "start",
+    	"labelRotation": 25,
+    },
+    "export": {
+    	"enabled": true
+     }
+});
+
+var chart = AmCharts.makeChart("char-2", {
+    "theme": "light",
+    "type": "serial",
+    "startDuration": 2,
+    "dataProvider": chart3,
+    "valueAxes": [{
+        "position": "left",
+        "axisAlpha":0,
+        "gridAlpha":0
+    }],
+    "graphs": [{
+        "balloonText": "[[category]]: [[producto]] <b>[[value]]</b>",
+        "colorField": "color",
+        "fillAlphas": 0.85,
+        "lineAlpha": 0.1,
+        "type": "column",
+        "topRadius":1,
+        "valueField": "cantidad_pedida",
+        "labelText": "[[value]]",
+    }],
+    "depth3D": 40,
+	"angle": 30,
+    "chartCursor": {
+        "categoryBalloonEnabled": false,
+        "cursorAlpha": 0,
+        "zoomable": false
+    },
+    "categoryField": "clave_cliente",
+    "categoryAxis": {
+        "gridPosition": "start",
+        "labelRotation": 45,
+        "axisAlpha":0,
+        "gridAlpha":0
+
+    },
+    "export": {
+    	"enabled": true
+     }
+});
+
+var chart = AmCharts.makeChart("char-3", {
+    "theme": "light",
+    "type": "serial",
+	"startDuration": 2,
+    "dataProvider": chart4,
+    "graphs": [{
+        "balloonText": "[[category]]: <b>[[value]]</b>",
+        "fillColorsField": "color",
+        "fillAlphas": 0.59,
+        "lineAlpha": 0.1,
+        "type": "column",
+        "valueField": "monto",
+        "labelText": "$ [[value]]",
+    }],
+    "depth3D": 20,
+	"angle": 30,
+    "chartCursor": {
+        "categoryBalloonEnabled": false,
+        "cursorAlpha": 0,
+        "zoomable": false
+    },
+    "categoryField": "clave_cliente",
+    "categoryAxis": {
+        "gridPosition": "start",
+        "labelRotation": 30
     },
     "export": {
     	"enabled": true
