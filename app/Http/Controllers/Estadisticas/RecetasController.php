@@ -70,7 +70,7 @@ class RecetasController extends ControllerBase
                 ->whereBetween(DB::RAW("to_char(p.fecha, 'YYYY-MM-DD')"), [$fecha_inicio, $fecha_fin])
                 ->whereraw("(j.id_jurisdiccion = $jurisdiccion or $jurisdiccion = -999)")
                 ->groupBy(['j.jurisdiccion','l.localidad'])
-                ->orderBy('jurisdiccion')->get();
+                ->orderBy('jurisdiccion')->orderBy('centro_salud')->get();
 	    
         $char02 = DB::table('ss_qro_receta as p')
             ->leftJoin('ss_qro_receta_detalle as d','d.id_receta','p.id_receta')

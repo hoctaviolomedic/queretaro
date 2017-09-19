@@ -70,7 +70,7 @@ class RequisicionesController extends ControllerBase
                 ->whereBetween(DB::RAW("to_char(p.fecha, 'YYYY-MM-DD')"), [$fecha_inicio, $fecha_fin])
                 ->whereraw("(j.id_jurisdiccion = $jurisdiccion or $jurisdiccion = -999)")
                 ->groupBy(['j.jurisdiccion','l.localidad'])
-                ->orderBy(['jurisdiccion','centro_salud'])->get();
+                ->orderBy('jurisdiccion')->orderBy('centro_salud')->get();
     	    
         $char02 = DB::table('ss_qro_requisicion as p')
             ->leftJoin('ss_qro_requisicion_detalle as d','d.id_requisicion','p.id_requisicion')
