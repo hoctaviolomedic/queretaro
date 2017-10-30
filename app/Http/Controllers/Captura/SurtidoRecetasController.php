@@ -156,11 +156,11 @@ class SurtidoRecetasController extends ControllerBase
 
         $pdf = PDF::setPaper([0,0,1000,200],'landscape')->loadView(currentRouteName('imprimir'), compact('data','qr','barcode'));
             
-        $pdf->output();
+        #$pdf->output();
         $dom_pdf = $pdf->getDomPDF();
-        $canvas = $dom_pdf->get_canvas();
+        #$canvas = $dom_pdf->get_canvas();
         
-        return $pdf->stream('solicitud')->header('Content-Type',"application/pdf");
+        return $pdf->stream('ticket_'.$id.'.pdf')->header('Content-Type',"application/pdf");
     }
     
     public function getrecetas($company,Request $request)

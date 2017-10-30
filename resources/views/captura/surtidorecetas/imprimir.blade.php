@@ -1,116 +1,5 @@
+<!DOCTYPE html>
 <html>
-<head>
-    <style type="text/css">
-        * {
-            font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
-            font-size: 11px;
-            margin: 0px;
-            padding: 0px;
-        }
-        body {
-            padding: 2em 1.4em;
-        }
-        img {
-            margin-top:12px;
-            padding:0px;
-            border:0px;
-        }
-        table {
-            border-spacing: 0;
-            border-collapse: collapsed;
-        }
-        td, th{
-            border: none;
-            border-collapse: collapse;
-            padding: 2px;
-        }
-        table thead{
-            border-bottom: 2px solid #ccc;
-            border-collapse: collapse;
-        }
-        table tfoot{
-            border-top: 2px solid #ccc;
-            border-collapse: collapse;
-        }
-        .panel {
-            padding:0px;
-            margin:0px;
-            background-color: #fff;
-            border: 1px solid #919191;
-            border-radius: 4px;
-        }
-        .panel-heading {
-            padding: 10px;
-            #border-bottom: 1px solid #919191;
-            border-top-left-radius: 3px;
-            border-top-right-radius: 3px;
-        }
-        .panel-body {
-            padding: 10px 12px;
-        }
-        .panel-foot {
-            padding: 10px;
-            border-top: 1px solid #919191;
-            border-bottom-left-radius: 3px;
-            border-bottom-right-radius: 3px;
-        }
-        .row {
-            position: relative !important;
-            margin:0;
-            margin-right: -5px;
-            margin-left: -5px;
-            width: 100%;
-            overflow: hidden !important;
-            display: block;
-        }
-        .col-12, .col-11, .col-10, .col-9, .col-8, .col-7, .col-6, .col-5, .col-4, .col-3, .col-2, .col-1 {
-            position: relative !important;
-            overflow: hidden !important;
-            display: inline-block;
-            min-height: 1px;
-            padding: 6px 2px;
-        }
-        .col-12 {width: 100%;}
-        .col-11 {width: 88.33%;}
-        .col-10 {width: 80.3%;}
-        .col-9  {width: 72.27%;}
-        .col-8  {width: 64.24%;}
-        .col-7  {width: 56.21%;}
-        .col-6  {width: 48.18%;}
-        .col-5  {width: 40.15%;}
-        .col-4  {width: 32.12%;}
-        .col-3  {width: 24.09%;}
-        .col-2  {width: 16.06%;}
-        .col-1  {width: 8.03%;}
-        .float-left{
-            float:left;
-        }
-        .float-right{
-            float: right;
-        }
-        .text-left{
-            text-align: left !important;
-        }
-        .text-right{
-            text-align: right !important;
-        }
-        .text-center{
-            text-align: center !important;
-        }
-        .text-justify{
-            text-align: justify;
-        }
-        .mt-3{
-            margin-top: 3em;
-        }
-        .mt-1{
-            margin-top: 1em;
-        }
-        .fx-10 {
-            font-size: 10px;
-        }
-    </style>
-</head>
 <body>
 <div class="row">
     <div class="panel-heading text-center" style="background-color: #f4f4f4;">
@@ -235,6 +124,114 @@
 </div><!--/panel-->
 
 </body>
-</html>
-</body>
+	<style type="text/css">
+        * {
+            font-family: Arial,Helvetica Neue,Helvetica,sans-serif;
+            font-size: 11px;
+            margin: 0px;
+            padding: 0px;
+        }
+        body {
+            padding: 2em 1.4em;
+        }
+        img {
+            margin-top:12px;
+            padding:0px;
+            border:0px;
+        }
+        table {
+            border-spacing: 0;
+            border-collapse: collapsed;
+        }
+        td, th{
+            border: none;
+            border-collapse: collapse;
+            padding: 2px;
+        }
+        table thead{
+            border-bottom: 2px solid #ccc;
+            border-collapse: collapse;
+        }
+        table tfoot{
+            border-top: 2px solid #ccc;
+            border-collapse: collapse;
+        }
+        .panel {
+            padding:0px;
+            margin:0px;
+            background-color: #fff;
+            border: 1px solid #919191;
+            border-radius: 4px;
+        }
+        .panel-heading {
+            padding: 10px;
+            #border-bottom: 1px solid #919191;
+            border-top-left-radius: 3px;
+            border-top-right-radius: 3px;
+        }
+        .panel-body {
+            padding: 10px 12px;
+        }
+        .panel-foot {
+            padding: 10px;
+            border-top: 1px solid #919191;
+            border-bottom-left-radius: 3px;
+            border-bottom-right-radius: 3px;
+        }
+        .row {
+            position: relative !important;
+            margin:0;
+            margin-right: -5px;
+            margin-left: -5px;
+            width: 100%;
+            overflow: hidden !important;
+            display: block;
+        }
+        .col-12, .col-11, .col-10, .col-9, .col-8, .col-7, .col-6, .col-5, .col-4, .col-3, .col-2, .col-1 {
+            position: relative !important;
+            overflow: hidden !important;
+            display: inline-block;
+            min-height: 1px;
+            padding: 6px 2px;
+        }
+        .col-12 {width: 100%;}
+        .col-11 {width: 88.33%;}
+        .col-10 {width: 80.3%;}
+        .col-9  {width: 72.27%;}
+        .col-8  {width: 64.24%;}
+        .col-7  {width: 56.21%;}
+        .col-6  {width: 48.18%;}
+        .col-5  {width: 40.15%;}
+        .col-4  {width: 32.12%;}
+        .col-3  {width: 24.09%;}
+        .col-2  {width: 16.06%;}
+        .col-1  {width: 8.03%;}
+        .float-left{
+            float:left;
+        }
+        .float-right{
+            float: right;
+        }
+        .text-left{
+            text-align: left !important;
+        }
+        .text-right{
+            text-align: right !important;
+        }
+        .text-center{
+            text-align: center !important;
+        }
+        .text-justify{
+            text-align: justify;
+        }
+        .mt-3{
+            margin-top: 3em;
+        }
+        .mt-1{
+            margin-top: 1em;
+        }
+        .fx-10 {
+            font-size: 10px;
+        }
+    </style>
 </html>
