@@ -93,7 +93,7 @@ class SurtidoRecetasController extends ControllerBase
             else
                 DB::rollBack();
 
-            request()->session()->flash('printpdf', $id_receta );
+            request()->session()->flash('printpdf', $id);
             return redirect(companyRoute('index'))->with('printpdf', $id);
 
         }
