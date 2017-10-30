@@ -29,5 +29,9 @@ Route::prefix('{company}')->group(function () {
         Route::resource('requisicioneshospitalarias', 'Captura\RequisicionesHospitalariasController');
         Route::post('getAreas','Captura\RequisicionesHospitalariasController@getAreas')->name('requisicioneshospitalarias.getAreas');
         Route::resource('pedidos', 'Captura\PedidosController');
+        Route::get('surtidorecetas/{id}/imprimir','Captura\SurtidoRecetasController@imprimir')->name('surtidorecetas.imprimir');
+        Route::get('surtidorecetas/getrecetas','Captura\SurtidoRecetasController@getrecetas')->name('surtidorecetas.getrecetas');
+        Route::get('surtidorecetas/getrecetadetalle','Captura\SurtidoRecetasController@getrecetadetalle')->name('surtidorecetas.getrecetadetalle');
+        Route::resource('surtidorecetas', 'Captura\SurtidoRecetasController');
     });
 });

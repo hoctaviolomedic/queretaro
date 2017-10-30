@@ -27,5 +27,7 @@ class CuadroProductos extends Model
 		return $this->hasOne(UnidadMedida::class, 'id_unidad_medida', 'id_unidad_medida');
 	}
 
+	
+	
 
 }

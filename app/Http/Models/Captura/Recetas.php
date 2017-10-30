@@ -125,4 +125,9 @@ class Recetas extends ModelCompany
     {
         return $this->hasMany('App\Http\Models\Captura\RecetasDetalle','id_receta','id_receta');
     }
+    
+    public function area()
+    {
+        return $this->belongsTo('App\Http\Models\Captura\Areas','id_area','id_area');
+    }
 }
