@@ -156,23 +156,33 @@ function guardarRequisicion()
     var fecha_requerido = $('#fecha_requerido').val();
     var id_solicitante = $('#id_solicitante option:selected').val();
 
-    if(id_solicitante != 0)
+    if($('#lista_productos tr').length > 0)
     {
-        if(fecha_requerido != '')
+        if(id_solicitante != 0)
         {
-            return true;
+            if(fecha_requerido != '')
+            {
+                return true;
+            }
+            else
+            {
+                mensajes_alert('Favor de ingresar una fecha.');
+                return false;
+            }
         }
         else
         {
-            mensajes_alert('Favor de ingresar una fecha.');
+            mensajes_alert('Favor de ingresar un solicitante.');
             return false;
         }
     }
     else
     {
-        mensajes_alert('Favor de ingresar un solicitante.');
+        mensajes_alert('Favor de ingresar por lo menos un producto.');
         return false;
     }
+
+
 
 }
 
