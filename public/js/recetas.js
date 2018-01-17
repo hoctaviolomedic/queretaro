@@ -586,6 +586,7 @@ function limpiarCampos() {
     $('#nota_medicamento').val('');
     $('.medicamento').select2('destroy');
     $('.medicamento').empty();
+    $('#labelmaximo').text('');
     medicamento();
     $('#dosis12').prop('checked',false);
     $('#dosis12').parent().removeClass('active');
