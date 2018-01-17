@@ -59,8 +59,8 @@
         </div><br>
         <div class="row margin-bottom text-center">
             <div class="width-25 float-left">
-                <span>Género:</span>
-                <br><b>Masculino</b>
+                {{--<span>Género:</span>--}}
+                {{--<br><b>Masculino</b>--}}
             </div>
         </div><br><br>
         <hr style="color: #ccc; margin-top:15px; margin-bottom: 15px;">
