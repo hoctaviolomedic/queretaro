@@ -8,20 +8,21 @@
 	"license" : "MIT",
 	"type" : "project",
 	"require" : {
-		"php": ">=5.6.4",
-		"Doctrine/dbal": "^2.6",
-		"barryvdh/laravel-dompdf": "~0.8",
-		"laravel/framework": "5.4.*",
-		"laravel/tinker": "~1.0",
-		"laravelcollective/html": "5.4.*",
-		"maatwebsite/excel": "~2.1",
-		"milon/barcode": "^5.3",
-		"predis/predis": "^1.1"
+		"php" : "^5.6 || ^7.0",
+		"Doctrine/dbal" : "~2.6",
+		"laravel/framework" : "~5.5",
+		"laravel/tinker" : "~1.0",
+		"laravelcollective/html" : "~5.5",
+		"barryvdh/laravel-dompdf" : "~0.8",
+		"maatwebsite/excel" : "~2.1",
+		"milon/barcode" : "~5.3",
+		"predis/predis" : "~1.1",
+		"chumper/zipper" : "~1.0"
 	},
 	"require-dev" : {
-		"fzaninotto/faker" : "~1.4",
-		"mockery/mockery" : "0.9.*",
-		"phpunit/phpunit" : "~5.7"
+		"fzaninotto/faker" : "~1.7",
+		"mockery/mockery" : "~1.0",
+		"phpunit/phpunit" : "~6.4"
 	},
 	"autoload" : {
 		"classmap" : [

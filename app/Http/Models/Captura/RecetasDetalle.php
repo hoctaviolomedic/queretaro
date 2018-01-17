@@ -3,6 +3,7 @@
 namespace App\Http\Models\Captura;
 
 use App\Http\Models\ModelCompany;
+use DB;
 
 class RecetasDetalle extends ModelCompany
 {
@@ -49,7 +50,7 @@ class RecetasDetalle extends ModelCompany
 
     public function producto()
     {
-        return $this->hasOne('App\Http\Models\Captura\CuadroProductos','clave_cliente','clave_cliente');
+        return $this->hasOne('App\Http\Models\Captura\CuadroProductos','clave_cliente','clave_cliente')->where('id_cuadro', $this->id_cuadro);
     }
 
 }

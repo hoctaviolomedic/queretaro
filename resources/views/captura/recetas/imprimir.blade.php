@@ -79,7 +79,7 @@
                         <p>{{$detalle->producto->descripcion}}</p>
                         <p>{{$detalle->dosis}}</p>
                         <p>{{isset($detalle->en_caso_presentar)?$detalle->en_caso_presentar:''}}</p>
-                        <p>{{isset($detalle->recurrente)?'Recoger '.$detalle->cantidad_pedida.' cada '.$detalle->recurrente/24 .' días':''}}</p>
+                        <p>{{'Recoger '.$detalle->cantidad_pedida}}{{!empty($detalle->recurrente)?' cada '.$detalle->recurrente/24 .' días':''}}</p>
                     </td>
                 </tr>
             @endforeach

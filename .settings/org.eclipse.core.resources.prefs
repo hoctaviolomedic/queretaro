@@ -1,3 +1,5 @@
 eclipse.preferences.version=1
 encoding//resources/views/captura/pedidos/smart.blade.php=UTF-8
 encoding//resources/views/captura/requisicioneshospitalarias/smart.blade.php=UTF-8
+encoding//resources/views/captura/surtidorecetas/imprimir.blade.php=UTF-8
+encoding//resources/views/captura/surtidorecetas/smart.blade.php=UTF-8

@@ -272,10 +272,18 @@ function getItems($page) {
 			let collection_item = {};
 			collection_item['input'] = '<input type="checkbox" id="check-'+id+'" class="single-check" data-item-id="'+id+'" rv-on-click="actions.itemsSync" rv-get-datarow name="check-'+id+'"><label for="check-'+id+'"></label>';
 			$.each(columns, function(index, column){
-				collection_item[column] = (new Function('str', 'return eval("this." + str);')).call(item, column)
+				try {
+					collection_item[column] = (new Function('str', 'return eval("this." + str);')).call(item, column)
+				}
+				catch(err) {
+					id = '';
+					collection_item[column] = "";
+				}
 			})
-			collection_item['actions'] = document.querySelector('.smart-actions').innerHTML.replace(/#ID#/g, id);
-			collection.push(collection_item);
+			if(id !== "undefined" & id !== '') {
+				collection_item['actions'] = document.querySelector('.smart-actions').innerHTML.replace(/#ID#/g, id);
+				collection.push(collection_item);
+			}
 		})
 
 		datatable.import({
