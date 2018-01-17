@@ -225,7 +225,7 @@ $(document).ready(function () {
                 $.toaster({
                     priority: 'danger',
                     title: 'Medicamento',
-                    message: 'Verifica el tiempo de recurrencia y el de la duración del tratamiento',
+                    message: 'Verifica el tiempo de recurrencia y el de la duración del tratamiento. Recuerda que no se debe excender la cantidad máxima a recetar por medicamento.',
                     settings: {
                         'timeout':10000,
                         'toaster':{
